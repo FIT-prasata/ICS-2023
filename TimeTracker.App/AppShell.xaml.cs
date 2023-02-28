@@ -1,9 +1,10 @@
-﻿namespace TimeTracker.App;
-
-public partial class AppShell : Shell
+﻿namespace TimeTracker.app
 {
-	public AppShell()
-	{
-		InitializeComponent();
-	}
+    public partial class AppShell : Shell
+    {
+        public AppShell()
+        {
+            InitializeComponent();
+        }
+    }
 }

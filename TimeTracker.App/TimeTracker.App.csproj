@@ -6,17 +6,17 @@
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
-		<RootNamespace>TimeTracker.App</RootNamespace>
+		<RootNamespace>TimeTracker.app</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>TimeTracker.App</ApplicationTitle>
+		<ApplicationTitle>TimeTracker.app</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.timetracker.app</ApplicationId>
-		<ApplicationIdGuid>7d9322ab-b8ef-49e7-b9a8-b1fab60cc93d</ApplicationIdGuid>
+		<ApplicationIdGuid>cd35657b-f41a-4f2d-945e-e3c9ffc58fb1</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
