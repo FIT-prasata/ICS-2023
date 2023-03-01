@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.DAL", "TimeTracker.DAL\TimeTracker.DAL.csproj", "{1618DED9-EF18-462C-AF92-7B46422E8BA8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1618DED9-EF18-462C-AF92-7B46422E8BA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1618DED9-EF18-462C-AF92-7B46422E8BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1618DED9-EF18-462C-AF92-7B46422E8BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1618DED9-EF18-462C-AF92-7B46422E8BA8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E555BB57-4C73-402D-9AA3-367FDC2C2FD2}
+	EndGlobalSection
+EndGlobal
