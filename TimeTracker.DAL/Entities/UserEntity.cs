@@ -2,12 +2,16 @@
 {
     public class UserEntity : IEntity
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ImgUri { get; set; }
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
+        public string? ImgUri { get; set; }
 
         public List<ActivityEntity> Activities { get; set; }
-        public ICollection<ProjectUserEntity> Projects { get; set; }
+        
+        public List<ActivityEntity> AuthoredActivities { get; set; }
+        public List<ProjectUserEntity> Projects { get; set; }
+
+
 
     }
 }

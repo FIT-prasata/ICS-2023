@@ -2,5 +2,8 @@
 
 public class ProjectEntity : IEntity
 {
-    public string Name { get; set; }
+    public required string Name { get; set; }
+
+    public List<ActivityEntity> Activities { get; set; }
+    public List<ProjectUserEntity> Users { get; set; }
 }
