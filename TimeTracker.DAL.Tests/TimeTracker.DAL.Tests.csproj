@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TimeTracker.DAL\TimeTracker.DAL.csproj" />
+  </ItemGroup>
+
 </Project>
