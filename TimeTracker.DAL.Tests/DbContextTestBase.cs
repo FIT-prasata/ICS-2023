@@ -20,22 +20,22 @@ namespace TimeTracker.DAL.Tests;
 
             DbContextFactory = new DbContextSqLiteTestingFactory(GetType().FullName!, seedTestingData: true);
 
-            CookBookDbContextSUT = DbContextFactory.CreateDbContext();
+            TimeTrackerDbContextSUT = DbContextFactory.CreateDbContext();
         }
 
         protected IDbContextFactory<TimeTrackerDbContext> DbContextFactory { get; }
-        protected TimeTrackerDbContext CookBookDbContextSUT { get; }
+        protected TimeTrackerDbContext TimeTrackerDbContextSUT { get; }
 
 
         public async Task InitializeAsync()
         {
-            await CookBookDbContextSUT.Database.EnsureDeletedAsync();
-            await CookBookDbContextSUT.Database.EnsureCreatedAsync();
+            await TimeTrackerDbContextSUT.Database.EnsureDeletedAsync();
+            await TimeTrackerDbContextSUT.Database.EnsureCreatedAsync();
         }
 
         public async Task DisposeAsync()
         {
-            await CookBookDbContextSUT.Database.EnsureDeletedAsync();
-            await CookBookDbContextSUT.DisposeAsync();
+            await TimeTrackerDbContextSUT.Database.EnsureDeletedAsync();
+            await TimeTrackerDbContextSUT.DisposeAsync();
         }
     }
