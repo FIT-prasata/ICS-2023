@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.DAL", "TimeTracker.DAL\TimeTracker.DAL.csproj", "{1618DED9-EF18-462C-AF92-7B46422E8BA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.DAL.Tests", "TimeTracker.DAL.Tests\TimeTracker.DAL.Tests.csproj", "{AF37CC5D-88FE-4BE7-9037-6902880607C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1618DED9-EF18-462C-AF92-7B46422E8BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1618DED9-EF18-462C-AF92-7B46422E8BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1618DED9-EF18-462C-AF92-7B46422E8BA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF37CC5D-88FE-4BE7-9037-6902880607C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF37CC5D-88FE-4BE7-9037-6902880607C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF37CC5D-88FE-4BE7-9037-6902880607C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF37CC5D-88FE-4BE7-9037-6902880607C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
