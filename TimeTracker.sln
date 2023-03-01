@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.DAL", "TimeTracker.DAL\TimeTracker.DAL.csproj", "{1618DED9-EF18-462C-AF92-7B46422E8BA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTracker.DAL", "TimeTracker.DAL\TimeTracker.DAL.csproj", "{1618DED9-EF18-462C-AF92-7B46422E8BA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.DAL.Tests", "TimeTracker.DAL.Tests\TimeTracker.DAL.Tests.csproj", "{AF37CC5D-88FE-4BE7-9037-6902880607C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTracker.DAL.Tests", "TimeTracker.DAL.Tests\TimeTracker.DAL.Tests.csproj", "{AF37CC5D-88FE-4BE7-9037-6902880607C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Common", "TimeTracker.Common\TimeTracker.Common.csproj", "{E7F54329-4F37-4BC7-A4BA-65A5FC5C44DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Common.Tests", "TimeTracker.Common.Tests\TimeTracker.Common.Tests.csproj", "{FBE3F55C-D101-4557-AAF6-C6AD09279401}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{AF37CC5D-88FE-4BE7-9037-6902880607C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF37CC5D-88FE-4BE7-9037-6902880607C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF37CC5D-88FE-4BE7-9037-6902880607C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7F54329-4F37-4BC7-A4BA-65A5FC5C44DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7F54329-4F37-4BC7-A4BA-65A5FC5C44DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7F54329-4F37-4BC7-A4BA-65A5FC5C44DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7F54329-4F37-4BC7-A4BA-65A5FC5C44DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBE3F55C-D101-4557-AAF6-C6AD09279401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBE3F55C-D101-4557-AAF6-C6AD09279401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBE3F55C-D101-4557-AAF6-C6AD09279401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBE3F55C-D101-4557-AAF6-C6AD09279401}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
