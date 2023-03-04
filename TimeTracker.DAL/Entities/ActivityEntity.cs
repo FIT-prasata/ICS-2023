@@ -13,11 +13,11 @@ public class ActivityEntity : IEntity
     public required ActivityType Type { get; set; }
 
     public required Guid CreatedById { get; set; }
-    public required UserEntity CreatedBy { get; set; }
+    public UserEntity? CreatedBy { get; set; }
 
     public Guid? AssignedId { get; set; }
     public UserEntity? Assigned { get; set; }
 
     public required Guid ProjectId { get; set; }
-    public ProjectEntity Project { get; set; }
+    public ProjectEntity? Project { get; set; }
 }
