@@ -11,7 +11,7 @@ using TimeTracker.DAL;
 namespace TimeTracker.DAL.Migrations
 {
     [DbContext(typeof(TimeTrackerDbContext))]
-    [Migration("20230304072744_CurrentState")]
+    [Migration("20230304073335_CurrentState")]
     partial class CurrentState
     {
         /// <inheritdoc />
