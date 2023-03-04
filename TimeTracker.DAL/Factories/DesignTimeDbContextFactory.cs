@@ -21,7 +21,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<TimeTracke
         //         Encrypt = False;
         //         TrustServerCertificate = True;");
 
-        builder.UseSqlite($"Data Source=TimeTracker;Cache=Shared");
+        builder.UseSqlite($"Data Source=TimeTrackerDB;Cache=Shared");
 
         return new TimeTrackerDbContext(builder.Options);
     }
