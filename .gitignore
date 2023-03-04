@@ -6,6 +6,9 @@
 # SQLite db
 TimeTrackerDB.sqlite
 
+# because of DataGrip
+.idea/
+
 # User-specific files
 *.rsuser
 *.suo
