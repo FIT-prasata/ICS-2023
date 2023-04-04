@@ -1,6 +1,6 @@
 ﻿namespace TimeTracker.DAL.Entities;
 
-public class ProjectEntity : IEntity
+public record ProjectEntity : IEntity
 {
     public required string Name { get; set; }
 
@@ -12,4 +12,5 @@ public class ProjectEntity : IEntity
 
     public List<ActivityEntity>? Activities { get; set; }
     public List<ProjectUserEntity>? Users { get; set; }
+    public Guid Id { get; set; }
 }
