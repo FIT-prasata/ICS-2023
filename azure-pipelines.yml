@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- task*
 
 pool:
   vmImage: 'windows-latest'
