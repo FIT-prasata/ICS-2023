@@ -7,9 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTracker.DAL", "TimeTrac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTracker.DAL.Tests", "TimeTracker.DAL.Tests\TimeTracker.DAL.Tests.csproj", "{AF37CC5D-88FE-4BE7-9037-6902880607C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Common", "TimeTracker.Common\TimeTracker.Common.csproj", "{E7F54329-4F37-4BC7-A4BA-65A5FC5C44DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTracker.Common", "TimeTracker.Common\TimeTracker.Common.csproj", "{E7F54329-4F37-4BC7-A4BA-65A5FC5C44DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Common.Tests", "TimeTracker.Common.Tests\TimeTracker.Common.Tests.csproj", "{FBE3F55C-D101-4557-AAF6-C6AD09279401}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTracker.Common.Tests", "TimeTracker.Common.Tests\TimeTracker.Common.Tests.csproj", "{FBE3F55C-D101-4557-AAF6-C6AD09279401}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.BL", "TimeTracker.BL\TimeTracker.BL.csproj", "{361AADD7-B542-4B2E-874F-F2C8EE0F37B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.BL.Tests", "TimeTracker.BL.Tests\TimeTracker.BL.Tests.csproj", "{E52F447F-1BC1-403A-86BD-2AE532A25965}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{FBE3F55C-D101-4557-AAF6-C6AD09279401}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBE3F55C-D101-4557-AAF6-C6AD09279401}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBE3F55C-D101-4557-AAF6-C6AD09279401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{361AADD7-B542-4B2E-874F-F2C8EE0F37B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{361AADD7-B542-4B2E-874F-F2C8EE0F37B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{361AADD7-B542-4B2E-874F-F2C8EE0F37B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{361AADD7-B542-4B2E-874F-F2C8EE0F37B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E52F447F-1BC1-403A-86BD-2AE532A25965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E52F447F-1BC1-403A-86BD-2AE532A25965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E52F447F-1BC1-403A-86BD-2AE532A25965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E52F447F-1BC1-403A-86BD-2AE532A25965}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
