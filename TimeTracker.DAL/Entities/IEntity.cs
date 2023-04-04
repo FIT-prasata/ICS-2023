@@ -1,6 +1,6 @@
 ﻿namespace TimeTracker.DAL.Entities;
 
-public class IEntity
+public interface IEntity
 {
     public Guid Id { get; set; }
 }
