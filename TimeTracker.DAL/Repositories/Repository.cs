@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TimeTracker.DAL.Entities;
-using TimeTracker.DAL.Mapper;
+using TimeTracker.DAL.Mappers;
 
 namespace TimeTracker.DAL.Repositories;
 public class Repository<TEntity> : IRepository<TEntity>
