@@ -1,6 +1,6 @@
 ﻿namespace TimeTracker.DAL.Entities
 {
-    public class UserEntity : IEntity
+    public record UserEntity : IEntity
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
@@ -12,6 +12,6 @@
         public List<ProjectUserEntity>? Projects { get; set; }
 
 
-
+        public Guid Id { get; set; }
     }
 }

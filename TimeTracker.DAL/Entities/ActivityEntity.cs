@@ -2,7 +2,7 @@
 
 namespace TimeTracker.DAL.Entities;
 
-public class ActivityEntity : IEntity
+public record ActivityEntity : IEntity
 {
     public required DateTime Start { get; set; }
 
@@ -20,4 +20,5 @@ public class ActivityEntity : IEntity
 
     public required Guid ProjectId { get; set; }
     public ProjectEntity? Project { get; set; }
+    public Guid Id { get; set; }
 }
