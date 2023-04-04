@@ -31,5 +31,12 @@ namespace TimeTracker.DAL.Tests
             Assert.Equal((entity.Id, entity.FirstName, entity.LastName, entity.ImgUri), (actualEntities.Id, actualEntities.FirstName, actualEntities.LastName, actualEntities.ImgUri));
         }
 
+
+        [Fact]
+        public void SuccessfullTest()
+        {
+            Assert.True(true);
+        }
+
     }
 }
