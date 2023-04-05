@@ -4,8 +4,9 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- master
-- task*
+  branches:
+    include:
+    - '*'
 
 pool:
   vmImage: 'windows-latest'
@@ -24,7 +25,7 @@ steps:
 - task: VisualStudioTestPlatformInstaller@1
   inputs:
     versionSelector: 'SpecificVersion'
-    testPlatformVersion: '17.2.0'
+    testPlatformVersion: '17.3.0'
 
 - task: VSBuild@1
   inputs:
