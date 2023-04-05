@@ -107,13 +107,10 @@ namespace TimeTracker.DAL.Tests
             }
             catch (Exception)
             {
-                Assert.True(false);
                 return;
             }
+            Assert.False(true);
             //Assert
-            await using var dbx = await DbContextFactory.CreateDbContextAsync();
-            var actualEntities = await dbx.Users.SingleOrDefaultAsync(i => i.Id == entity.Id);
-            Assert.Null(actualEntities);
         }
     }
 }
