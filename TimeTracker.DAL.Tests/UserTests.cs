@@ -67,6 +67,31 @@ namespace TimeTracker.DAL.Tests
         }
 
         [Fact]
+        public async Task UpdateUser()
+        {
+            //Arrange
+            UserEntity entity = new()
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Igor",
+                LastName = "Rogi",
+                ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+            };
+            //Act
+            TimeTrackerDbContextSUT.Users.Add(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            entity.FirstName = "Igor2";
+            entity.LastName = "Rogi2";
+            TimeTrackerDbContextSUT.Users.Update(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var actualEntities = await dbx.Users.SingleAsync(i => i.Id == entity.Id);
+            Assert.Equal((entity.Id, entity.FirstName, entity.LastName, entity.ImgUri), (actualEntities.Id, actualEntities.FirstName, actualEntities.LastName, actualEntities.ImgUri));
+        }
+
+
+        [Fact]
         public async Task DeleteExisting_User()
         {
             //Arrange
