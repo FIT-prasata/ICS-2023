@@ -43,7 +43,7 @@ namespace TimeTracker.DAL.Tests
         }
 
         [Fact]
-        public async Task GetById_User()
+        public async Task GetUserById()
         {
             //Act
             var entity = await TimeTrackerDbContextSUT.Users.FindAsync(UserSeeds.UserGet.Id);

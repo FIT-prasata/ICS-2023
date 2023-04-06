@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Entities;
 using Xunit.Abstractions;
 
@@ -13,22 +14,11 @@ namespace TimeTracker.DAL.Tests
         public async Task AddNew_Project()
         {
             //Arrange            
-            UserEntity userEntity = new()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Igor",
-                LastName = "Rogi",
-                ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-            };
-
-            TimeTrackerDbContextSUT.Users.Add(userEntity);
-            await TimeTrackerDbContextSUT.SaveChangesAsync();
-
             ProjectEntity entity = new()
             {
                 Id = Guid.NewGuid(),
-                CreatedById = userEntity.Id,
-                Name = "Proj",
+                CreatedById = UserSeeds.UserEntity1.Id,
+                Name = "New Project 1",
             };
 
             //Act
@@ -37,8 +27,64 @@ namespace TimeTracker.DAL.Tests
 
             //Assert
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
-            var actualEntities = await dbx.Projects.SingleAsync(i => i.Id == entity.Id);
-            Assert.Equal((entity.Id,entity.CreatedById,entity.Name),(actualEntities.Id,actualEntities.CreatedById,actualEntities.Name));
+            var actualEntities = await dbx.Projects
+                .Include(i => i.CreatedBy)//TODO
+                .SingleAsync(i => i.Id == entity.Id);
+            Assert.Equal(entity,actualEntities);
+        }
+
+        [Fact]
+        public async Task GetAllProjects_ContainsSeededProject()
+        {
+            //Act
+            var entities = await TimeTrackerDbContextSUT.Projects.ToArrayAsync();
+            //Assert
+            Assert.Contains(ProjectSeeds.ProjectGet, entities);
+        }
+
+        [Fact]
+        public async Task GetProjectById()
+        {
+            //Act
+            var entity = await TimeTrackerDbContextSUT.Projects.FindAsync(ProjectSeeds.ProjectGet.Id);
+            //Assert
+            Assert.Equal(ProjectSeeds.ProjectGet, entity);
+        }
+
+        [Fact]
+        public async Task UpdateProject()
+        {
+            //Arrange
+            var baseEntity = ProjectSeeds.ProjectUpdate;
+            var entity =
+                baseEntity with
+                {
+                    Name = baseEntity + "Updated",
+                    Description = baseEntity + "Updated",
+                };
+
+            //Act
+            TimeTrackerDbContextSUT.Projects.Update(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+
+            //Assert
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var actualEntity = await dbx.Projects.SingleAsync(i => i.Id == entity.Id);
+            Assert.Equal(entity, actualEntity);
+        }
+
+        [Fact]
+        public async Task DeleteProject()
+        {
+            //Arrange
+            var entityBase = ProjectSeeds.ProjectDelete;
+
+            //Act
+            TimeTrackerDbContextSUT.Projects.Remove(entityBase);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+
+            //Assert
+            Assert.False(await TimeTrackerDbContextSUT.Projects.AnyAsync(i => i.Id == entityBase.Id));
         }
     }
 }
