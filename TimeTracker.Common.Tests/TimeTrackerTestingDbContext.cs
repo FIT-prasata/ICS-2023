@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL;
 
 namespace TimeTracker.Common.Tests;
@@ -19,7 +20,7 @@ public class TimeTrackerTestingDbContext : TimeTrackerDbContext
 
         if (_seedTestingData)
         {
-
+            UserSeeds.Seed(modelBuilder);
         }
     }
 }
