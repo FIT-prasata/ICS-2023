@@ -14,13 +14,13 @@ public static class ActivitySeeds
         End = DateTime.Now,
         Description = "Test",
         Type = ActivityType.Work,
-        CreatedById = UserSeeds.UserGet.Id,
+        CreatedById = UserSeeds.UserEntity1.Id,
         ProjectId = ProjectSeeds.ProjectEntity1.Id
     };
-
+    
     public static void Seed(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<UserEntity>().HasData(
+        modelBuilder.Entity<ActivityEntity>().HasData(
                 ActivitySeed1
             );
     }
