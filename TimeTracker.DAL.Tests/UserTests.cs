@@ -154,6 +154,23 @@ namespace TimeTracker.DAL.Tests
             //Assert
             Assert.Equal(entity, entityU);
         }
+        [Fact]
+        public async Task UserRepositoryDelete()
+        {
+            //Arrange
+            UserEntity entity = UserSeeds.UserDelete;
+
+            var repo = new Repository<UserEntity>(TimeTrackerDbContextSUT, new UserEntityMapper());
+
+            Assert.True(await repo.ExistsAsync(entity));
+
+            //Act
+            repo.Delete(entity.Id);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            Assert.False(await repo.ExistsAsync(entity));
+        }
+
 
         //TODO: add test for deleting user with all his own projects and its activities
     }
