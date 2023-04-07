@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Entities;
+using TimeTracker.DAL.Mappers;
+using TimeTracker.DAL.Repositories;
 using Xunit.Abstractions;
 
 namespace TimeTracker.DAL.Tests
@@ -98,6 +100,70 @@ namespace TimeTracker.DAL.Tests
 
             //Assert
             Assert.False(await TimeTrackerDbContextSUT.Projects.AnyAsync(i => i.Id == entityBase.Id));
+        }
+        [Fact]
+        public async Task ProjectRepositoryExists()
+        {
+            //Arrange
+            var repo = new Repository<ProjectEntity>(TimeTrackerDbContextSUT, new ProjectEntityMapper());
+            var entity = ProjectSeeds.ProjectGet;
+
+            //Assert
+            Assert.True(await repo.ExistsAsync(entity));
+        }
+        [Fact]
+        public async Task ProjectRepositoryInsert()
+        {
+            //Arrange
+            ProjectEntity entity = new()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = UserSeeds.UserEntity1.Id,
+                Name = "New Project 1",
+            };
+            var repo = new Repository<ProjectEntity>(TimeTrackerDbContextSUT, new ProjectEntityMapper());
+
+            Assert.False(await repo.ExistsAsync(entity));
+
+            //Act
+            await repo.InsertAsync(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            Assert.True(await repo.ExistsAsync(entity));
+        }
+        [Fact]
+        public async Task ProjectRepositoryUpdate()
+        {
+            //Arrange
+            ProjectEntity entity = ProjectSeeds.ProjectUpdate;
+            entity.Name = entity.Name + "Updated";
+
+            var repo = new Repository<ProjectEntity>(TimeTrackerDbContextSUT, new ProjectEntityMapper());
+
+            Assert.True(await repo.ExistsAsync(entity));
+
+            //Act
+            await repo.UpdateAsync(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            var entityU = repo.Get().Where(i => i.Id == entity.Id).ToList().First();
+            //Assert
+            Assert.Equal(entity, entityU);
+        }
+        [Fact]
+        public async Task ProjectRepositoryDelete()
+        {
+            //Arrange
+            ProjectEntity entity = ProjectSeeds.ProjectDelete;
+
+            var repo = new Repository<ProjectEntity>(TimeTrackerDbContextSUT, new ProjectEntityMapper());
+
+            Assert.True(await repo.ExistsAsync(entity));
+
+            //Act
+            repo.Delete(entity.Id);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            Assert.False(await repo.ExistsAsync(entity));
         }
     }
 }

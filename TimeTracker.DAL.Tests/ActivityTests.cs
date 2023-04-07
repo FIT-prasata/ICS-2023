@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Entities;
+using TimeTracker.DAL.Mappers;
+using TimeTracker.DAL.Repositories;
 using Xunit.Abstractions;
 
 namespace TimeTracker.DAL.Tests
@@ -106,6 +108,74 @@ namespace TimeTracker.DAL.Tests
 
             //Assert
             Assert.False(await TimeTrackerDbContextSUT.Activities.AnyAsync(i => i.Id == entityBase.Id));
+        }
+        [Fact]
+        public async Task ActivityRepositoryExists()
+        {
+            //Arrange
+            var repo = new Repository<ActivityEntity>(TimeTrackerDbContextSUT, new ActivityEntityMapper());
+            var entity = ActivitySeeds.ActivityGet;
+
+            //Assert
+            Assert.True(await repo.ExistsAsync(entity));
+        }
+        [Fact]
+        public async Task ActivityRepositoryInsert()
+        {
+            //Arrange
+            ActivityEntity entity = new()
+            {
+                Id = Guid.NewGuid(),
+                Start = DateTime.Now,
+                End = DateTime.Now,
+                Description = "Test",
+                Type = Enums.ActivityType.Work,
+                CreatedById = UserSeeds.UserEntity1.Id,
+                ProjectId = ProjectSeeds.ProjectEntity1.Id
+            };
+            var repo = new Repository<ActivityEntity>(TimeTrackerDbContextSUT, new ActivityEntityMapper());
+
+            Assert.False(await repo.ExistsAsync(entity));
+
+            //Act
+            await repo.InsertAsync(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            Assert.True(await repo.ExistsAsync(entity));
+        }
+        [Fact]
+        public async Task ActivityRepositoryUpdate()
+        {
+            //Arrange
+            ActivityEntity entity = ActivitySeeds.ActivityUpdate;
+            entity.Description = entity.Description + "Updated";
+
+            var repo = new Repository<ActivityEntity>(TimeTrackerDbContextSUT, new ActivityEntityMapper());
+
+            Assert.True(await repo.ExistsAsync(entity));
+
+            //Act
+            await repo.UpdateAsync(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            var entityU = repo.Get().Where(i => i.Id == entity.Id).ToList().First();
+            //Assert
+            Assert.Equal(entity, entityU);
+        }
+        [Fact]
+        public async Task ActivityRepositoryDelete()
+        {
+            //Arrange
+            ActivityEntity entity = ActivitySeeds.ActivityDelete;
+
+            var repo = new Repository<ActivityEntity>(TimeTrackerDbContextSUT, new ActivityEntityMapper());
+
+            Assert.True(await repo.ExistsAsync(entity));
+
+            //Act
+            repo.Delete(entity.Id);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            Assert.False(await repo.ExistsAsync(entity));
         }
     }
 }
