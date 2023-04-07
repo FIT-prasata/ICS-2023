@@ -7,7 +7,7 @@ public static class UserSeeds
 {
     public static UserEntity UserGet => new()
     {
-        Id = Guid.NewGuid(),
+        Id = Guid.Parse(input: "86aae9b6-46ff-4ded-8562-dc5dcd06c39b"),
         FirstName = "John",
         LastName = "Doe",
         ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
