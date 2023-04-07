@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using TimeTracker.DAL.Entities;
 using Xunit.Abstractions;
 using TimeTracker.Common.Tests.Seeds;
+using TimeTracker.DAL.Repositories;
+using Microsoft.EntityFrameworkCore.Metadata;
+using TimeTracker.DAL.Mappers;
 
 namespace TimeTracker.DAL.Tests
 {
@@ -100,6 +103,15 @@ namespace TimeTracker.DAL.Tests
 
             //Assert
             Assert.False(await TimeTrackerDbContextSUT.Users.AnyAsync(i => i.Id == entityBase.Id));
+        }
+
+        [Fact]
+        public async Task UserRepositoryExists()
+        {
+            var repo = new Repository<UserEntity>(TimeTrackerDbContextSUT, new UserEntityMapper());
+
+            UserEntity entity = UserSeeds.UserUpdate;
+            Assert.True(await repo.ExistsAsync(entity));
         }
         
         //TODO: add test for deleting user with all his own projects and its activities
