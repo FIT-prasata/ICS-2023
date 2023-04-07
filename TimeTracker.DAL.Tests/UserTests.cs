@@ -108,12 +108,53 @@ namespace TimeTracker.DAL.Tests
         [Fact]
         public async Task UserRepositoryExists()
         {
+            //Arrange
             var repo = new Repository<UserEntity>(TimeTrackerDbContextSUT, new UserEntityMapper());
+            UserEntity entity = UserSeeds.UserGet;
 
-            UserEntity entity = UserSeeds.UserUpdate;
+            //Assert
             Assert.True(await repo.ExistsAsync(entity));
         }
-        
+        [Fact]
+        public async Task UserRepositoryInsert()
+        {
+            //Arrange
+            UserEntity entity = new()
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Igor",
+                LastName = "Rogi",
+                ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+            };
+            var repo = new Repository<UserEntity>(TimeTrackerDbContextSUT, new UserEntityMapper());
+
+            Assert.False(await repo.ExistsAsync(entity));
+
+            //Act
+            await repo.InsertAsync(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            Assert.True(await repo.ExistsAsync(entity));
+        }
+        [Fact]
+        public async Task UserRepositoryUpdate()
+        {
+            //Arrange
+            UserEntity entity = UserSeeds.UserUpdate;
+            entity.FirstName = entity.FirstName + "Updated";
+
+            var repo = new Repository<UserEntity>(TimeTrackerDbContextSUT, new UserEntityMapper());
+
+            Assert.True(await repo.ExistsAsync(entity));
+
+            //Act
+            await repo.UpdateAsync(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            var entityU = repo.Get().Where(i => i.Id == entity.Id).ToList().First();
+            //Assert
+            Assert.Equal(entity, entityU);
+        }
+
         //TODO: add test for deleting user with all his own projects and its activities
     }
 }
