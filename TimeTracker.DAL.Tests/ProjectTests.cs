@@ -27,9 +27,7 @@ namespace TimeTracker.DAL.Tests
 
             //Assert
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
-            var actualEntities = await dbx.Projects
-                .Include(i => i.CreatedBy)//TODO
-                .SingleAsync(i => i.Id == entity.Id);
+            var actualEntities = await dbx.Projects.SingleAsync(i => i.Id == entity.Id);
             Assert.Equal(entity,actualEntities);
         }
 
@@ -81,6 +79,21 @@ namespace TimeTracker.DAL.Tests
 
             //Act
             TimeTrackerDbContextSUT.Projects.Remove(entityBase);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+
+            //Assert
+            Assert.False(await TimeTrackerDbContextSUT.Projects.AnyAsync(i => i.Id == entityBase.Id));
+        }
+
+        [Fact]
+        public async Task DeleteProjectById()
+        {
+            //Arrange
+            var entityBase = ProjectSeeds.ProjectDelete;
+
+            //Act
+            TimeTrackerDbContextSUT.Remove(
+                TimeTrackerDbContextSUT.Projects.Single(i => i.Id == entityBase.Id));
             await TimeTrackerDbContextSUT.SaveChangesAsync();
 
             //Assert
