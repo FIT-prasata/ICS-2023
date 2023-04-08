@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using TimeTracker.BL.Facades.Interfaces;
 using TimeTracker.BL.Mappers.Interfaces;
 using TimeTracker.BL.Models;
 using TimeTracker.DAL.Entities;
@@ -15,7 +16,7 @@ using TimeTracker.DAL.UnitOfWork;
 
 namespace TimeTracker.BL.Facades
 {
-    public class FacadeBase<TEntity, TDetailModel ,TListModel,TEntityMapper>
+    public class FacadeBase<TEntity, TDetailModel ,TListModel,TEntityMapper>: IFacade<TEntity, TDetailModel, TListModel>
         where TEntity : class, IEntity
         where TDetailModel : class, IModel
         where TListModel : IModel
