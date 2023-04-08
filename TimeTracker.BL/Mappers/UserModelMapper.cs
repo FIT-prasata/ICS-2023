@@ -8,7 +8,7 @@ using TimeTracker.DAL.Entities;
 using TimeTracker.BL.Models;
 namespace TimeTracker.BL.Mappers
 {
-    public class UserModelMapper: IModelDetailMapper<UserEntity, UserDetailModel>, IModelListMapper<UserEntity, UserListModel>
+    public class UserModelMapper: IModelMapper<UserEntity,UserDetailModel,UserListModel>
     {
         public UserDetailModel MapToDetailModel(UserEntity? entity)
         => entity is null

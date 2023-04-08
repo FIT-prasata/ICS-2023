@@ -8,13 +8,16 @@ using TimeTracker.BL.Models;
 
 namespace TimeTracker.BL.Facades.Interfaces
 {
-    internal interface IFacadeDetailMixin<TEntity, TDetailModel>
+    internal interface IFacadeMixin<TEntity, TDetailModel, TListModel>
         where TEntity : class, IEntity
         where TDetailModel : class, IModel
+        where TListModel : IModel
 
     {
         Task DeleteAsync(Guid id);
         Task<TDetailModel?> GeAsync(Guid id);
         Task<TDetailModel> SaveAsync(TDetailModel model);
+        Task<IEnumerable<TListModel>> GetAsync();
+
     }
 }

@@ -15,14 +15,14 @@ public static class BLInstaller
 
         services.Scan(selector => selector
             .FromAssemblyOf<BusinessLogic>()
-            .AddClasses(filter => filter.AssignableTo(typeof(IFacadeDetailMixin<,>)))
+            .AddClasses(filter => filter.AssignableTo(typeof(IFacadeMixin<,>)))
             .AddClasses(filter => filter.AssignableTo(typeof(IFacadeListMixin<,>)))
             .AsMatchingInterface()
             .WithSingletonLifetime());
 
         services.Scan(selector => selector
             .FromAssemblyOf<BusinessLogic>()
-            .AddClasses(filter => filter.AssignableTo(typeof(IModelDetailMapper<,>)))
+            .AddClasses(filter => filter.AssignableTo(typeof(IModelMapper<,,>)))
             .AddClasses(filter => filter.AssignableTo(typeof(IModelListMapper<,>)))
             .AsMatchingInterface()
             .WithSingletonLifetime());

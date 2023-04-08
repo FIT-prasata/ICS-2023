@@ -12,10 +12,10 @@ using TimeTracker.DAL.UnitOfWork;
 
 namespace TimeTracker.BL.Facades
 {
-    public class ProjectFacade: FacadeDetailMixin<ProjectEntity, ProjectDetailModel, ProjectEntityMapper>, IFacadeListMixin<ProjectEntity,ProjectListModel>
+    public class ProjectFacade: FacadeBase<ProjectEntity, ProjectDetailModel, ProjectListModel, ProjectEntityMapper>
 
     {
-        public ProjectFacade(IUnitOfWorkFactory iow, ProjectModelMapper mapper) : base(iow, mapper)
+        public ProjectFacade(ProjectModelMapper mapper, IUnitOfWorkFactory uow) : base(mapper, uow)
         {
         }
         protected override List<string> IncludesNavigationPathDetail => new()
