@@ -3,13 +3,8 @@ using System.Linq;
 
 namespace TimeTracker.BL.Mappers.Interfaces;
 
-public interface IModelMapper<TEntity, out TListModel, TDetailModel>
+public interface IModelDetailMapper<TEntity, TDetailModel>
 {
-    TListModel MapToListModel(TEntity? entity);
-
-    IEnumerable<TListModel> MapToListModel(IEnumerable<TEntity> entities)
-        => entities.Select(MapToListModel);
-
     TDetailModel MapToDetailModel(TEntity entity);
     TEntity MapToEntity(TDetailModel model);
 }
