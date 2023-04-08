@@ -10,7 +10,7 @@ using TimeTracker.DAL.Mappers;
 
 namespace TimeTracker.BL.Facades
 {
-    internal class FacadeDetailMixin<TEntity, TDetailModel, TEntityMapper>: IFacadeDetailMixin<TEntity, TDetailModel>
+    public abstract class FacadeDetailMixin<TEntity, TDetailModel, TEntityMapper>: IFacadeDetailMixin<TEntity, TDetailModel>
     where TEntity : class, IEntity
     where TDetailModel : class, IModel
     where TEntityMapper: IEntityMapper<TEntity>, new()
