@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Entities;
+using TimeTracker.DAL.Mappers;
+using TimeTracker.DAL.Repositories;
 using Xunit.Abstractions;
 
 namespace TimeTracker.DAL.Tests
@@ -10,247 +13,169 @@ namespace TimeTracker.DAL.Tests
         {
         }
 
-        //[Fact]
-        //public async Task AddNewActivity()
-        //{
-        //    //Arrange
-        //    UserEntity userEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        FirstName = "Igor",
-        //        LastName = "Rogi",
-        //        ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-        //    };
+        [Fact]
+        public async Task AddNewActivity()
+        {
+            //Arrange
+            ActivityEntity entity = new()
+            {
+                Id = Guid.NewGuid(),
+                Start = DateTime.Now,
+                End = DateTime.Now,
+                Description = "Test",
+                Type = Enums.ActivityType.Work,
+                CreatedById = UserSeeds.UserEntity1.Id,
+                ProjectId = ProjectSeeds.ProjectEntity1.Id
+            };
 
-        //    ProjectEntity projectEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Name = "Test",
-        //        Description = "Test",
-        //        CreatedById = userEntity.Id
-        //    };
+            //Act
+            TimeTrackerDbContextSUT.Activities.Add(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
 
-        //    ActivityEntity entity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Start = DateTime.Now,
-        //        End = DateTime.Now,
-        //        Description = "Test",
-        //        Type = Enums.ActivityType.Work,
-        //        CreatedById = userEntity.Id,
-        //        ProjectId = projectEntity.Id
-        //    };
-        //    //Act
-        //    TimeTrackerDbContextSUT.Users.Add(userEntity);
-        //    TimeTrackerDbContextSUT.Projects.Add(projectEntity);
-        //    TimeTrackerDbContextSUT.Activities.Add(entity);
-        //    await TimeTrackerDbContextSUT.SaveChangesAsync();
-        //    //Assert
-        //    await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        //    var actualEntities = await dbx.Activities.SingleAsync(i => i.Id == entity.Id);
-        //    Assert.Equal((entity.Id, entity.Start, entity.End, entity.Description, entity.Type, entity.CreatedById, entity.ProjectId), (actualEntities.Id, actualEntities.Start, actualEntities.End, actualEntities.Description, actualEntities.Type, actualEntities.CreatedById, actualEntities.ProjectId));
-        //}
+            //Assert
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var actualEntities = await dbx.Activities.SingleAsync(i => i.Id == entity.Id);
+            Assert.Equal(entity, actualEntities);
+        }
 
-        //[Fact]
-        //public async Task AddNewActivity_With_Existing_Id()
-        //{
-        //    //Arrange
-        //    UserEntity userEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        FirstName = "Igor",
-        //        LastName = "Rogi",
-        //        ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-        //    };
-        //    ProjectEntity projectEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Name = "Test",
-        //        Description = "Test",
-        //        CreatedById = userEntity.Id
-        //    };
-        //    ActivityEntity entity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Start = DateTime.Now,
-        //        End = DateTime.Now,
-        //        Description = "Test",
-        //        Type = Enums.ActivityType.Work,
-        //        CreatedById = userEntity.Id,
-        //        ProjectId = projectEntity.Id
-        //    };
-        //    ActivityEntity entity2 = new()
-        //    {
-        //        Id = entity.Id,
-        //        Start = DateTime.Now,
-        //        End = DateTime.Now,
-        //        Description = "Test",
-        //        Type = Enums.ActivityType.Work,
-        //        CreatedById = userEntity.Id,
-        //        ProjectId = projectEntity.Id
-        //    };
-        //    //Act
-        //    TimeTrackerDbContextSUT.Users.Add(userEntity);
-        //    TimeTrackerDbContextSUT.Projects.Add(projectEntity);
-        //    TimeTrackerDbContextSUT.Activities.Add(entity);
-        //    await TimeTrackerDbContextSUT.SaveChangesAsync();
-        //    try
-        //    {
-        //        TimeTrackerDbContextSUT.Activities.Add(entity2);
-        //        await TimeTrackerDbContextSUT.SaveChangesAsync();
-        //        Assert.True(false);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        Assert.True(true);
-        //    }
-        //}
+        [Fact]
+        public async Task GetAllActivities_ContainsSeededActivity()
+        {
+            //Act
+            var entities = await TimeTrackerDbContextSUT.Activities.ToArrayAsync();
 
-        //[Fact]
-        //public async Task DeleteExistingActivity()
-        //{
-        //    //Arrange
-        //    UserEntity userEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        FirstName = "Igor",
-        //        LastName = "Rogi",
-        //        ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-        //    };
+            //Assert
+            Assert.Contains(ActivitySeeds.ActivityGet, entities);
+        }
 
-        //    ProjectEntity projectEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Name = "Test",
-        //        Description = "Test",
-        //        CreatedById = userEntity.Id
-        //    };
+        [Fact]
+        public async Task GetActivityById()
+        {
+            //Act
+            var entity = await TimeTrackerDbContextSUT.Activities.FindAsync(ActivitySeeds.ActivityGet.Id);
+            //Assert
+            Assert.Equal(ActivitySeeds.ActivityGet, entity);
+        }
 
-        //    ActivityEntity entity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Start = DateTime.Now,
-        //        End = DateTime.Now,
-        //        Description = "Test",
-        //        Type = Enums.ActivityType.Work,
-        //        CreatedById = userEntity.Id,
-        //        ProjectId = projectEntity.Id
-        //    };
+        [Fact]
+        public async Task UpdateActivity()
+        {
+            //Arrange
+            var baseEntity = ActivitySeeds.ActivityUpdate;
+            var entity =
+                baseEntity with
+                {
+                    Description = baseEntity + "Updated",
+                    Type = Enums.ActivityType.Break,
+                    Start = DateTime.Parse("2023-12-31 23:59:59"),
+                    End = DateTime.Parse("2023-12-31 23:59:59")
+                };
 
-        //    //Act
-        //    TimeTrackerDbContextSUT.Users.Add(userEntity);
-        //    TimeTrackerDbContextSUT.Projects.Add(projectEntity);
-        //    TimeTrackerDbContextSUT.Activities.Add(entity);
-        //    await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Act
+            TimeTrackerDbContextSUT.Activities.Update(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
 
-        //    TimeTrackerDbContextSUT.Activities.Remove(entity);
-        //    await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            await using var dbx = await DbContextFactory.CreateDbContextAsync();
+            var actualEntity = await dbx.Activities.SingleAsync(i => i.Id == entity.Id);
+            Assert.Equal(entity, actualEntity);
+        }
 
-        //    //Assert
-        //    await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        //    var actualEntities = await dbx.Activities.SingleOrDefaultAsync(i => i.Id == entity.Id);
-        //    Assert.Null(actualEntities);
-        //}
+        [Fact]
+        public async Task DeleteActivity()
+        {
+            //Arrange
+            var entityBase = ActivitySeeds.ActivityDelete;
 
-        //[Fact]
-        //public async Task DeleteNonExistingActivity()
-        //{
-        //    //Arrange
-        //    UserEntity userEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        FirstName = "Igor",
-        //        LastName = "Rogi",
-        //        ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-        //    };
+            //Act
+            TimeTrackerDbContextSUT.Activities.Remove(entityBase);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
 
-        //    ProjectEntity projectEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Name = "Test",
-        //        Description = "Test",
-        //        CreatedById = userEntity.Id
-        //    };
+            //Assert
+            Assert.False(await TimeTrackerDbContextSUT.Activities.AnyAsync(i => i.Id == entityBase.Id));
+        }
 
-        //    ActivityEntity entity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Start = DateTime.Now,
-        //        End = DateTime.Now,
-        //        Description = "Test",
-        //        Type = Enums.ActivityType.Work,
-        //        CreatedById = userEntity.Id,
-        //        ProjectId = projectEntity.Id
-        //    };
-        //    //Act
-        //    TimeTrackerDbContextSUT.Users.Add(userEntity);
-        //    TimeTrackerDbContextSUT.Projects.Add(projectEntity);
-        //    await TimeTrackerDbContextSUT.SaveChangesAsync();
-        //    try
-        //    {
-        //        TimeTrackerDbContextSUT.Activities.Remove(entity);
-        //        await TimeTrackerDbContextSUT.SaveChangesAsync();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return;
-        //    }
-        //    Assert.False(true);
-        //}
+        [Fact]
+        public async Task DeleteActivityById()
+        {
+            //Arrange
+            var entityBase = ActivitySeeds.ActivityDelete;
 
-        //[Fact]
-        //public async Task UpdateActivity()
-        //{
-        //    //Arrange
-        //    UserEntity userEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        FirstName = "Igor",
-        //        LastName = "Rogi",
-        //        ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-        //    };
+            //Act
+            TimeTrackerDbContextSUT.Remove(
+                TimeTrackerDbContextSUT.Activities.Single(i => i.Id == entityBase.Id));
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
 
-        //    ProjectEntity projectEntity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Name = "Test",
-        //        Description = "Test",
-        //        CreatedById = userEntity.Id
-        //    };
+            //Assert
+            Assert.False(await TimeTrackerDbContextSUT.Activities.AnyAsync(i => i.Id == entityBase.Id));
+        }
+        [Fact]
+        public async Task ActivityRepositoryExists()
+        {
+            //Arrange
+            var repo = new Repository<ActivityEntity>(TimeTrackerDbContextSUT, new ActivityEntityMapper());
+            var entity = ActivitySeeds.ActivityGet;
 
-        //    ActivityEntity entity = new()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Start = DateTime.Now,
-        //        End = DateTime.Now,
-        //        Description = "Test",
-        //        Type = Enums.ActivityType.Work,
-        //        CreatedById = userEntity.Id,
-        //        ProjectId = projectEntity.Id
-        //    };
+            //Assert
+            Assert.True(await repo.ExistsAsync(entity));
+        }
+        [Fact]
+        public async Task ActivityRepositoryInsert()
+        {
+            //Arrange
+            ActivityEntity entity = new()
+            {
+                Id = Guid.NewGuid(),
+                Start = DateTime.Now,
+                End = DateTime.Now,
+                Description = "Test",
+                Type = Enums.ActivityType.Work,
+                CreatedById = UserSeeds.UserEntity1.Id,
+                ProjectId = ProjectSeeds.ProjectEntity1.Id
+            };
+            var repo = new Repository<ActivityEntity>(TimeTrackerDbContextSUT, new ActivityEntityMapper());
 
-        //    //Act
-        //    TimeTrackerDbContextSUT.Users.Add(userEntity);
-        //    TimeTrackerDbContextSUT.Projects.Add(projectEntity);
-        //    TimeTrackerDbContextSUT.Activities.Add(entity);
-        //    await TimeTrackerDbContextSUT.SaveChangesAsync();
+            Assert.False(await repo.ExistsAsync(entity));
 
-        //    entity.Start = DateTime.Now;
-        //    entity.End = DateTime.Now;
-        //    entity.Description = "Test2";
-        //    entity.Type = Enums.ActivityType.Break;
+            //Act
+            await repo.InsertAsync(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            Assert.True(await repo.ExistsAsync(entity));
+        }
+        [Fact]
+        public async Task ActivityRepositoryUpdate()
+        {
+            //Arrange
+            ActivityEntity entity = ActivitySeeds.ActivityUpdate;
+            entity.Description = entity.Description + "Updated";
 
+            var repo = new Repository<ActivityEntity>(TimeTrackerDbContextSUT, new ActivityEntityMapper());
 
-        //    TimeTrackerDbContextSUT.Activities.Update(entity);
-        //    await TimeTrackerDbContextSUT.SaveChangesAsync();
+            Assert.True(await repo.ExistsAsync(entity));
 
-        //    //Assert
-        //    await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        //    var actualEntities = await dbx.Activities
-        //        .Include(i => i.CreatedBy)
-        //        .Include(i => i.Project)
-        //        .SingleAsync(i => i.Id == entity.Id);
-        //    Assert.Equal(entity, actualEntities);
-        //}
+            //Act
+            await repo.UpdateAsync(entity);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            var entityU = repo.Get().Where(i => i.Id == entity.Id).ToList().First();
+            //Assert
+            Assert.Equal(entity, entityU);
+        }
+        [Fact]
+        public async Task ActivityRepositoryDelete()
+        {
+            //Arrange
+            ActivityEntity entity = ActivitySeeds.ActivityDelete;
+
+            var repo = new Repository<ActivityEntity>(TimeTrackerDbContextSUT, new ActivityEntityMapper());
+
+            Assert.True(await repo.ExistsAsync(entity));
+
+            //Act
+            repo.Delete(entity.Id);
+            await TimeTrackerDbContextSUT.SaveChangesAsync();
+            //Assert
+            Assert.False(await repo.ExistsAsync(entity));
+        }
     }
 }
