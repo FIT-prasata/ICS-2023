@@ -9,7 +9,7 @@ using TimeTracker.BL.Models;
 
 namespace TimeTracker.BL.Mappers
 {
-    public class ActivityModelMapper: IModelDetailMapper<ActivityEntity, ActivityDetailModel, ActivityListModel>
+    public class ActivityModelMapper: IModelMapper<ActivityEntity, ActivityDetailModel, ActivityListModel>
     {
         public ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
             => entity is null

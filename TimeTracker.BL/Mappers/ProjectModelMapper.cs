@@ -9,7 +9,7 @@ using TimeTracker.DAL.Entities;
 using TimeTracker.BL.Models;
 namespace TimeTracker.BL.Mappers
 {
-    public class ProjectModelMapper: IModelDetailMapper<ProjectEntity, ProjectDetailModel, ProjectListModel>
+    public class ProjectModelMapper: IModelMapper<ProjectEntity, ProjectDetailModel, ProjectListModel>
 
     {
 
