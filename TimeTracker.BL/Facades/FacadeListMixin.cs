@@ -12,7 +12,7 @@ using TimeTracker.DAL.Entities;
 
 namespace TimeTracker.BL.Facades
 {
-    internal class FacadeListMixin<TEntity, TListModel, TEntityMapper> : IFacadeListMixin<TEntity, TListModel>
+    public abstract class FacadeListMixin<TEntity, TListModel, TEntityMapper> : IFacadeListMixin<TEntity, TListModel>
         where TEntity : class, IEntity
         where TListModel : IModel
         where TEntityMapper : IEntityMapper<TEntity>, new()
