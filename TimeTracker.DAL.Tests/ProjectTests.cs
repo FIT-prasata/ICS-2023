@@ -23,9 +23,9 @@ namespace TimeTracker.DAL.Tests
                 Name = "New Project 1",
             };
 
-            //Act
-            TimeTrackerDbContextSUT.Projects.Add(entity);
-            await TimeTrackerDbContextSUT.SaveChangesAsync();
+        //    //Act
+        //    TimeTrackerDbContextSUT.Projects.Add(entity);
+        //    await TimeTrackerDbContextSUT.SaveChangesAsync();
 
             //Assert
             await using var dbx = await DbContextFactory.CreateDbContextAsync();
