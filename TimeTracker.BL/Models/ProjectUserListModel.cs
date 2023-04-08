@@ -8,7 +8,7 @@ using TimeTracker.DAL.Enums;
 
 namespace TimeTracker.BL.Models
 {
-    internal record ProjectUserListModel : ModelBase
+    public record ProjectUserListModel : ModelBase
     {
         public ObservableCollection<UserDetailModel> User { get; init; } = new();
         public ObservableCollection<ProjectDetailModel> Project { get; init; } = new();

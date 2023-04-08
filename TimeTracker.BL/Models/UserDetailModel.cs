@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TimeTracker.BL.Models
 {
-    internal record UserDetailModel : ModelBase
+    public record UserDetailModel : ModelBase
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

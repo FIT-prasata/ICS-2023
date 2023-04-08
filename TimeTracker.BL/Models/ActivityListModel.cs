@@ -8,7 +8,7 @@ using TimeTracker.DAL.Enums;
 
 namespace TimeTracker.BL.Models
 {
-    internal record ActivityListModel : ModelBase
+    public record ActivityListModel : ModelBase
     {
         public DateTime Start { get; set; }
         public DateTime End { get; set; }

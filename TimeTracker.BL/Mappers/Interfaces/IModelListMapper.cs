@@ -7,7 +7,7 @@ using TimeTracker.DAL.Entities;
 
 namespace TimeTracker.BL.Mappers.Interfaces
 {
-    internal interface IModelListMapper<in TEntity, out TListModel>
+    public interface IModelListMapper<in TEntity, out TListModel>
     {
         TListModel MapToListModel(TEntity? entity);
 

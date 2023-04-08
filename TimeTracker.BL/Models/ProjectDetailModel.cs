@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TimeTracker.BL.Models
 {
-    internal record ProjectDetailModel : ModelBase
+    public record ProjectDetailModel : ModelBase
     {
         public string Name { get; set; }
         public string? Description { get; set; }
