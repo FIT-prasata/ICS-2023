@@ -27,9 +27,9 @@ namespace TimeTracker.BL.Models
             End = DateTime.Now,
             Description = string.Empty,
             Type = ActivityType.Empty,
-            CreatedBy = Guid.Empty,
-            Assigned = Guid.Empty,
-            Project = Guid.Empty,
+            CreatedById = Guid.Empty,
+            AssignedId = Guid.Empty,
+            ProjectId = Guid.Empty,
         };
     }
 
