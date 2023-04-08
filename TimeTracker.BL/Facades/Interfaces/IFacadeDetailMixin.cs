@@ -14,7 +14,7 @@ namespace TimeTracker.BL.Facades.Interfaces
 
     {
         Task DeleteAsync(Guid id);
-        Task<TDetailModel> GeAsync(Guid id);
+        Task<TDetailModel?> GeAsync(Guid id);
         Task<TDetailModel> SaveAsync(TDetailModel model);
     }
 }

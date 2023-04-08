@@ -13,7 +13,7 @@ namespace TimeTracker.BL.Facades.Interfaces
         where TListModel : IModel
 
     {
-        Task<TListModel> GeAsync(Guid id);
+        Task<IEnumerable<TListModel>> GetAsync();
 
     }
 }
