@@ -12,13 +12,25 @@ namespace TimeTracker.BL.Models
     {
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public ActivityType Type { get; set; }
 
-        public ObservableCollection<UserDetailModel> CreatedBy { get; init; } = new();
-        public ObservableCollection<UserDetailModel> Assigned { get; init; } = new();
-        public ObservableCollection<ProjectDetailModel> Project { get; init; } = new();
+        public Guid CreatedById { get; set; }
+        public Guid? AssignedId { get; set; }
+        public Guid ProjectId { get; set; } 
 
+
+        public static ActivityDetailModel Empty => new()
+        {
+            Id = Guid.Empty,
+            Start = DateTime.Now,
+            End = DateTime.Now,
+            Description = string.Empty,
+            Type = ActivityType.Empty,
+            CreatedBy = Guid.Empty,
+            Assigned = Guid.Empty,
+            Project = Guid.Empty,
+        };
     }
 
 }

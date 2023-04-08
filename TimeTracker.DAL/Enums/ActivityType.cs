@@ -5,6 +5,7 @@ namespace TimeTracker.DAL.Enums
     {
         // TODO: specify list of activity types
         Work,
-        Break
+        Break,
+        Empty
     }
 }

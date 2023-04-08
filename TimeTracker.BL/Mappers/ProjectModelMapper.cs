@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,24 +9,48 @@ using TimeTracker.DAL.Entities;
 using TimeTracker.BL.Models;
 namespace TimeTracker.BL.Mappers
 {
-    public class ProjectModelMapper<TEntity, TDetailModel, TListModel> : IModelDetailMapper<TEntity, TDetailModel>, IModelListMapper<TEntity, TListModel>
-        where TEntity : class, IEntity
-        where TDetailModel : class, IModel
-        where TListModel : IModel
+    public class ProjectModelMapper: IModelDetailMapper<ProjectEntity, ProjectDetailModel>, IModelListMapper<ProjectEntity, ProjectListModel>
+
     {
-        public TDetailModel MapToDetailModel(TEntity entity)
+
+        private readonly ActivityModelMapper _activityModelMapper;
+        private readonly ProjectUserModelMapper _projectUserModelMapper;
+        public ProjectModelMapper(ActivityModelMapper activityModelMapper, ProjectUserModelMapper projectUserModelMapper)
         {
-            throw new NotImplementedException();
+            _activityModelMapper = activityModelMapper;
+            _projectUserModelMapper = projectUserModelMapper;
         }
 
-        public TEntity MapToEntity(TDetailModel model)
-        {
-            throw new NotImplementedException();
-        }
 
-        public TListModel MapToListModel(TEntity? entity)
+        public ProjectDetailModel MapToDetailModel(ProjectEntity? entity)
+         => entity is null
+             ? ProjectDetailModel.Empty
+             : new ProjectDetailModel
+             {
+                 Id = entity.Id,
+                 Name = entity.Name,
+                 Description = entity.Description,
+                 CreatedById = entity.CreatedById,
+                 Activities = _activityModelMapper.MapToListModel(entity.Activities).ToObservableCollection(),
+                 Users = _projectUserModelMapper.MapToListModel(entity.Users).ToObservableCollection(),
+             };   
+
+        public ProjectEntity MapToEntity(ProjectDetailModel model)
+        => new()
         {
-            throw new NotImplementedException();
-        }
+            Id = model.Id,
+            Name = model.Name,
+            Description = model.Description,
+            CreatedById = model.CreatedById,
+        };
+
+        public ProjectListModel MapToListModel(ProjectEntity? entity)
+        => entity is null ? ProjectListModel.Empty
+            : new ProjectListModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description,
+            };
     }
 }

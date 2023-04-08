@@ -8,24 +8,37 @@ using TimeTracker.DAL.Entities;
 using TimeTracker.BL.Models;
 namespace TimeTracker.BL.Mappers
 {
-    public class UserModelMapper<TEntity, TDetailModel, TListModel> : IModelDetailMapper<TEntity, TDetailModel>, IModelListMapper<TEntity, TListModel>
-        where TEntity : class, IEntity
-        where TDetailModel : class, IModel
-        where TListModel : IModel
+    public class UserModelMapper: IModelDetailMapper<UserEntity, UserDetailModel>, IModelListMapper<UserEntity, UserListModel>
     {
-        public TDetailModel MapToDetailModel(TEntity entity)
-        {
-            throw new NotImplementedException();
-        }
+        public UserDetailModel MapToDetailModel(UserEntity? entity)
+        => entity is null
+            ? UserDetailModel.Empty
+            : new UserDetailModel
+            {
+                Id = entity.Id,
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+                ImgUri = entity.ImgUri,
+            };
+        public UserEntity MapToEntity(UserDetailModel model)
+            => new()
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                ImgUri = model.ImgUri,
+            };
 
-        public TEntity MapToEntity(TDetailModel model)
-        {
-            throw new NotImplementedException();
-        }
+        public UserListModel MapToListModel(UserEntity? entity)
+        => entity is null
+            ? UserListModel.Empty
+            : new UserListModel
+            {
+                Id = entity.Id,
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+            };
+        
 
-        public TListModel MapToListModel(TEntity? entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

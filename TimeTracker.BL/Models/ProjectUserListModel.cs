@@ -10,8 +10,15 @@ namespace TimeTracker.BL.Models
 {
     public record ProjectUserListModel : ModelBase
     {
-        public ObservableCollection<UserDetailModel> User { get; init; } = new();
-        public ObservableCollection<ProjectDetailModel> Project { get; init; } = new();
+        public Guid UserId { get; set; }
+        public Guid ProjectId { get; set; }
+
+        public static ProjectUserListModel Empty => new()
+        {
+            Id = Guid.Empty,
+            UserId = Guid.Empty,
+            ProjectId = Guid.Empty,
+        };
     }
 
 }

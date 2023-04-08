@@ -11,7 +11,8 @@ namespace TimeTracker.BL.Mappers.Interfaces
     {
         TListModel MapToListModel(TEntity? entity);
 
-        IEnumerable<TListModel> MapToListModel(IEnumerable<TEntity> entities)
-            => entities.Select(MapToListModel);
+        IEnumerable<TListModel> MapToListModel(IEnumerable<TEntity>? entities)
+            => entities is null ? Enumerable.Empty<TListModel>() :
+                entities.Select(MapToListModel);
     }
 }

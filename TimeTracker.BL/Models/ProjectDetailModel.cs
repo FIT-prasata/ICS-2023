@@ -11,8 +11,17 @@ namespace TimeTracker.BL.Models
     {
         public string Name { get; set; }
         public string? Description { get; set; }
-        public DateTime Created { get; set; }
 
-        public ObservableCollection<UserDetailModel> CreatedBy { get; init; } = new();
+        public Guid CreatedById { get; init; } = new();
+        public ObservableCollection<ActivityListModel>? Activities { get; init; } = new();
+        public ObservableCollection<ProjectUserListModel>? Users { get; init; } = new();
+
+        public static ProjectDetailModel Empty => new()
+        {
+            Id = Guid.Empty,
+            Name = string.Empty,
+            Description = string.Empty,
+            CreatedById = Guid.Empty,
+        };
     }
 }

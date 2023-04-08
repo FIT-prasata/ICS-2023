@@ -10,6 +10,12 @@ namespace TimeTracker.BL.Models
     {
         public string Name { get; set; }
         public string? Description { get; set; }
-        public DateTime Created { get; set; }
+
+        public static ProjectListModel Empty => new()
+        {
+            Id = Guid.Empty,
+            Name = string.Empty,
+            Description = string.Empty,
+        };
     }
 }
