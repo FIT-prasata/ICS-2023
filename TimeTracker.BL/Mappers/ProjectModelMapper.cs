@@ -8,7 +8,7 @@ using TimeTracker.DAL.Entities;
 using TimeTracker.BL.Models;
 namespace TimeTracker.BL.Mappers
 {
-    internal class ProjectModelMapper<TEntity, TDetailModel, TListModel> : IModelDetailMapper<TEntity, TDetailModel>, IModelListMapper<TEntity, TListModel>
+    public class ProjectModelMapper<TEntity, TDetailModel, TListModel> : IModelDetailMapper<TEntity, TDetailModel>, IModelListMapper<TEntity, TListModel>
         where TEntity : class, IEntity
         where TDetailModel : class, IModel
         where TListModel : IModel
