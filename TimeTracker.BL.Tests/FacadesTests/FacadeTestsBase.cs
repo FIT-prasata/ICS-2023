@@ -11,7 +11,7 @@ using System.Threading.Tasks.Dataflow;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace TimeTracker.BL.Tests.FacadesTests;
+namespace CookBook.BL.Tests;
 
 public class FacadeTestsBase : IAsyncLifetime
 {
@@ -33,12 +33,11 @@ public class FacadeTestsBase : IAsyncLifetime
         ProjectModelMapper = new ProjectModelMapper(new ActivityModelMapper(), new ProjectUserModelMapper());
         ProjectUserModelMapper = new ProjectUserModelMapper();
         UserModelMapper = new UserModelMapper();
-        
 
         UnitOfWorkFactory = new UnitOfWorkFactory(DbContextFactory);
     }
 
-    protected DbContextSqLiteTestingFactory DbContextFactory { get; }
+    protected IDbContextFactory<TimeTrackerDbContext> DbContextFactory { get; }
 
     protected ActivityEntityMapper ActivityEntityMapper { get; }
     protected ProjectEntityMapper ProjectEntityMapper { get; }
@@ -53,14 +52,14 @@ public class FacadeTestsBase : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        var dbx = DbContextFactory.CreateDbContext();
+        await using var dbx = await DbContextFactory.CreateDbContextAsync();
         await dbx.Database.EnsureDeletedAsync();
         await dbx.Database.EnsureCreatedAsync();
     }
 
     public async Task DisposeAsync()
     {
-        var dbx = DbContextFactory.CreateDbContext();
+        await using var dbx = await DbContextFactory.CreateDbContextAsync();
         await dbx.Database.EnsureDeletedAsync();
     }
 }
