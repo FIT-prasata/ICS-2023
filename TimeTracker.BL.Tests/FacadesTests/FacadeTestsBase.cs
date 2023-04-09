@@ -11,7 +11,7 @@ using System.Threading.Tasks.Dataflow;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace CookBook.BL.Tests;
+namespace TimeTracker.BL.Tests.FacadesTests;
 
 public class FacadeTestsBase : IAsyncLifetime
 {
