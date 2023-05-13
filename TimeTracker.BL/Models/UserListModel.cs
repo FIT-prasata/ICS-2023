@@ -12,6 +12,9 @@ namespace TimeTracker.BL.Models
         public string LastName { get; set; }
         public string FullName => $"{FirstName} {LastName}";
 
+        public string? ImgUri { get; set; }
+
+
         public static UserListModel Empty => new()
         {
             Id = Guid.Empty,

@@ -38,7 +38,11 @@ namespace TimeTracker.BL.Mappers
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
             };
-        
+
+        public IEnumerable<UserListModel> MapToListModel(IEnumerable<UserEntity>? entities)
+            => entities is null ? Enumerable.Empty<UserListModel>() :
+                entities.Select(MapToListModel);
+
 
     }
 }

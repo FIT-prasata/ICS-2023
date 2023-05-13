@@ -13,8 +13,8 @@ namespace TimeTracker.BL.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public ActivityType Type { get; set; }
-        public Guid? AssignedId { get; set; }
-        public Guid ProjectId { get; set; } 
+        public UserDetailModel? Assigned { get; set; }
+
 
         public static ActivityListModel Empty => new()
         {
@@ -22,8 +22,7 @@ namespace TimeTracker.BL.Models
             Start = DateTime.Now,
             End = DateTime.Now,
             Type = ActivityType.Empty,
-            AssignedId = Guid.Empty,
-            ProjectId = Guid.Empty,
+            Assigned = UserDetailModel.Empty,
         };
 
     }

@@ -11,6 +11,13 @@ namespace TimeTracker.BL.Mappers
 {
     public class ActivityModelMapper: IModelMapper<ActivityEntity, ActivityDetailModel, ActivityListModel>
     {
+        private readonly UserModelMapper _userModelMapper;
+
+        public ActivityModelMapper(UserModelMapper userModelMapper)
+        {
+            _userModelMapper = userModelMapper;
+        }
+
         public ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
             => entity is null
                 ? ActivityDetailModel.Empty
@@ -21,8 +28,8 @@ namespace TimeTracker.BL.Mappers
                     End = entity.End,
                     Description = entity.Description,
                     Type = entity.Type,
-                    CreatedById = entity.CreatedById,
-                    AssignedId = entity.AssignedId,
+                    CreatedBy = _userModelMapper.MapToDetailModel(entity.CreatedBy),
+                    Assigned = _userModelMapper.MapToDetailModel(entity.Assigned),
                     ProjectId = entity.ProjectId,
                 };
 
@@ -34,8 +41,8 @@ namespace TimeTracker.BL.Mappers
                 End = model.End,
                 Description = model.Description ?? string.Empty,
                 Type = model.Type,
-                CreatedById = model.CreatedById,
-                AssignedId = model.AssignedId,
+                CreatedById = model.CreatedBy.Id,
+                AssignedId = model.Assigned.Id,
                 ProjectId = model.ProjectId,
             };
 
@@ -48,8 +55,7 @@ namespace TimeTracker.BL.Mappers
                     Start = entity.Start,
                     End = entity.End,
                     Type = entity.Type,
-                    AssignedId = entity.AssignedId,
-                    ProjectId = entity.ProjectId,
+                    Assigned = _userModelMapper.MapToDetailModel(entity.Assigned),
                 };
 
         public IEnumerable<ActivityListModel> MapToListModel(IEnumerable<ActivityEntity>? entities)

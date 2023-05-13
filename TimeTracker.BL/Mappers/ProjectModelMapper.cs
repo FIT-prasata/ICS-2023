@@ -14,11 +14,11 @@ namespace TimeTracker.BL.Mappers
     {
 
         private readonly ActivityModelMapper _activityModelMapper;
-        private readonly ProjectUserModelMapper _projectUserModelMapper;
-        public ProjectModelMapper(ActivityModelMapper activityModelMapper, ProjectUserModelMapper projectUserModelMapper)
+        private readonly UserModelMapper _userModelMapper;
+        public ProjectModelMapper(ActivityModelMapper activityModelMapper, UserModelMapper userModelMapper)
         {
             _activityModelMapper = activityModelMapper;
-            _projectUserModelMapper = projectUserModelMapper;
+            _userModelMapper = userModelMapper;
         }
 
 
@@ -32,7 +32,7 @@ namespace TimeTracker.BL.Mappers
                  Description = entity.Description,
                  CreatedById = entity.CreatedById,
                  Activities = _activityModelMapper.MapToListModel(entity.Activities).ToObservableCollection(),
-                 Users = _projectUserModelMapper.MapToListModel(entity.Users).ToObservableCollection(),
+                 Users = _userModelMapper.MapToListModel(entity.Users.Select(o => o.UserEntity)).ToObservableCollection() ,
              };   
 
         public ProjectEntity MapToEntity(ProjectDetailModel model)
