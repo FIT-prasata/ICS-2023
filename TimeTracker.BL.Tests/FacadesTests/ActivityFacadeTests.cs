@@ -85,6 +85,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
                 throw new Exception("Activity not found");
             }
             retrievedActivity.Description = "Updated description";
+            retrievedActivity.Assigned = new UserModelMapper().MapToDetailModel(UserSeeds.UserDelete);
             await _activityFacade.SaveAsync(retrievedActivity);
             var finalActivity = await _activityFacade.GetAsync(ActivitySeeds.ActivityUpdate.Id);
 
