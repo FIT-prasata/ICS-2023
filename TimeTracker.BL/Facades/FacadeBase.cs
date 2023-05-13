@@ -56,7 +56,7 @@ namespace TimeTracker.BL.Facades
 
             if (IncludesNavigationPathDetail.Any())
             {
-                IncludesNavigationPathDetail.ForEach(include => query = query.Include(include)); // TODO: may explode, good testing needed
+                IncludesNavigationPathDetail.ForEach(include => query = query.Include(include));
             }
 
 

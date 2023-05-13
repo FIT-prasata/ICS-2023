@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimeTracker.BL.Enums;
 using TimeTracker.BL.Facades;
 using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
@@ -64,6 +65,55 @@ namespace TimeTracker.BL.Tests.FacadesTests
             var expectedActivity = ActivityModelMapper.MapToDetailModel(ActivitySeeds.ActivityGet);
 
             Assert.Equal((expectedActivity.Id, expectedActivity.Start, expectedActivity.End, expectedActivity.Description), (activity.Id, activity.Start, activity.End, activity.Description));
+        }
+
+        [Fact]
+        public async Task GetActivitiesFromSpecificTimeRange()
+        {
+            var activities = await _activityFacade.GetActivitiesByDateAsync(DateTime.Parse("2020-01-1 00:00:00"), DateTime.Parse("2020-01-31 23:59:59"));
+            Assert.Equal(activities.Count(), ActivitySeeds.NumActivitiesInJanuary2020);
+        }
+
+        [Fact]
+        public async Task GetActivitiesCreatedByUser()
+        {
+            var activities = await _activityFacade.GetActivitiesByUserCreatedAsync(UserSeeds.UserEntity1.Id);
+            Assert.Equal( ActivitySeeds.NumActivities, activities.Count());
+        }
+
+        [Fact]
+        public async Task GetActivitiesAssignedToUser()
+        {
+            var activities = await _activityFacade.GetActivitiesByUserAssignedAsync(UserSeeds.UserEntity1.Id);
+            Assert.Single(activities);
+        }
+
+        [Fact]
+        public async Task GetActivitiesFromToday()
+        {
+            var activities = await _activityFacade.GetActivitiesByDateLazyAsync(LazyDateType.Day);
+            Assert.Single(activities);
+        }
+
+        [Fact]
+        public async Task GetActivitiesFromThisWeek()
+        {
+            var activities = await _activityFacade.GetActivitiesByDateLazyAsync(LazyDateType.Week);
+            Assert.Equal(2, activities.Count());
+        }
+
+        [Fact]
+        public async Task GetActivitiesFromThisMonth()
+        {
+            var activities = await _activityFacade.GetActivitiesByDateLazyAsync(LazyDateType.Month);
+            Assert.Equal(3, activities.Count());
+        }
+
+        [Fact]
+        public async Task GetActivitiesFromThisYear()
+        {
+            var activities = await _activityFacade.GetActivitiesByDateLazyAsync(LazyDateType.Year);
+            Assert.Equal(4, activities.Count());
         }
 
 
