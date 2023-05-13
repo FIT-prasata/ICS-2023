@@ -26,9 +26,11 @@ namespace TimeTracker.BL.Tests.FacadesTests
         }
 
         [Fact]
-        public async Task Create_Save_Activity()
+        public async Task CreateSaveActivity()
         {
-            Guid testId = Guid.NewGuid();
+
+            // Arrange
+            var testId = Guid.NewGuid();
             var activity = new ActivityDetailModel()
             {
                 Id = testId,
@@ -40,43 +42,61 @@ namespace TimeTracker.BL.Tests.FacadesTests
                 Assigned =  new UserModelMapper().MapToDetailModel(UserSeeds.UserDelete),
                 ProjectId = ProjectSeeds.ProjectGet.Id,
             };
-            var saved = await _activityFacade.SaveAsync(activity);
 
-            var expected_activity = await _activityFacade.GetAsync(testId);
-            var lmodel = ActivityModelMapper.MapToDetailModel(ActivityModelMapper.MapToEntity(saved));
-            Assert.Equal(expected_activity, lmodel);
+
+            // Act
+            var expectedActivity = await _activityFacade.SaveAsync(activity);
+            var actualActivity = await _activityFacade.GetAsync(testId);
+
+
+            // Assert
+            Assert.Equal(expectedActivity, actualActivity);
         }
 
         [Fact]
-        public async Task Get_All_Activities()
+        public async Task GetAllActivities()
         {
-            IEnumerable<ActivityListModel> activities = await _activityFacade.GetAsync();
+            var activities = await _activityFacade.GetAsync();
             Assert.Equal(activities.Count(), ActivitySeeds.NumActivities);
         }
 
         [Fact]
-        public async Task Get_Predefined_Activity()
+        public async Task GetSingleActivity()
         {
+            // Act
             var activity = await _activityFacade.GetAsync(ActivitySeeds.ActivityGet.Id);
-            ActivityDetailModel emodel = ActivityModelMapper.MapToDetailModel(ActivitySeeds.ActivityGet);
-            Assert.Equal(emodel, activity);
+            var expectedActivity = ActivityModelMapper.MapToDetailModel(ActivitySeeds.ActivityGet);
+
+            // Assert
+            Assert.Equal(expectedActivity, activity);
         }
 
-        [Fact]
-        public async Task Get_Activity_By_Id()
-        {
-            var activity = await _activityFacade.GetAsync(ActivitySeeds.ActivityGet.Id);
-            ActivityDetailModel emodel = ActivityModelMapper.MapToDetailModel(ActivitySeeds.ActivityGet);
-            Assert.Equal(emodel, activity);
-        }
 
         [Fact]
-        public async Task Delete_Activity_By_Id()
+        public async Task DeleteActivityBy()
         {
             await _activityFacade.DeleteAsync(ActivitySeeds.ActivityDelete.Id);
             var activities = await _activityFacade.GetAsync();
             Assert.NotEqual(activities.Count(), ActivitySeeds.NumActivities);
 
+        }
+
+        [Fact]
+        public async Task UpdateActivity()
+        {
+            // Act
+            var retrievedActivity = await _activityFacade.GetAsync(ActivitySeeds.ActivityUpdate.Id);
+            if (retrievedActivity == null)
+            {
+                throw new Exception("Activity not found");
+            }
+            retrievedActivity.Description = "Updated description";
+            await _activityFacade.SaveAsync(retrievedActivity);
+            var finalActivity = await _activityFacade.GetAsync(ActivitySeeds.ActivityUpdate.Id);
+
+            // Assert
+            Assert.Equal(retrievedActivity, finalActivity);
+            
         }
 
 

@@ -11,6 +11,11 @@ namespace TimeTracker.BL.Facades
         public ActivityFacade(ActivityModelMapper mapper, IUnitOfWorkFactory uow) : base(mapper, uow)
         {
         }
+        protected override List<string> IncludesNavigationPathDetail => new()
+        {
+            $"{nameof(ActivityEntity.Assigned)}",
+            $"{nameof(ActivityEntity.CreatedBy)}",
+        };
 
     }
 }

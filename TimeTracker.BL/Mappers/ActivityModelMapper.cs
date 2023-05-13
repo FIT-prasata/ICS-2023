@@ -42,7 +42,7 @@ namespace TimeTracker.BL.Mappers
                 Description = model.Description ?? string.Empty,
                 Type = model.Type,
                 CreatedById = model.CreatedBy.Id,
-                AssignedId = model.Assigned.Id,
+                AssignedId = model.Assigned.Id == Guid.Empty ? null : model.Assigned.Id,
                 ProjectId = model.ProjectId,
             };
 
