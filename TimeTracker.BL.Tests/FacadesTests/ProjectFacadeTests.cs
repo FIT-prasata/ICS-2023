@@ -65,7 +65,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
         {
             await _projectFacade.DeleteAsync(ProjectSeeds.ProjectEntity1.Id);
             var projects = await _projectFacade.GetAsync();
-            Assert.NotEqual(projects.Count(), ProjectSeeds.NumProjects);
+            Assert.NotEqual(ProjectSeeds.NumProjects, projects.Count());
         }
 
         [Fact]
@@ -73,14 +73,14 @@ namespace TimeTracker.BL.Tests.FacadesTests
         {
             await _projectFacade.DeleteAsync(ProjectSeeds.ProjectEntity1.Id);
             var activities = await _activityFacade.GetAsync();
-            Assert.NotEqual(activities.Count(), ActivitySeeds.NumActivities);
+            Assert.NotEqual(ActivitySeeds.NumActivities, activities.Count());
         }
         [Fact]
         public async Task DeleteProjectRelatedActivitiesNotCascadingUnrelated()
         {
             await _projectFacade.DeleteAsync(ProjectSeeds.ProjectGet.Id);
             var activities = await _activityFacade.GetAsync();
-            Assert.Equal(activities.Count(), ActivitySeeds.NumActivities);
+            Assert.Equal(ActivitySeeds.NumActivities, activities.Count());
         }
 
         [Fact]
@@ -100,6 +100,46 @@ namespace TimeTracker.BL.Tests.FacadesTests
             }
 
             Assert.Equal(retrievedProject.Name, finalProject.Name);
+        }
+
+        [Fact]
+        public async Task AddUserToProject()
+        {
+            await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectUpdate.Id, UserSeeds.UserUpdate.Id);
+            await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectUpdate.Id, UserSeeds.UserGet.Id);
+            var project = await _projectFacade.GetAsync(ProjectSeeds.ProjectUpdate.Id);
+            if (project == null)
+            {
+                throw new Exception("Project not found");
+            }
+
+            if (project.Users == null)
+            {
+                throw new Exception("No users");
+            }
+            Assert.Equal(2, project.Users.Count());
+
+        }
+
+        [Fact]
+        public async Task removeuserFromProject()
+        {
+            await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectUpdate.Id, UserSeeds.UserUpdate.Id);
+            await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectUpdate.Id, UserSeeds.UserGet.Id);
+
+            await _projectFacade.RemoveUserFromProjectAsync(ProjectSeeds.ProjectUpdate.Id, UserSeeds.UserUpdate.Id);
+
+            var project = await _projectFacade.GetAsync(ProjectSeeds.ProjectUpdate.Id);
+            if (project == null)
+            {
+                throw new Exception("Project not found");
+            }
+
+            if (project.Users == null)
+            {
+                throw new Exception("No users");
+            }
+            Assert.Single(project.Users);
         }
     }
 }

@@ -8,7 +8,7 @@ using TimeTracker.BL.Models;
 
 namespace TimeTracker.BL.Facades.Interfaces
 {
-    internal interface IFacade<TEntity, TDetailModel, TListModel>
+    public interface IFacade<TEntity, TDetailModel, TListModel>
         where TEntity : class, IEntity
         where TDetailModel : class, IModel
         where TListModel : IModel
