@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -142,6 +143,133 @@ namespace TimeTracker.BL.Tests.FacadesTests
             Assert.Equal(retrievedActivity, finalActivity);
 
         }
+        [Fact]
+        public async Task CannotAddActivityInsideAnotherActivity()
+        {
+            try
+            {
+                // Inside of other activity
+                await _activityFacade.SaveAsync(new ActivityDetailModel()
+                {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Start = DateTime.Parse("2020-01-22 05:00:00"),
+                    End = DateTime.Parse("2020-01-22 10:00:00"),
+                    Description = "Test",
+                    Type = ActivityType.Work,
+                    CreatedBy = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1),
+                    ProjectId = ProjectSeeds.ProjectEntity1.Id,
+                    Assigned = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1)
+                });
+            }
+            catch (SecurityTokenException e)
+            {
+                Assert.True(true);
+                return;
+            }
+            Assert.True(false);
+
+        }
+        [Fact]
+        public async Task CannotAddActivityThatHasOtherActivityInside()
+        {
+            try
+            {
+                // Inside of other activity
+                await _activityFacade.SaveAsync(new ActivityDetailModel()
+                {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Start = DateTime.Parse("2020-01-22 00:00:00"),
+                    End = DateTime.Parse("2020-01-22 20:00:00"),
+                    Description = "Test",
+                    Type = ActivityType.Work,
+                    CreatedBy = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1),
+                    ProjectId = ProjectSeeds.ProjectEntity1.Id,
+                    Assigned = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1)
+                });
+            }
+            catch (SecurityTokenException e)
+            {
+                Assert.True(true);
+                return;
+            }
+            Assert.True(false);
+        }
+        [Fact]
+        public async Task CannotAddActivityThatEndsInsideOtherActivity()
+        {
+            try
+            {
+                // Inside of other activity
+                await _activityFacade.SaveAsync(new ActivityDetailModel()
+                {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Start = DateTime.Parse("2020-01-22 00:00:00"),
+                    End = DateTime.Parse("2020-01-22 10:00:00"),
+                    Description = "Test",
+                    Type = ActivityType.Work,
+                    CreatedBy = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1),
+                    ProjectId = ProjectSeeds.ProjectEntity1.Id,
+                    Assigned = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1)
+                });
+            }
+            catch (SecurityTokenException e)
+            {
+                Assert.True(true);
+                return;
+            }
+            Assert.True(false);
+        }
+        [Fact]
+        public async Task CannotAddActivityThatStartsInsideOtherActivity()
+        {
+            try
+            {
+                // Inside of other activity
+                await _activityFacade.SaveAsync(new ActivityDetailModel()
+                {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Start = DateTime.Parse("2020-01-22 05:00:00"),
+                    End = DateTime.Parse("2020-01-22 20:00:00"),
+                    Description = "Test",
+                    Type = ActivityType.Work,
+                    CreatedBy = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1),
+                    ProjectId = ProjectSeeds.ProjectEntity1.Id,
+                    Assigned = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1)
+                });
+            }
+            catch (SecurityTokenException e)
+            {
+                Assert.True(true);
+                return;
+            }
+            Assert.True(false);
+        }
+        [Fact]
+        public async Task CanAddActivityThatDoesntCollideWithAnyOther()
+        {
+            try
+            {
+                // Inside of other activity
+                await _activityFacade.SaveAsync(new ActivityDetailModel()
+                {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Start = DateTime.Parse("2020-01-22 13:00:00"),
+                    End = DateTime.Parse("2020-01-22 20:00:00"),
+                    Description = "Test",
+                    Type = ActivityType.Work,
+                    CreatedBy = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1),
+                    ProjectId = ProjectSeeds.ProjectEntity1.Id,
+                    Assigned = UserModelMapper.MapToDetailModel(UserSeeds.UserEntity1)
+                });
+            }
+            catch (SecurityTokenException e)
+            {
+                Assert.True(false);
+                return;
+            }
+            Assert.True(true);
+        }
+
 
 
     }

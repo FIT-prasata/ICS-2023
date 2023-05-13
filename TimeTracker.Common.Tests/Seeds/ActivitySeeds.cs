@@ -90,8 +90,8 @@ public static class ActivitySeeds
     public static ActivityEntity ActivityAssignedToUser => new()
     {
         Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
-        Start = DateTime.Parse("2020-01-22 00:00:00"),
-        End = DateTime.Parse("2020-01-22 01:00:00"),
+        Start = DateTime.Parse("2020-01-22 03:00:00"),
+        End = DateTime.Parse("2020-01-22 12:00:00"),
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
