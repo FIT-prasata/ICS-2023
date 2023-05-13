@@ -32,8 +32,8 @@ namespace TimeTracker.BL.Tests.FacadesTests
                 End = DateTime.Now,
                 Description = "Fancy description",
                 Type = ActivityType.Work,
-                CreatedById = UserSeeds.UserGet.Id,
-                AssignedId = UserSeeds.UserDelete.Id,
+                CreatedBy = new UserModelMapper().MapToDetailModel(UserSeeds.UserGet),
+                Assigned =  new UserModelMapper().MapToDetailModel(UserSeeds.UserDelete),
                 ProjectId = ProjectSeeds.ProjectGet.Id,
             };
             var saved = await _activityFacade.SaveAsync(activity);

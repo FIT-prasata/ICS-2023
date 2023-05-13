@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
+using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Enums;
 
 namespace TimeTracker.BL.Tests.ModelsTests
@@ -22,8 +24,8 @@ namespace TimeTracker.BL.Tests.ModelsTests
             Assert.Equal(DateTime.Now.Date, emptyActivity.End.Date);
             Assert.Equal(string.Empty, emptyActivity.Description);
             Assert.Equal(ActivityType.Empty, emptyActivity.Type);
-            Assert.Equal(Guid.Empty, emptyActivity.CreatedById);
-            Assert.Equal(emptyActivity.AssignedId, Guid.Empty);
+            Assert.Equal(UserDetailModel.Empty, emptyActivity.CreatedBy);
+            Assert.Equal(emptyActivity.Assigned, UserDetailModel.Empty);
             Assert.Equal(Guid.Empty, emptyActivity.ProjectId);
         }
 
@@ -36,14 +38,14 @@ namespace TimeTracker.BL.Tests.ModelsTests
             // Act
             activity.Start = new DateTime(2023, 04, 08, 9, 0, 0);
             activity.End = new DateTime(2023, 04, 08, 10, 0, 0);
-            activity.AssignedId = new Guid("01234567-89ab-cdef-0123-456789abcdef");
+            activity.Assigned = new UserModelMapper().MapToDetailModel(UserSeeds.UserGet);
             activity.ProjectId = new Guid("01234567-89ab-cdef-0123-456789aeeeee");
 
             // Assert
             Assert.Equal(new DateTime(2023, 04, 08, 9, 0, 0), activity.Start);
             Assert.Equal(new DateTime(2023, 04, 08, 10, 0, 0), activity.End);
-            Assert.NotNull(activity.AssignedId);
-            Assert.Equal(new Guid("01234567-89ab-cdef-0123-456789abcdef"), activity.AssignedId);
+            Assert.NotNull(activity.Assigned);
+            Assert.Equal(UserSeeds.UserGet, new UserModelMapper().MapToEntity(activity.Assigned));
             Assert.Equal(new Guid("01234567-89ab-cdef-0123-456789aeeeee"), activity.ProjectId);
         }
 
@@ -67,10 +69,10 @@ namespace TimeTracker.BL.Tests.ModelsTests
             var activity = new ActivityDetailModel();
 
             // Act
-            activity.CreatedById = new Guid("01234567-89ab-cdef-0123-456789abcdef");
+            activity.CreatedBy = new UserModelMapper().MapToDetailModel(UserSeeds.UserGet);
 
             // Assert
-            Assert.Equal(new Guid("01234567-89ab-cdef-0123-456789abcdef"), activity.CreatedById);
+            Assert.Equal(UserSeeds.UserGet, new UserModelMapper().MapToEntity(activity.CreatedBy));
         }
 
         [Fact]

@@ -74,7 +74,7 @@ namespace TimeTracker.BL.Tests.ModelsTests
 
             // Assert
             Assert.NotNull(project.Users);
-            Assert.IsType<ObservableCollection<ProjectUserListModel>>(project.Users);
+            Assert.IsType<ObservableCollection<UserListModel>>(project.Users);
         }
 
         [Fact]
@@ -87,7 +87,6 @@ namespace TimeTracker.BL.Tests.ModelsTests
                 Id = Guid.NewGuid(),
                 Start = DateTime.Now, 
                 End = DateTime.Now,
-                ProjectId = project.Id,
                 Type = ActivityType.Empty,
 
             };
@@ -105,7 +104,7 @@ namespace TimeTracker.BL.Tests.ModelsTests
         {
             // Arrange
             var project = new ProjectDetailModel();
-            var user = new ProjectUserListModel { Id = System.Guid.NewGuid(), UserId = System.Guid.NewGuid(), ProjectId = project.Id };
+            var user = new UserListModel { Id = System.Guid.NewGuid(), FirstName = "Ignac", ImgUri = "jo", LastName = "Chlebodarce"};
 
             // Act
             project.Users.Add(user);

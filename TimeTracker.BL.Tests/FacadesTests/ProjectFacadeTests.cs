@@ -22,7 +22,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
         [Fact]
         public async Task ProjectFacadeTestGet()
         {
-            var facade = new ProjectFacade(new ProjectModelMapper(new ActivityModelMapper(), new ProjectUserModelMapper()), UnitOfWorkFactory);
+            var facade = new ProjectFacade(new ProjectModelMapper(new ActivityModelMapper(new UserModelMapper()), new UserModelMapper()), UnitOfWorkFactory);
             var projectEnum = await facade.GetAsync();
             Assert.NotNull(projectEnum);
             var fmodel = projectEnum.Where(i => i.Id == ProjectSeeds.ProjectGet.Id).ToList().First();

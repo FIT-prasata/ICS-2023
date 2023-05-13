@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
+using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Enums;
 
 namespace TimeTracker.BL.Tests.ModelsTests
@@ -21,8 +23,7 @@ namespace TimeTracker.BL.Tests.ModelsTests
             Assert.Equal(DateTime.Now.Date, emptyActivity.Start.Date);
             Assert.Equal(DateTime.Now.Date, emptyActivity.End.Date);
             Assert.Equal(ActivityType.Empty, emptyActivity.Type);
-            Assert.Equal(Guid.Empty, emptyActivity.AssignedId);
-            Assert.Equal(Guid.Empty, emptyActivity.ProjectId);
+            Assert.Equal(UserDetailModel.Empty, emptyActivity.Assigned);
         }
 
         [Fact]
@@ -35,8 +36,7 @@ namespace TimeTracker.BL.Tests.ModelsTests
                 Start = DateTime.Now,
                 End = DateTime.Now,
                 Type = ActivityType.Empty,
-                AssignedId = Guid.NewGuid(),
-                ProjectId = Guid.NewGuid()
+                Assigned = new UserModelMapper().MapToDetailModel(UserSeeds.UserGet),
             };
 
             // Act & Assert
@@ -44,8 +44,7 @@ namespace TimeTracker.BL.Tests.ModelsTests
             Assert.Equal(activity.Start, activity.Start);
             Assert.Equal(activity.End, activity.End);
             Assert.Equal(activity.Type, activity.Type);
-            Assert.Equal(activity.AssignedId, activity.AssignedId);
-            Assert.Equal(activity.ProjectId, activity.ProjectId);
+            Assert.Equal(activity.Assigned.Id, activity.Assigned.Id);
         }
     }
 }
