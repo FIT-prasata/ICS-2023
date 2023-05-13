@@ -15,63 +15,73 @@ namespace TimeTracker.BL.Tests.FacadesTests
 {
     public class UserFacadeTests : FacadeTestsBase
     {
+        protected readonly UserFacade _userFacade;
         public UserFacadeTests(ITestOutputHelper output) : base(output)
         {
+            _userFacade = new UserFacade(UserModelMapper, UnitOfWorkFactory);
         }
+
         [Fact]
-        public async Task UserFacadeTestGet()
+        public async Task CreateSaveUser()
         {
-            var facade = new UserFacade(new Mappers.UserModelMapper(), UnitOfWorkFactory);
-            var userEnum = await facade.GetAsync();
-            Assert.NotNull(userEnum);
-            var fmodel = userEnum.Where(i => i.Id == UserSeeds.UserGet.Id).ToList().First();
-            UserListModel emodel = UserModelMapper.MapToListModel(UserSeeds.UserGet);
-            Assert.NotNull(emodel);
-            Assert.Equal(fmodel,emodel);
-        }
-        [Fact]
-        public async Task UserFacadeTestInsert()
-        {
-            var facade = new UserFacade(new Mappers.UserModelMapper(), UnitOfWorkFactory);
-            UserEntity entity = new()
+            var testId = Guid.NewGuid();
+            var expectedUser = new UserDetailModel()
             {
-                Id = Guid.Parse("10000000-0000-aaaa-0000-000000000003"),
-                FirstName = "Igor",
-                LastName = "Rogi",
-                ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                Id = testId,
+                FirstName = "Jindrich",
+                LastName = "Chlebonosic",
+                ImgUri = "Jakoze-fotka.cz"
             };
-            var dmodel = UserModelMapper.MapToDetailModel(entity);
-            Assert.NotNull(dmodel);
 
-            var real = await facade.SaveAsync(dmodel);
-            var userEnum = await facade.GetAsync();
-            Assert.NotNull(userEnum);
+            await _userFacade.SaveAsync(expectedUser);
+            var actualUser = await _userFacade.GetAsync(testId);
 
-            var fmodel = userEnum.Where(i => i.Id == real.Id).ToList().First();
-            var lmodel = UserModelMapper.MapToListModel(UserModelMapper.MapToEntity(real));
-            Assert.Equal(fmodel, lmodel);
+            Assert.Equal(expectedUser, actualUser);
         }
+
         [Fact]
-        public async Task UserFacadeTestUpdate()
+        public async Task GetAllUsers()
         {
-            var facade = new UserFacade(new Mappers.UserModelMapper(), UnitOfWorkFactory);
-            UserEntity entity = new()
-            {
-                Id = UserSeeds.UserUpdate.Id,
-                FirstName = "Igor2",
-                LastName = "Rogi2",
-                ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-            };
-            var dmodel = UserModelMapper.MapToDetailModel(entity);
-            Assert.NotNull(dmodel);
-
-            var real = await facade.SaveAsync(dmodel);
-            var userEnum = await facade.GetAsync();
-            Assert.NotNull(userEnum);
-
-            var fmodel = userEnum.Where(i => i.Id == real.Id).ToList().First();
-            var lmodel = UserModelMapper.MapToListModel(UserModelMapper.MapToEntity(real));
-            Assert.Equal(fmodel, lmodel);
+            var users = await _userFacade.GetAsync();
+            Assert.Equal(users.Count(), UserSeeds.NumUsers);
         }
+
+        [Fact]
+        public async Task GetSingleUser()
+        {
+            var user = await _userFacade.GetAsync(UserSeeds.UserGet.Id);
+            var expectedUser = UserModelMapper.MapToDetailModel(UserSeeds.UserGet);
+            Assert.Equal(expectedUser, user);
+        }
+
+        [Fact]
+        public async Task DeleteUser()
+        {
+            var user = await _userFacade.GetAsync(UserSeeds.UserDelete.Id);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            await _userFacade.DeleteAsync(user.Id);
+            var users = await _userFacade.GetAsync();
+            Assert.NotEqual(users.Count(), UserSeeds.NumUsers);
+        }
+
+        [Fact]
+        public async Task UpdateUser()
+        {
+            var user = await _userFacade.GetAsync(UserSeeds.UserUpdate.Id);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            user.FirstName = "Jindrich";
+            user.LastName = "Chlebonosic";
+            user.ImgUri = "Jakoze-fotka.cz";
+            await _userFacade.SaveAsync(user);
+            var updatedUser = await _userFacade.GetAsync(user.Id);
+            Assert.Equal(user, updatedUser);
+        }
+        
     }
 }

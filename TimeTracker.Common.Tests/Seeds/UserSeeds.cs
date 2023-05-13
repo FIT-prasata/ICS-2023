@@ -5,6 +5,8 @@ namespace TimeTracker.Common.Tests.Seeds;
 
 public static class UserSeeds
 {
+
+    public static readonly int NumUsers = 4;
     public static UserEntity UserGet => new()
     {
         Id = Guid.Parse(input: "86aae9b6-46ff-4ded-8562-dc5dcd06c39b"),
