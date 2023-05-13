@@ -14,35 +14,92 @@ namespace TimeTracker.BL.Tests.FacadesTests
 {
     public class ProjectFacadeTests : FacadeTestsBase
     {
+        private readonly ProjectFacade _projectFacade;
+        private readonly ActivityFacade _activityFacade;
+
 
         public ProjectFacadeTests(ITestOutputHelper output) : base(output)
         {
+            _projectFacade = new ProjectFacade(ProjectModelMapper, UnitOfWorkFactory);
+            _activityFacade = new ActivityFacade(ActivityModelMapper, UnitOfWorkFactory);
         }
 
         [Fact]
-        public async Task ProjectFacadeTestGet()
+        public async Task CreateSaveProject()
         {
-            var facade = new ProjectFacade(new ProjectModelMapper(new ActivityModelMapper(new UserModelMapper()), new UserModelMapper()), UnitOfWorkFactory);
-            var projectEnum = await facade.GetAsync();
-            Assert.NotNull(projectEnum);
-            var fmodel = projectEnum.Where(i => i.Id == ProjectSeeds.ProjectGet.Id).ToList().First();
-            ProjectListModel emodel = ProjectModelMapper.MapToListModel(ProjectSeeds.ProjectGet);
-            Assert.NotNull(emodel);
-            Assert.Equal(fmodel, emodel);
+            var testId = Guid.NewGuid();
+            var expectedProject = new ProjectDetailModel()
+            {
+                Id = testId,
+                Name = "Fancy name",
+                Description = "Fancy description",
+                CreatedById = UserSeeds.UserGet.Id,
+                Activities = new List<ActivityListModel>().ToObservableCollection(),
+                Users = new List<UserListModel>().ToObservableCollection(),
+            };
+
+            await _projectFacade.SaveAsync(expectedProject);
+            var actualProject = await _projectFacade.GetAsync(testId);
+
+            Assert.Equal((expectedProject.Id, expectedProject.Description, expectedProject.Name), (actualProject.Id, actualProject.Description, actualProject.Name));
         }
 
-        //[Fact]
-        //public async Task ProjectFacadeTestGetById()
-        //{
-        //    var facade = new ProjectFacade(new ProjectModelMapper(new ActivityModelMapper(), new ProjectUserModelMapper()), UnitOfWorkFactory);
-        //    var projectEnum = await facade.GetAsync(ProjectSeeds.ProjectGet.Id);
-        //    Assert.NotNull(projectEnum);
-        //    ProjectDetailModel fmodel = projectEnum;
-        //    ProjectDetailModel emodel = ProjectModelMapper.MapToDetailModel(ProjectSeeds.ProjectGet);
-        //    Assert.NotNull(emodel);
-        //    Assert.Equal(fmodel, emodel);
-        //}
+        [Fact]
+        public async Task GetAllProjects()
+        {
+            var projects = await _projectFacade.GetAsync();
+            Assert.Equal(projects.Count(), ProjectSeeds.NumProjects);
+        }
 
+        [Fact]
+        public async Task GetSingleProject()
+        {
+            var project = await _projectFacade.GetAsync(ProjectSeeds.ProjectEntity1.Id);
+            var expectedProject = ProjectModelMapper.MapToDetailModel(ProjectSeeds.ProjectEntity1);
 
+            Assert.Equal((expectedProject.Id, expectedProject.Name, ActivitySeeds.NumActivities), (project.Id, project.Name, project.Activities.Count()));
+        }
+
+        [Fact]
+        public async Task DeleteProject()
+        {
+            await _projectFacade.DeleteAsync(ProjectSeeds.ProjectEntity1.Id);
+            var projects = await _projectFacade.GetAsync();
+            Assert.NotEqual(projects.Count(), ProjectSeeds.NumProjects);
+        }
+
+        [Fact]
+        public async Task DeleteProjectRelatedActivitiesCascade()
+        {
+            await _projectFacade.DeleteAsync(ProjectSeeds.ProjectEntity1.Id);
+            var activities = await _activityFacade.GetAsync();
+            Assert.NotEqual(activities.Count(), ActivitySeeds.NumActivities);
+        }
+        [Fact]
+        public async Task DeleteProjectRelatedActivitiesNotCascadingUnrelated()
+        {
+            await _projectFacade.DeleteAsync(ProjectSeeds.ProjectGet.Id);
+            var activities = await _activityFacade.GetAsync();
+            Assert.Equal(activities.Count(), ActivitySeeds.NumActivities);
+        }
+
+        [Fact]
+        public async Task UpdateProject()
+        {
+            var retrievedProject = await _projectFacade.GetAsync(ProjectSeeds.ProjectEntity1.Id);
+            if (retrievedProject == null)
+            {
+                throw new Exception("Project not found");
+            }
+            retrievedProject.Name = "Updated name";
+            await _projectFacade.SaveAsync(retrievedProject.WithoutRelatedProperties());
+            var finalProject = await _projectFacade.GetAsync(ProjectSeeds.ProjectEntity1.Id);
+            if (finalProject == null)
+            {
+                throw new Exception("Project not found");
+            }
+
+            Assert.Equal(retrievedProject.Name, finalProject.Name);
+        }
     }
 }

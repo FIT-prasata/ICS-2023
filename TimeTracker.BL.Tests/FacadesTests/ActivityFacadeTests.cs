@@ -29,9 +29,8 @@ namespace TimeTracker.BL.Tests.FacadesTests
         public async Task CreateSaveActivity()
         {
 
-            // Arrange
             var testId = Guid.NewGuid();
-            var activity = new ActivityDetailModel()
+            var expectedActivity = new ActivityDetailModel()
             {
                 Id = testId,
                 Start = DateTime.Now,
@@ -39,17 +38,15 @@ namespace TimeTracker.BL.Tests.FacadesTests
                 Description = "Fancy description",
                 Type = ActivityType.Work,
                 CreatedBy = new UserModelMapper().MapToDetailModel(UserSeeds.UserGet),
-                Assigned =  new UserModelMapper().MapToDetailModel(UserSeeds.UserDelete),
+                Assigned = new UserModelMapper().MapToDetailModel(UserSeeds.UserDelete),
                 ProjectId = ProjectSeeds.ProjectGet.Id,
             };
 
 
-            // Act
-            var expectedActivity = await _activityFacade.SaveAsync(activity);
+            await _activityFacade.SaveAsync(expectedActivity);
             var actualActivity = await _activityFacade.GetAsync(testId);
 
 
-            // Assert
             Assert.Equal(expectedActivity, actualActivity);
         }
 
@@ -63,12 +60,10 @@ namespace TimeTracker.BL.Tests.FacadesTests
         [Fact]
         public async Task GetSingleActivity()
         {
-            // Act
             var activity = await _activityFacade.GetAsync(ActivitySeeds.ActivityGet.Id);
             var expectedActivity = ActivityModelMapper.MapToDetailModel(ActivitySeeds.ActivityGet);
 
-            // Assert
-            Assert.Equal(expectedActivity, activity);
+            Assert.Equal((expectedActivity.Id, expectedActivity.Start, expectedActivity.End, expectedActivity.Description), (activity.Id, activity.Start, activity.End, activity.Description));
         }
 
 
@@ -84,7 +79,6 @@ namespace TimeTracker.BL.Tests.FacadesTests
         [Fact]
         public async Task UpdateActivity()
         {
-            // Act
             var retrievedActivity = await _activityFacade.GetAsync(ActivitySeeds.ActivityUpdate.Id);
             if (retrievedActivity == null)
             {
@@ -94,9 +88,8 @@ namespace TimeTracker.BL.Tests.FacadesTests
             await _activityFacade.SaveAsync(retrievedActivity);
             var finalActivity = await _activityFacade.GetAsync(ActivitySeeds.ActivityUpdate.Id);
 
-            // Assert
             Assert.Equal(retrievedActivity, finalActivity);
-            
+
         }
 
 

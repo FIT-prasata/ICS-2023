@@ -32,7 +32,7 @@ namespace TimeTracker.BL.Mappers
                  Description = entity.Description,
                  CreatedById = entity.CreatedById,
                  Activities = _activityModelMapper.MapToListModel(entity.Activities).ToObservableCollection(),
-                 Users = _userModelMapper.MapToListModel(entity.Users.Select(o => o.UserEntity)).ToObservableCollection() ,
+                 Users = entity.Users != null ? _userModelMapper.MapToListModel(entity.Users.Select(o => o.UserEntity)!).ToObservableCollection() : new List<UserListModel>().ToObservableCollection(),
              };   
 
         public ProjectEntity MapToEntity(ProjectDetailModel model)

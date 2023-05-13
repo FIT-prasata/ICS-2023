@@ -5,6 +5,8 @@ namespace TimeTracker.Common.Tests.Seeds;
 
 public static class ProjectSeeds
 {
+
+    public static readonly int NumProjects = 4;
     public static ProjectEntity ProjectGet => new()
     {
         Id = Guid.Parse(input: "00000000-0000-0000-0001-000000000001"),

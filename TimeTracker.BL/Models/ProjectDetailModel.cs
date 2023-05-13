@@ -23,5 +23,10 @@ namespace TimeTracker.BL.Models
             Description = string.Empty,
             CreatedById = Guid.Empty,
         };
+
+        public ProjectDetailModel WithoutRelatedProperties()
+        {
+            return this with { Activities = null, Users = null};
+        }
     }
 }
