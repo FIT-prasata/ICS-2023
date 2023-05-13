@@ -8,7 +8,7 @@ namespace TimeTracker.Common.Tests.Seeds;
 public static class ActivitySeeds
 
 {
-
+    public static readonly int NumActivities = 3;
  
     public static ActivityEntity ActivityGet => new()
     {

@@ -39,6 +39,8 @@ namespace TimeTracker.BL.Facades
             try
             {
                 uow.GetRepository<TEntity, TEntityMapper>().Delete(id);
+                await uow.CommitAsync().ConfigureAwait(false);
+
             }
             catch (Exception ex)
             {
@@ -57,7 +59,8 @@ namespace TimeTracker.BL.Facades
                 IncludesNavigationPathDetail.ForEach(include => query = query.Include(include)); // TODO: may explode, good testing needed
             }
 
-            TEntity? entity = await query.SingleOrDefaultAsync(e => e.Id == id);
+
+            var entity = await query.SingleOrDefaultAsync(e => e.Id == id);
 
             return entity is null ?
                 null :
@@ -82,7 +85,10 @@ namespace TimeTracker.BL.Facades
             }
             else
             {
-                entity.Id = Guid.NewGuid();
+                if (entity.Id == Guid.Empty)
+                {
+                    entity.Id = Guid.NewGuid();
+                }
                 TEntity insertedEntity = await repository.InsertAsync(entity);
                 result = Mapper.MapToDetailModel(insertedEntity);
             }
