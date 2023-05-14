@@ -9,8 +9,8 @@
                        x:DataType="vm:ProjectListViewModel"
 >
     <Grid>
-        <Grid HorizontalOptions="FillAndExpand"
-              RowDefinitions="Auto, *"
+        <Grid HorizontalOptions="Start"
+              RowDefinitions="Auto, *, 50"
               RowSpacing="20"
               Margin="15"
               >
@@ -24,42 +24,64 @@
                 VerticalOptions="FillAndExpand">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout 
-                            Orientation="Horizontal"
+                            Orientation="Vertical"
                             HorizontalItemSpacing="10" VerticalItemSpacing="10"
-                            Span="2"
+                            Span="4"
                         />
                 </CollectionView.ItemsLayout>
-            </CollectionView>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="m:ProjectListModel">
-                    <Frame Padding="0"
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:ProjectListModel">
+                        <Frame Padding="0"
                                CornerRadius="10"
                                WidthRequest="320" HeightRequest="240"
                                IsClippedToBounds="True">
 
-                        <!--<Frame.GestureRecognizers>
+                            <!--<Frame.GestureRecognizers>
                             TODO
                             <TapGestureRecognizer Command="{Binding Source={x:Reference RecipeListViewRoot}, Path=BindingContext.GoToDetailCommand}"
                                                       CommandParameter="{Binding Id}" />
                         </Frame.GestureRecognizers>-->
 
-                        <StackLayout>
-                            
-                            
-                            <Label VerticalOptions="Center"
-                                   FontSize="11"
-                                   Text="{Binding Name}"
-                                   TextColor="Black" />
+                            <Grid
+                                RowDefinitions="*,*"
+                                >
+                                <Image Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       HorizontalOptions="Fill" VerticalOptions="Fill"
+                                       Aspect="AspectFill"
+                                       WidthRequest="320" HeightRequest="240"
+                                       Source="project_default.jpg" />
 
-                            <Label 
+                                <BoxView Grid.Row="0"
+                                         Grid.RowSpan="2"
+                                         Opacity="0.25"
+                                         Color="Black" />
+
+                                <Label 
+                                    Grid.Row="0"
+                                VerticalOptions="Center"
+                                   FontSize="30"
+                                   Text="{Binding Name}"
+                                   TextColor="Wheat" BackgroundColor="Black"/>
+
+                                <Label 
+                                        Grid.Row="1"
                                        Margin="22,12"
                                        FontSize="20" LineBreakMode="WordWrap"
                                        Text="{Binding Description}"
-                                       TextColor="Black" VerticalOptions="End" />
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                                       TextColor="Wheat" BackgroundColor="Black" VerticalOptions="Start" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Grid Grid.Row="2" ColumnDefinitions="*,3*,200">
+                <Entry BackgroundColor="Black" TextColor="Wheat" Text="{Binding NewProject.Name}" Grid.Column="0" />
+                <Entry BackgroundColor="Black" TextColor="Wheat" Text="{Binding NewProject.Description}" Grid.Column="1" />
+                <Button BackgroundColor="Green" TextColor="Wheat" Text="Add new project" Grid.Column="2" Command="{Binding AddProjectCommand}"/>
+            </Grid>
+
+
         </Grid>
     </Grid>
 </views:ContentBasePage>

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using TimeTracker.App.Services;
+using TimeTracker.App.Services.Interfaces;
 using TimeTracker.App.Shells;
 using TimeTracker.App.ViewModels;
 using TimeTracker.App.Views;
@@ -16,6 +17,7 @@ public static class AppInstaller
         services.AddSingleton<IMessengerService, MessengerService>();
 
         services.AddSingleton<IAlertService, AlertService>();
+        services.AddSingleton<IActiveUserService, ActiveUserService>();
 
         services.Scan(selector => selector
             .FromAssemblyOf<App>()
