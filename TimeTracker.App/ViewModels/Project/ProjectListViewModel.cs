@@ -12,6 +12,7 @@ public partial class ProjectListViewModel : ViewModelBase
     private readonly IProjectFacade _projectFacade;
     private readonly INavigationService _navigationService;
     private readonly IActiveUserService _activeUserService;
+    private readonly IAlertService _alertService;
 
     public IEnumerable<ProjectListModel> Projects { get; set; } = null!;
     public ProjectDetailModel NewProject { get; set; } = ProjectDetailModel.Empty;
@@ -20,11 +21,13 @@ public partial class ProjectListViewModel : ViewModelBase
         IProjectFacade projectFacade,
         INavigationService navigationService,
         IActiveUserService activeUserService,
+        IAlertService alertService,
         IMessengerService messengerService) : base(messengerService)
     {
         _projectFacade = projectFacade;
         _navigationService = navigationService;
         _activeUserService = activeUserService;
+        _alertService = alertService;
 
     }
 
@@ -40,7 +43,7 @@ public partial class ProjectListViewModel : ViewModelBase
     {
         if (NewProject.Name == string.Empty || NewProject.Description == string.Empty)
         {
-            // TODO error toast
+            await _alertService.DisplayAsync("Error", "Please fill out both fields");
             return;
         }
         NewProject.Id = Guid.NewGuid();
