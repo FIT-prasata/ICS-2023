@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
-using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Enums;
+using TimeTracker.DAL.Seeds;
 
 namespace TimeTracker.BL.Tests.ModelsTests
 {

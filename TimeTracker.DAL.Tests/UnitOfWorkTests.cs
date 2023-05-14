@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TimeTracker.DAL.Entities;
 using TimeTracker.DAL.Mappers;
+using TimeTracker.DAL.Seeds;
 using Xunit.Abstractions;
 using TimeTracker.DAL.UnitOfWork;
-using TimeTracker.Common.Tests.Seeds;
 
 namespace TimeTracker.DAL.Tests
 {

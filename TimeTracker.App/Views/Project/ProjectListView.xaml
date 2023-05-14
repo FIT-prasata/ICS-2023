@@ -8,10 +8,58 @@
                        x:Name="ProjectListViewRoot"
                        x:DataType="vm:ProjectListViewModel"
 >
-    <VerticalStackLayout>
-        <Label 
-            Text="This is fooooooooooooking PROJECT list view"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+        <Grid HorizontalOptions="FillAndExpand"
+              RowDefinitions="Auto, *"
+              RowSpacing="20"
+              Margin="15"
+              >
+            <Label Grid.Row="0"
+                   FontSize="24"
+                   Text="Projects"
+                   BackgroundColor="Black"
+                   />
+            <CollectionView
+                Grid.Row="1" ItemsSource="{Binding Projects}"
+                VerticalOptions="FillAndExpand">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout 
+                            Orientation="Horizontal"
+                            HorizontalItemSpacing="10" VerticalItemSpacing="10"
+                            Span="2"
+                        />
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ProjectListModel">
+                    <Frame Padding="0"
+                               CornerRadius="10"
+                               WidthRequest="320" HeightRequest="240"
+                               IsClippedToBounds="True">
+
+                        <!--<Frame.GestureRecognizers>
+                            TODO
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference RecipeListViewRoot}, Path=BindingContext.GoToDetailCommand}"
+                                                      CommandParameter="{Binding Id}" />
+                        </Frame.GestureRecognizers>-->
+
+                        <StackLayout>
+                            
+                            
+                            <Label VerticalOptions="Center"
+                                   FontSize="11"
+                                   Text="{Binding Name}"
+                                   TextColor="Black" />
+
+                            <Label 
+                                       Margin="22,12"
+                                       FontSize="20" LineBreakMode="WordWrap"
+                                       Text="{Binding Description}"
+                                       TextColor="Black" VerticalOptions="End" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </Grid>
+    </Grid>
 </views:ContentBasePage>

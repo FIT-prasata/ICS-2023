@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Entities;
 using TimeTracker.DAL.Mappers;
 using TimeTracker.DAL.Repositories;
+using TimeTracker.DAL.Seeds;
 using Xunit.Abstractions;
 
 namespace TimeTracker.DAL.Tests

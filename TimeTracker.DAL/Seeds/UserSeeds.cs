@@ -1,7 +1,7 @@
-﻿using TimeTracker.DAL.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using TimeTracker.DAL.Entities;
 
-namespace TimeTracker.Common.Tests.Seeds;
+namespace TimeTracker.DAL.Seeds;
 
 public static class UserSeeds
 {

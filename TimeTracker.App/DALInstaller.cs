@@ -13,7 +13,7 @@ namespace TimeTracker.App
         {
             
             string databaseFilePath = Path.Combine(FileSystem.AppDataDirectory, "TimeTracker.sqlite");
-            services.AddSingleton<IDbContextFactory<TimeTrackerDbContext>>(provider => new DbContextSqLiteFactory(databaseFilePath, false));
+            services.AddSingleton<IDbContextFactory<TimeTrackerDbContext>>(provider => new DbContextSqLiteFactory(databaseFilePath, true));
             services.AddSingleton<IDbMigrator, SqliteDbMigrator>();
 
             services.AddSingleton<ProjectEntityMapper>();

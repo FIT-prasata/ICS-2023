@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using TimeTracker.BL.Facades;
 using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
-using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Enums;
+using TimeTracker.DAL.Seeds;
 using Xunit.Abstractions;
 
 namespace TimeTracker.BL.Tests.FacadesTests

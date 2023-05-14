@@ -8,11 +8,11 @@ using TimeTracker.BL.Enums;
 using TimeTracker.BL.Facades;
 using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
-using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Entities;
 using TimeTracker.DAL.Enums;
 using TimeTracker.DAL.Mappers;
 using TimeTracker.DAL.Repositories;
+using TimeTracker.DAL.Seeds;
 using TimeTracker.DAL.UnitOfWork;
 using Xunit.Abstractions;
 

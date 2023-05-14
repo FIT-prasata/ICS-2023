@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL;
+using TimeTracker.DAL.Seeds;
 
 namespace TimeTracker.Common.Tests;
 

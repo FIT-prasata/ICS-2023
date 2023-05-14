@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TimeTracker.DAL.Entities;
+using TimeTracker.DAL.Seeds;
 
 namespace TimeTracker.DAL
 {
@@ -45,6 +46,13 @@ namespace TimeTracker.DAL
                 .HasOne(i => i.UserEntity)
                 .WithMany(i => i.Projects)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            if (_seedDemoData)
+            {
+                UserSeeds.Seed(modelBuilder);
+                ProjectSeeds.Seed(modelBuilder);
+                ActivitySeeds.Seed(modelBuilder);
+            }
         }
 
     }

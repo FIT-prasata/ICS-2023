@@ -10,7 +10,7 @@ public partial class ProjectListViewModel : ViewModelBase
     private readonly IProjectFacade _projectFacade;
     private readonly INavigationService _navigationService;
 
-    public IEnumerable<ProjectListModel> Activities { get; set; } = null!;
+    public IEnumerable<ProjectListModel> Projects { get; set; } = null!;
 
     public ProjectListViewModel(
         IProjectFacade projectFacade,
@@ -26,6 +26,6 @@ public partial class ProjectListViewModel : ViewModelBase
     {
         await base.LoadDataAsync();
 
-        Activities = await _projectFacade.GetAsync();
+        Projects = await _projectFacade.GetAsync();
     }
 }

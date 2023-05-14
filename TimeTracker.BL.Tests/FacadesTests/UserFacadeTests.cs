@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TimeTracker.BL.Facades;
 using TimeTracker.BL.Models;
-using TimeTracker.Common.Tests.Seeds;
 using TimeTracker.DAL.Entities;
+using TimeTracker.DAL.Seeds;
 using TimeTracker.DAL.UnitOfWork;
 using Xunit.Abstractions;
 
