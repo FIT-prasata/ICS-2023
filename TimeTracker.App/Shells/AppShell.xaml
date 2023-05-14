@@ -6,16 +6,9 @@
        xmlns:user="using:TimeTracker.App.Views.User"
        x:Class="TimeTracker.App.Shells.AppShell"
        x:Name="AppShellRoot"
+       BackgroundColor="Wheat"
        FlyoutBehavior="Disabled">
-    <!--<MenuBarItem Text="T">
-            <MenuFlyoutItem Text="Projects"
-                            Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToProjectsCommand}" />
 
-            <MenuFlyoutItem Text="Activities"
-                            Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToActivitiesCommand}" />
-            <MenuFlyoutItem Text="User"
-                            Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToUserCommand}" />
-        </MenuBarItem>-->
     <Shell.TitleView>
         <Grid RowDefinitions="*" ColumnDefinitions="*, *, *">
             <Button Grid.Row="0" CornerRadius="0" Grid.Column="0" Text="Projects" BackgroundColor="#384c54" TextColor="Wheat" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToProjectsCommand}" />
