@@ -122,7 +122,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
         }
 
         [Fact]
-        public async Task removeuserFromProject()
+        public async Task RemoveUserFromProject()
         {
             await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectUpdate.Id, UserSeeds.UserUpdate.Id);
             await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectUpdate.Id, UserSeeds.UserGet.Id);
@@ -141,5 +141,19 @@ namespace TimeTracker.BL.Tests.FacadesTests
             }
             Assert.Single(project.Users);
         }
+
+        [Fact]
+        public async Task UserIsInProject()
+        {
+            await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectEntity1.Id,UserSeeds.UserEntity1.Id);
+            Assert.True(await _projectFacade.IsUserInProjectAsync(ProjectSeeds.ProjectEntity1.Id, UserSeeds.UserEntity1.Id));
+        }
+
+        [Fact]
+        public async Task UserIsNotInProject()
+        {
+            Assert.False(await _projectFacade.IsUserInProjectAsync(ProjectSeeds.ProjectEntity1.Id, UserSeeds.UserEntity1.Id));
+        }
+
     }
 }

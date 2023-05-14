@@ -12,26 +12,20 @@ public static class BLInstaller
     {
         services.AddSingleton<IUnitOfWorkFactory, UnitOfWorkFactory>();
 
-        services.AddSingleton<IProjectFacade, ProjectFacade>();
-        services.AddSingleton<IUserFacade, UserFacade>();
-        services.AddSingleton<IActivityFacade, ActivityFacade>();
+       
+        services.Scan(selector => selector
+            .FromAssemblyOf<BusinessLogic>()
+            .AddClasses(filter => filter.AssignableTo(typeof(IModelMapper<,,>)))
+            .AsMatchingInterface()
+            .WithSingletonLifetime());
 
-        services.AddSingleton<IProjectModelMapper, ProjectModelMapper>();
-        services.AddSingleton<IUserModelMapper, UserModelMapper>();
-        services.AddSingleton<IActivityModelMapper, ActivityModelMapper>();
-        //services.Scan(selector => selector
-        //    .FromAssemblyOf<BusinessLogic>()
-        //    .AddClasses(filter => filter.AssignableTo(typeof(IModelMapper<,,>)))
-        //    .AsMatchingInterface()
-        //    .WithSingletonLifetime());
+        services.Scan(selector => selector
+            .FromAssemblyOf<BusinessLogic>()
+            .AddClasses(filter => filter.AssignableTo(typeof(IFacade<,,>)))
+            .AsMatchingInterface()
+            .WithSingletonLifetime());
 
-        //services.Scan(selector => selector
-        //    .FromAssemblyOf<BusinessLogic>()
-        //    .AddClasses(filter => filter.AssignableTo(typeof(IFacade<,,>)))
-        //    .AsMatchingInterface()
-        //    .WithSingletonLifetime());
 
-        
 
         return services;
     }

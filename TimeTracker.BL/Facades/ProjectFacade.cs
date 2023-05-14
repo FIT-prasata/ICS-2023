@@ -55,5 +55,14 @@ namespace TimeTracker.BL.Facades
             uow.GetRepository<ProjectUserEntity, ProjectUserEntityMapper>().Delete(projectUser.Id);
             await uow.CommitAsync().ConfigureAwait(false);
         }
+
+        public async Task<Boolean> IsUserInProjectAsync(Guid projectId, Guid userId)
+        {
+            await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+            IQueryable<ProjectUserEntity> query = uow.GetRepository<ProjectUserEntity, ProjectUserEntityMapper>().Get();
+            ProjectUserEntity? projectUser =
+                query.FirstOrDefault(pu => pu.ProjectEntityId == projectId && pu.UserEntityId == userId);
+            return projectUser is not null;
+        }   
     }
 }
