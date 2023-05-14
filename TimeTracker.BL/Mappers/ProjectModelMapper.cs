@@ -4,25 +4,23 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TimeTracker.BL.Mappers.Interfaces;
 using TimeTracker.DAL.Entities;
 using TimeTracker.BL.Models;
 namespace TimeTracker.BL.Mappers
 {
-    public class ProjectModelMapper: IModelMapper<ProjectEntity, ProjectDetailModel, ProjectListModel>
-
+    public class ProjectModelMapper: ModelMapperBase<ProjectEntity, ProjectListModel, ProjectDetailModel>, IProjectModelMapper
     {
 
-        private readonly ActivityModelMapper _activityModelMapper;
-        private readonly UserModelMapper _userModelMapper;
-        public ProjectModelMapper(ActivityModelMapper activityModelMapper, UserModelMapper userModelMapper)
+        private readonly IActivityModelMapper _activityModelMapper;
+        private readonly IUserModelMapper _userModelMapper;
+        public ProjectModelMapper(IActivityModelMapper activityModelMapper, IUserModelMapper userModelMapper)
         {
             _activityModelMapper = activityModelMapper;
             _userModelMapper = userModelMapper;
         }
 
 
-        public ProjectDetailModel MapToDetailModel(ProjectEntity? entity)
+        public override ProjectDetailModel MapToDetailModel(ProjectEntity? entity)
          => entity is null
              ? ProjectDetailModel.Empty
              : new ProjectDetailModel
@@ -35,7 +33,7 @@ namespace TimeTracker.BL.Mappers
                  Users = entity.Users != null ? _userModelMapper.MapToListModel(entity.Users.Select(o => o.UserEntity)!).ToObservableCollection() : new List<UserListModel>().ToObservableCollection(),
              };   
 
-        public ProjectEntity MapToEntity(ProjectDetailModel model)
+        public override ProjectEntity MapToEntity(ProjectDetailModel model)
         => new()
         {
             Id = model.Id,
@@ -44,7 +42,7 @@ namespace TimeTracker.BL.Mappers
             CreatedById = model.CreatedById,
         };
 
-        public ProjectListModel MapToListModel(ProjectEntity? entity)
+        public override ProjectListModel MapToListModel(ProjectEntity? entity)
         => entity is null ? ProjectListModel.Empty
             : new ProjectListModel
             {

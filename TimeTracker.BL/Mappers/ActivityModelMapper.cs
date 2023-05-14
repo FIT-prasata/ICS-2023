@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TimeTracker.BL.Mappers.Interfaces;
 using TimeTracker.DAL.Entities;
 using TimeTracker.BL.Models;
 
 namespace TimeTracker.BL.Mappers
 {
-    public class ActivityModelMapper: IModelMapper<ActivityEntity, ActivityDetailModel, ActivityListModel>
+    public class ActivityModelMapper: ModelMapperBase<ActivityEntity, ActivityListModel, ActivityDetailModel>, IActivityModelMapper
     {
-        private readonly UserModelMapper _userModelMapper;
+        private readonly IUserModelMapper _userModelMapper;
 
-        public ActivityModelMapper(UserModelMapper userModelMapper)
+        public ActivityModelMapper(IUserModelMapper userModelMapper)
         {
             _userModelMapper = userModelMapper;
         }
 
-        public ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
+        public override ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
             => entity is null
                 ? ActivityDetailModel.Empty
                 : new ActivityDetailModel
@@ -33,7 +32,7 @@ namespace TimeTracker.BL.Mappers
                     ProjectId = entity.ProjectId,
                 };
 
-        public ActivityEntity MapToEntity(ActivityDetailModel model)
+        public override ActivityEntity MapToEntity(ActivityDetailModel model)
             => new()
             {
                 Id = model.Id,
@@ -46,7 +45,7 @@ namespace TimeTracker.BL.Mappers
                 ProjectId = model.ProjectId,
             };
 
-        public ActivityListModel MapToListModel(ActivityEntity? entity)
+        public override ActivityListModel MapToListModel(ActivityEntity? entity)
             => entity is null
                 ? ActivityListModel.Empty
                 : new ActivityListModel()

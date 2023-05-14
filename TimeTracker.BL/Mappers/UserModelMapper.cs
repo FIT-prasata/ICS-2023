@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TimeTracker.BL.Mappers.Interfaces;
 using TimeTracker.DAL.Entities;
 using TimeTracker.BL.Models;
 namespace TimeTracker.BL.Mappers
 {
-    public class UserModelMapper: IModelMapper<UserEntity,UserDetailModel,UserListModel>
+    public class UserModelMapper: ModelMapperBase<UserEntity,UserListModel, UserDetailModel>, IUserModelMapper
     {
-        public UserDetailModel MapToDetailModel(UserEntity? entity)
+        public override UserDetailModel  MapToDetailModel(UserEntity? entity)
         => entity is null
             ? UserDetailModel.Empty
             : new UserDetailModel
@@ -20,7 +19,7 @@ namespace TimeTracker.BL.Mappers
                 LastName = entity.LastName,
                 ImgUri = entity.ImgUri,
             };
-        public UserEntity MapToEntity(UserDetailModel model)
+        public override UserEntity MapToEntity(UserDetailModel model)
             => new()
             {
                 Id = model.Id,
@@ -29,7 +28,7 @@ namespace TimeTracker.BL.Mappers
                 ImgUri = model.ImgUri,
             };
 
-        public UserListModel MapToListModel(UserEntity? entity)
+        public override UserListModel MapToListModel(UserEntity? entity)
         => entity is null
             ? UserListModel.Empty
             : new UserListModel

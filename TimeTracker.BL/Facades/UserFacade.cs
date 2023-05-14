@@ -11,9 +11,9 @@ using TimeTracker.DAL.UnitOfWork;
 
 namespace TimeTracker.BL.Facades
 {
-    public class UserFacade: FacadeBase<UserEntity, UserDetailModel, UserListModel, UserEntityMapper>
+    public class UserFacade: FacadeBase<UserEntity, UserListModel, UserDetailModel, UserEntityMapper>, IUserFacade
     {
-        public UserFacade(UserModelMapper mapper, IUnitOfWorkFactory uow) : base(mapper, uow)
+        public UserFacade(IUserModelMapper mapper, IUnitOfWorkFactory uow) : base(mapper, uow)
         {
         }
 

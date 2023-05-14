@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TimeTracker.BL.Facades.Interfaces;
 using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
 using TimeTracker.DAL.Entities;
@@ -13,11 +12,11 @@ using TimeTracker.DAL.UnitOfWork;
 
 namespace TimeTracker.BL.Facades
 {
-    public class ProjectFacade : FacadeBase<ProjectEntity, ProjectDetailModel, ProjectListModel, ProjectEntityMapper>,
+    public class ProjectFacade : FacadeBase<ProjectEntity, ProjectListModel, ProjectDetailModel, ProjectEntityMapper>,
         IProjectFacade
 
     {
-        public ProjectFacade(ProjectModelMapper mapper, IUnitOfWorkFactory uow) : base(mapper, uow)
+        public ProjectFacade(IProjectModelMapper mapper, IUnitOfWorkFactory uow) : base(mapper, uow)
         {
         }
 

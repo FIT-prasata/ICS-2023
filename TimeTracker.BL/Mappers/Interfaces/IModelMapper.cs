@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TimeTracker.BL.Mappers.Interfaces;
+namespace TimeTracker.BL.Mappers;
 
-public interface IModelMapper<TEntity, TDetailModel, out TListModel>
+public interface IModelMapper<TEntity, out TListModel, TDetailModel>
 {
     TDetailModel MapToDetailModel(TEntity? entity);
     TEntity MapToEntity(TDetailModel model);

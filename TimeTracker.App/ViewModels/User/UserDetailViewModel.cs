@@ -11,7 +11,7 @@ namespace TimeTracker.App.ViewModels.User;
 
 public partial class UserDetailViewModel : ViewModelBase
 {
-    private readonly UserFacade _userFacade;
+    private readonly IUserFacade _userFacade;
     private readonly INavigationService _navigationService;
     private readonly IAlertService _alertService;
 
@@ -19,7 +19,7 @@ public partial class UserDetailViewModel : ViewModelBase
     public IEnumerable<UserListModel> Users { get; private set; }
 
     public UserDetailViewModel(
-            UserFacade userFacade,
+            IUserFacade userFacade,
             INavigationService navigationService,
             IMessengerService messengerService,
             IAlertService alertService

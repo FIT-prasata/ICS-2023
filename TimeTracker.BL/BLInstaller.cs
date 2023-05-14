@@ -2,8 +2,7 @@
 using TimeTracker.BL.Mappers;
 using TimeTracker.DAL.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
-using TimeTracker.BL.Facades.Interfaces;
-using TimeTracker.BL.Mappers.Interfaces;
+using TimeTracker.DAL.Mappers;
 
 namespace TimeTracker.BL;
 
@@ -13,17 +12,26 @@ public static class BLInstaller
     {
         services.AddSingleton<IUnitOfWorkFactory, UnitOfWorkFactory>();
 
-        services.Scan(selector => selector
-            .FromAssemblyOf<BusinessLogic>()
-            .AddClasses(filter => filter.AssignableTo(typeof(IFacade<,,>)))
-            .AsMatchingInterface()
-            .WithSingletonLifetime());
+        services.AddSingleton<IProjectFacade, ProjectFacade>();
+        services.AddSingleton<IUserFacade, UserFacade>();
+        services.AddSingleton<IActivityFacade, ActivityFacade>();
 
-        services.Scan(selector => selector
-            .FromAssemblyOf<BusinessLogic>()
-            .AddClasses(filter => filter.AssignableTo(typeof(IModelMapper<,,>)))
-            .AsMatchingInterface()
-            .WithSingletonLifetime());
+        services.AddSingleton<IProjectModelMapper, ProjectModelMapper>();
+        services.AddSingleton<IUserModelMapper, UserModelMapper>();
+        services.AddSingleton<IActivityModelMapper, ActivityModelMapper>();
+        //services.Scan(selector => selector
+        //    .FromAssemblyOf<BusinessLogic>()
+        //    .AddClasses(filter => filter.AssignableTo(typeof(IModelMapper<,,>)))
+        //    .AsMatchingInterface()
+        //    .WithSingletonLifetime());
+
+        //services.Scan(selector => selector
+        //    .FromAssemblyOf<BusinessLogic>()
+        //    .AddClasses(filter => filter.AssignableTo(typeof(IFacade<,,>)))
+        //    .AsMatchingInterface()
+        //    .WithSingletonLifetime());
+
+        
 
         return services;
     }

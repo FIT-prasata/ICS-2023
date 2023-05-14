@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using TimeTracker.App.Services;
-using TimeTracker.BL.Facades.Interfaces;
+using TimeTracker.BL.Facades;
 using TimeTracker.BL.Models;
 
 namespace TimeTracker.App.ViewModels.Activity;

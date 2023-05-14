@@ -7,9 +7,9 @@ using TimeTracker.BL.Enums;
 using TimeTracker.BL.Models;
 using TimeTracker.DAL.Entities;
 
-namespace TimeTracker.BL.Facades.Interfaces
+namespace TimeTracker.BL.Facades
 {
-    public interface IActivityFacade : IFacade<ActivityEntity, ActivityDetailModel, ActivityListModel>
+    public interface IActivityFacade : IFacade<ActivityEntity, ActivityListModel, ActivityDetailModel>
     {
         Task<IEnumerable<ActivityListModel>> GetActivitiesByDateAsync(DateTime? dateStart, DateTime? dateEnd);
         Task<IEnumerable<ActivityListModel>> GetActivitiesByUserCreatedAsync(Guid userId);

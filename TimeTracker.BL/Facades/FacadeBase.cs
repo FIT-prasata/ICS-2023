@@ -6,8 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using TimeTracker.BL.Facades.Interfaces;
-using TimeTracker.BL.Mappers.Interfaces;
+using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
 using TimeTracker.DAL.Entities;
 using TimeTracker.DAL.Mappers;
@@ -16,16 +15,16 @@ using TimeTracker.DAL.UnitOfWork;
 
 namespace TimeTracker.BL.Facades
 {
-    public class FacadeBase<TEntity, TDetailModel ,TListModel,TEntityMapper>: IFacade<TEntity, TDetailModel, TListModel>
+    public class FacadeBase<TEntity, TListModel, TDetailModel , TEntityMapper>: IFacade<TEntity, TListModel, TDetailModel>
         where TEntity : class, IEntity
         where TDetailModel : class, IModel
         where TListModel : IModel
         where TEntityMapper : IEntityMapper<TEntity>, new()
     {
-        protected readonly IModelMapper<TEntity,TDetailModel,TListModel> Mapper;
+        protected readonly IModelMapper<TEntity,TListModel, TDetailModel> Mapper;
         protected readonly IUnitOfWorkFactory UnitOfWorkFactory;
 
-        protected FacadeBase(IModelMapper<TEntity,TDetailModel,TListModel> mapper, IUnitOfWorkFactory unitOfWorkFactory)
+        protected FacadeBase(IModelMapper<TEntity,TListModel, TDetailModel> mapper, IUnitOfWorkFactory unitOfWorkFactory)
         {
             Mapper = mapper;
             UnitOfWorkFactory = unitOfWorkFactory;

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using TimeTracker.App.Services;
-using TimeTracker.BL.Facades.Interfaces;
+using TimeTracker.BL.Facades;
 using TimeTracker.BL.Models;
 
 namespace TimeTracker.App.ViewModels.Project;

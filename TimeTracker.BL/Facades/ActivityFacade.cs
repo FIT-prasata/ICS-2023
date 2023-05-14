@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using TimeTracker.BL.Enums;
-using TimeTracker.BL.Facades.Interfaces;
 using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
 using TimeTracker.DAL.Entities;
@@ -12,9 +11,9 @@ using TimeTracker.DAL.UnitOfWork;
 
 namespace TimeTracker.BL.Facades
 {
-    public class ActivityFacade : FacadeBase<ActivityEntity, ActivityDetailModel, ActivityListModel, ActivityEntityMapper>, IActivityFacade
+    public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, ActivityDetailModel, ActivityEntityMapper>, IActivityFacade
     {
-        public ActivityFacade(ActivityModelMapper mapper, IUnitOfWorkFactory uow) : base(mapper, uow)
+        public ActivityFacade(IActivityModelMapper mapper, IUnitOfWorkFactory uow) : base(mapper, uow)
         {
         }
         protected override List<string> IncludesNavigationPathDetail => new()

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TimeTracker.App.Options;
 using TimeTracker.DAL;
 
 namespace TimeTracker.App;
@@ -23,12 +22,10 @@ public class NoneDbMigrator : IDbMigrator
 public class SqliteDbMigrator : IDbMigrator
 {
     private readonly IDbContextFactory<TimeTrackerDbContext> _dbContextFactory;
-    private readonly SqliteOptions _sqliteOptions;
 
-    public SqliteDbMigrator(IDbContextFactory<TimeTrackerDbContext> dbContextFactory, DALOptions dalOptions)
+    public SqliteDbMigrator(IDbContextFactory<TimeTrackerDbContext> dbContextFactory)
     {
         _dbContextFactory = dbContextFactory;
-        _sqliteOptions = dalOptions.Sqlite ?? throw new ArgumentNullException(nameof(dalOptions), $@"{nameof(DALOptions.Sqlite)} are not set");
     }
 
     public void Migrate() => MigrateAsync(CancellationToken.None).GetAwaiter().GetResult();
@@ -37,7 +34,8 @@ public class SqliteDbMigrator : IDbMigrator
     {
         await using TimeTrackerDbContext dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-        if (_sqliteOptions.RecreateDatabaseEachTime)
+        var recreateData = true;
+        if (recreateData)
         {
             await dbContext.Database.EnsureDeletedAsync(cancellationToken);
         }

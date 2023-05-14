@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using TimeTracker.DAL.Entities;
 using TimeTracker.BL.Models;
 
-namespace TimeTracker.BL.Facades.Interfaces
+namespace TimeTracker.BL.Facades
 {
-    public interface IFacade<TEntity, TDetailModel, TListModel>
+    public interface IFacade<TEntity, TListModel, TDetailModel>
         where TEntity : class, IEntity
         where TDetailModel : class, IModel
         where TListModel : IModel

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 using TimeTracker.BL.Models;
 using TimeTracker.DAL.Entities;
 
-namespace TimeTracker.BL.Facades.Interfaces
+namespace TimeTracker.BL.Facades;
+public interface IProjectFacade: IFacade<ProjectEntity, ProjectListModel, ProjectDetailModel>
 {
-    public interface IProjectFacade: IFacade<ProjectEntity, ProjectDetailModel, ProjectListModel>
-    {
-        Task AddUserToProjectAsync(Guid projectId, Guid userId);
-        Task RemoveUserFromProjectAsync(Guid projectId, Guid userId);
-    }
+    Task AddUserToProjectAsync(Guid projectId, Guid userId);
+    Task RemoveUserFromProjectAsync(Guid projectId, Guid userId);
 }

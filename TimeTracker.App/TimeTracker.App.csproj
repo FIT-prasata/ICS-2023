@@ -31,6 +31,17 @@
 	<PropertyGroup>
 		<NoWarn>1591</NoWarn>
 		<UserSecretsId>00775e36-5374-4630-b80a-38bf58169d4e</UserSecretsId>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <Optimize>False</Optimize>
+	  <DefineConstants></DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <Optimize>False</Optimize>
+	  <DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>
