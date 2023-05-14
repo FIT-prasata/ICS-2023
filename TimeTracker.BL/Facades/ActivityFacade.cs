@@ -23,7 +23,7 @@ namespace TimeTracker.BL.Facades
             $"{nameof(ActivityEntity.CreatedBy)}",
         };
 
-        private async Task<IQueryable<ActivityEntity>> GetQueryAsync(IUnitOfWork uow)
+        private IQueryable<ActivityEntity> GetQuery(IUnitOfWork uow)
         {
             IQueryable<ActivityEntity> query = uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Get();
             IncludesNavigationPathDetail.ForEach(include => query = query.Include(include));
@@ -34,7 +34,7 @@ namespace TimeTracker.BL.Facades
         public override async Task<ActivityDetailModel> SaveAsync(ActivityDetailModel model)
         {
             await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-            IQueryable<ActivityEntity> query = await GetQueryAsync(uow);
+            IQueryable<ActivityEntity> query = GetQuery(uow);
 
 
             query = query.Where(activity =>
@@ -58,7 +58,7 @@ namespace TimeTracker.BL.Facades
         public async Task<IEnumerable<ActivityListModel>> GetActivitiesByDateAsync(DateTime? dateStart, DateTime? dateEnd)
         {
             await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-            IQueryable<ActivityEntity> query = await GetQueryAsync(uow);
+            IQueryable<ActivityEntity> query = GetQuery(uow);
             if (dateStart.HasValue)
             {
                 query = query.Where(activity => activity.Start >= dateStart.Value);
@@ -75,7 +75,7 @@ namespace TimeTracker.BL.Facades
         {
             await using IUnitOfWork uow = UnitOfWorkFactory.Create();
             return   Mapper.MapToListModel(await (
-                    await GetQueryAsync(uow)).Where(
+                     GetQuery(uow)).Where(
                     activity => activity.CreatedById == userId)
                 .ToListAsync()
             );
@@ -84,7 +84,7 @@ namespace TimeTracker.BL.Facades
         {
             await using IUnitOfWork uow = UnitOfWorkFactory.Create();
             return Mapper.MapToListModel(await (
-                    await GetQueryAsync(uow)).Where(
+                     GetQuery(uow)).Where(
                     activity => activity.AssignedId == userId)
                 .ToListAsync()
             );
