@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentBasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="clr-namespace:TimeTracker.App.Views"
+                       xmlns:m="clr-namespace:TimeTracker.BL.Models;assembly=TimeTracker.BL"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels.Activity"
+                       x:Class="TimeTracker.App.Views.Activity.ActivityListView"
+                       x:Name="ActivityListViewRoot"
+                       x:DataType="vm:ActivityListViewModel"
+                       >
+    <VerticalStackLayout>
+        <Label 
+            Text="This is fooooooooooooking Activity list view"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</views:ContentBasePage>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:project="using:TimeTracker.App.Views.Project"
+       xmlns:activity="using:TimeTracker.App.Views.Activity"
+       xmlns:user="using:TimeTracker.App.Views.User"
+       x:Class="TimeTracker.App.Shells.AppShell"
+       x:Name="AppShellRoot"
+       FlyoutBehavior="Disabled">
+    <Shell.MenuBarItems>
+        <MenuBarItem Text="T">
+            <MenuFlyoutItem Text="Projects"
+                            Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToProjectsCommand}" />
+
+            <MenuFlyoutItem Text="Activities"
+                            Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToActivitiesCommand}" />
+            <MenuFlyoutItem Text="User"
+                            Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToUserCommand}" />
+        </MenuBarItem>
+
+
+    </Shell.MenuBarItems>
+
+    <ShellContent ContentTemplate="{DataTemplate project:ProjectListView}" Route="projects" />
+    <ShellContent ContentTemplate="{DataTemplate activity:ActivityListView}" Route="activities" />
+    <ShellContent ContentTemplate="{DataTemplate user:UserDetailView}" Route="user" />
+
+</Shell>
