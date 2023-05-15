@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.IdentityModel.Tokens;
 using TimeTracker.App.Services;
 using TimeTracker.App.Services.Interfaces;
 using TimeTracker.BL.Facades;
 using TimeTracker.BL.Models;
+using TimeTracker.DAL.Enums;
 
 namespace TimeTracker.App.ViewModels.Project;
 [QueryProperty(nameof(ProjectId), nameof(ProjectId))]
@@ -30,6 +32,13 @@ public partial class ProjectDetailViewModel : ViewModelBase
     public IEnumerable<UserListModel> Users { get; set; } = new List<UserListModel>() ;
     public UserListModel? SelectedUser { get; set; }
 
+    public ActivityDetailModel NewActivity {get; set; } = ActivityDetailModel.Empty;
+
+    public DateTime DateStart { get; set; } = DateTime.Now;
+    public DateTime DateEnd { get; set; } = DateTime.Now;
+    public TimeSpan TimeStart { get; set; } = new TimeSpan(0,0,0);
+    public TimeSpan TimeEnd { get; set; } = new TimeSpan(0,0,0);
+    public List<ActivityType> ActivityTypes { get; set; }
     public ProjectDetailViewModel(IProjectFacade projectFacade, IUserFacade userFacade,
         IActivityFacade activityFacade, INavigationService navigationService, IActiveUserService activeUserService, IAlertService alertService, IMessengerService messengerService)
     : base(messengerService)
@@ -40,6 +49,8 @@ public partial class ProjectDetailViewModel : ViewModelBase
         _navigationService = navigationService;
         _activeUserService = activeUserService;
         _alertService = alertService;
+
+        ActivityTypes = Enum.GetValues<ActivityType>().Where(a => a != ActivityType.Empty).ToList();
 
     }
 
@@ -82,5 +93,38 @@ public partial class ProjectDetailViewModel : ViewModelBase
             return;
         }
         await _alertService.DisplayAsync("Warning", "You need to select user first");
+    }
+
+    [RelayCommand]
+    private async Task AddActivityAsync()
+    {
+        if (NewActivity.Type == ActivityType.Empty)
+        {
+            await _alertService.DisplayAsync("Error", "Select type");
+            return;
+        }
+        NewActivity.Id = Guid.NewGuid();
+        NewActivity.ProjectId = ProjectId;
+        NewActivity.Start = DateStart + TimeStart;
+        NewActivity.End = DateEnd + TimeEnd;
+        UserDetailModel user = (await _userFacade.GetAsync(_activeUserService.GetId()))!;
+        NewActivity.CreatedBy = user;
+        NewActivity.Assigned = user;
+        try
+        {
+            await _activityFacade.SaveAsync(NewActivity);
+        }
+        catch (SecurityTokenException e)
+        {
+            await _alertService.DisplayAsync("Error", e.Message);
+        }
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task DeleteActivityAsync(Guid id)
+    {
+        await _activityFacade.DeleteAsync(id);
+        await LoadDataAsync();
     }
 }

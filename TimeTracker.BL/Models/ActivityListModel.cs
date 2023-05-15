@@ -24,7 +24,7 @@ namespace TimeTracker.BL.Models
             Start = DateTime.Now,
             End = DateTime.Now,
             Type = ActivityType.Empty,
-            Assigned = UserDetailModel.Empty,
+            Assigned = null,
         };
 
     }

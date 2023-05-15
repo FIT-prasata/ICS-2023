@@ -26,5 +26,6 @@ namespace TimeTracker.BL.Facades
             IEnumerable<Guid> userIds = projectUsers.Where(pu => pu.ProjectEntityId == projectId).Select(pu => pu.UserEntityId);
             return Mapper.MapToListModel(await (query.Where(u => !userIds.Contains(u.Id))).ToListAsync());
         }
+
     }
 }

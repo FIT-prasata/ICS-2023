@@ -24,6 +24,8 @@ namespace TimeTracker.BL.Facades
         {
             $"{nameof(ProjectEntity.Users)}.{nameof(ProjectUserEntity.UserEntity)}",
             $"{nameof(ProjectEntity.Activities)}",
+            $"{nameof(ProjectEntity.Activities)}.{nameof(ActivityEntity.Assigned)}",
+            $"{nameof(ProjectEntity.Activities)}.{nameof(ActivityEntity.CreatedBy)}"
         };
 
         public async Task AddUserToProjectAsync(Guid projectId, Guid userId)

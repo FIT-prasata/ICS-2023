@@ -18,7 +18,8 @@ public static class ActivitySeeds
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
-        ProjectId = ProjectSeeds.ProjectEntity1.Id
+        ProjectId = ProjectSeeds.ProjectGet.Id,
+        AssignedId = UserSeeds.UserEntity1.Id
     };
 
     public static ActivityEntity ActivityUpdate => new()

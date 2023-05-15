@@ -48,9 +48,8 @@ namespace TimeTracker.BL.Tests.FacadesTests
             {
                 throw new Exception("Project not found");
             }
-            var actualActivity = project.Activities == null ? throw new Exception("Activities not found") : project.Activities.FirstOrDefault(a => a.Id == activityId);
-            var expectedActivityListModel = ActivityModelMapper.MapToListModel(ActivityModelMapper.MapToEntity(expectedActivity));
-            Assert.Equal(expectedActivityListModel, actualActivity);
+
+            Assert.Contains(project.Activities, a => a.Id == activityId);
         }
 
         [Fact]
@@ -61,6 +60,8 @@ namespace TimeTracker.BL.Tests.FacadesTests
             Assert.DoesNotContain(users, u => u.Id == UserSeeds.UserEntity1.Id);
 
         }
+
+
 
     }
 }

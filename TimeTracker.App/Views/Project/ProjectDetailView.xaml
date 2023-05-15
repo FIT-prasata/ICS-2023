@@ -172,7 +172,7 @@
                                     VerticalOptions="Center"
                                     BackgroundColor="Black"
                                     TextColor="Wheat"
-                                    Text="{Binding Assigned.FullName}"
+                                    Text="{Binding Assigned.FullName, FallbackValue='No one assigned'}"
                                 />
                                 <ImageButton 
                                 Grid.Column="1"
@@ -180,6 +180,8 @@
                                 Aspect="AspectFit"
                                 Source="delete_icon.png"
                                 Grid.Row="0"
+                                Command="{Binding Source={x:Reference ProjectDetailRoot}, Path=BindingContext.DeleteActivityCommand}"
+                                CommandParameter="{Binding Id}"
                                 />
                             </Grid>
                         </Grid>
@@ -191,5 +193,32 @@
             </CollectionView.ItemTemplate>
 
         </CollectionView>
+        <Grid
+            Grid.Row="4"
+            ColumnDefinitions="2*,2*,2*,*,*"
+            >
+            <Grid Grid.Column="0" ColumnDefinitions="*,*">
+                <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding DateStart}" Grid.Column="0"  />
+                <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeStart}" Grid.Column="1"  />
+            </Grid>
+            <Grid Grid.Column="1" ColumnDefinitions="*,*">
+                <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding  DateEnd}" Grid.Column="0"  />
+                <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeEnd}" Grid.Column="1"  />
+
+            </Grid>
+            <Entry BackgroundColor="Black" TextColor="Wheat" Text="{Binding NewActivity.Description}" Grid.Column="2" />
+            <Picker
+                BackgroundColor="Black"
+                TextColor="Wheat"
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill"
+                Grid.Column="3"
+                ItemsSource="{Binding ActivityTypes}"
+                ItemDisplayBinding="{Binding .}"
+                SelectedItem="{Binding NewActivity.Type}"
+            />
+            <Button BackgroundColor="#384c54" TextColor="Wheat" Text="Add activity" Grid.Column="4" Command="{Binding AddActivityCommand}"/>
+
+        </Grid>
     </Grid>
 </views:ContentBasePage>
