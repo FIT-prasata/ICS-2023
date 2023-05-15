@@ -15,12 +15,12 @@ namespace TimeTracker.BL.Models
         public ActivityType Type { get; set; }
         public UserDetailModel? Assigned { get; set; }
 
-        public string Duration => (End - Start).ToString(@"hh\:mm\:ss");
+        public string Duration => (End - Start).ToString(@"hh\:mm");
 
 
         public static ActivityListModel Empty => new()
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.Empty,
             Start = DateTime.Now,
             End = DateTime.Now,
             Type = ActivityType.Empty,

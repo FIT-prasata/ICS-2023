@@ -17,7 +17,7 @@ namespace TimeTracker.BL.Models
 
         public static UserListModel Empty => new()
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.Empty,
             FirstName = string.Empty,
             LastName = string.Empty,
         };

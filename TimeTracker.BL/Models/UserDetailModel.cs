@@ -15,10 +15,11 @@ namespace TimeTracker.BL.Models
 
         public static UserDetailModel Empty => new()
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.Empty,
             FirstName = string.Empty,
             LastName = string.Empty,
             ImgUri = string.Empty
         };
+ 
     }
 }
