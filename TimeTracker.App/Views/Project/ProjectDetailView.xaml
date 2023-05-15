@@ -15,14 +15,19 @@
                 Grid.Column="0"
                 VerticalOptions="Center"
                 FontSize="40"
+                Margin="20"
+                FontAttributes="Bold"
                 Text="{Binding  Project.Name, FallbackValue='Title' }"
                 TextColor="White"
             />
             <Button 
                 Grid.Column="1"
+                VerticalOptions="Center"
+                HeightRequest="50"
+                WidthRequest="170"
                 Text="Edit project info"
                 Command="{Binding GoToProjectEditCommand}"
-                BackgroundColor="Green"
+                BackgroundColor="#4d8e22"
                 TextColor="White"
             />
         </Grid>
@@ -33,7 +38,7 @@
                      BackgroundColor="#323232"
                     VerticalOptions="Center"
                     FontSize="30"
-                    Text="Description:"
+                    Text=" Description:"
                     TextColor="White"
                 />
                 <Label 
@@ -42,6 +47,7 @@
                 VerticalOptions="Fill"
                 FontSize="20"
                 Text="{Binding Project.Description, FallbackValue='Description'}"
+                 HorizontalTextAlignment="Start"
                 TextColor="White"
                 />
             </Grid>
@@ -51,7 +57,7 @@
                     Grid.Row="0"
                     VerticalOptions="Center"
                     FontSize="30"
-                    Text="Users:"
+                    Text=" Users:"
                     TextColor="White"
                 />
                 <Grid ColumnDefinitions="*,2*,200"  Grid.Row="1" BackgroundColor="#252525" ColumnSpacing="30"> <!-- add existing/add new-->
@@ -120,20 +126,20 @@
                         WidthRequest="150"
                         Grid.Column="2"
                         IsVisible="{Binding IsNotUserAssigned}"
-                        Text="Add yourself to project"
+                        Text="Add yourself"
                         Command="{Binding AddLoggedUserToProjectCommand}"
-                        BackgroundColor="Green"
-                        TextColor="Black"
+                        BackgroundColor="#4d8e22"
+                        TextColor="White"
                     />
                     <Button 
                         HeightRequest="100"
                         WidthRequest="150"
                         Grid.Column="2"
                         IsVisible="{Binding IsUserAssigned}"
-                        Text="Remove yourself from project"
-                        TextColor="Black"
+                        Text="Remove yourself"
+                        TextColor="White"
                         Command="{Binding RemoveLoggedUserFromProjectCommand}"
-                        BackgroundColor="Red"
+                        BackgroundColor="#b30b4e"
                     />
                 </Grid>
                 <!-- list of users-->
@@ -145,7 +151,7 @@
                         <GridItemsLayout
                         Orientation="Vertical"
                         HorizontalItemSpacing="10" VerticalItemSpacing="10"
-                        Span="4"
+                        Span="5"
                     />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
@@ -198,7 +204,7 @@
                 Grid.Row="0"
                 VerticalOptions="Center"
                 FontSize="30"
-                Text="Activities:"
+                Text=" Activities:"
                 TextColor="White"
             />
             <Grid Grid.Row="1" ColumnDefinitions="100,4*,4*,4*,*,2*,100" RowDefinitions="50, *" BackgroundColor="#252525" >
