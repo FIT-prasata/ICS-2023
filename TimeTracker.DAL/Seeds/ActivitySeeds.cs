@@ -19,7 +19,7 @@ public static class ActivitySeeds
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
         ProjectId = ProjectSeeds.ProjectGet.Id,
-        AssignedId = UserSeeds.UserEntity1.Id
+        AssignedId = UserSeeds.UserGet.Id,
     };
 
     public static ActivityEntity ActivityUpdate => new()
@@ -30,7 +30,9 @@ public static class ActivitySeeds
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
-        ProjectId = ProjectSeeds.ProjectEntity1.Id
+        ProjectId = ProjectSeeds.ProjectEntity1.Id,
+        AssignedId = UserSeeds.UserEntity1.Id
+
     };
     public static ActivityEntity ActivityDelete => new()
     {
@@ -46,8 +48,8 @@ public static class ActivitySeeds
     public static ActivityEntity ActivityFromToday => new()
     {
         Id = Guid.Parse("10000000-0000-0000-0000-000000000004"),
-        Start = DateTime.Now.AddHours(-2),
-        End = DateTime.Now,
+        Start = DateTime.Now,
+        End = DateTime.Now.AddHours(2),
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,

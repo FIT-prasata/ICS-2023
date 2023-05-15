@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.IdentityModel.Tokens;
+using TimeTracker.App.Messages;
 using TimeTracker.App.Services;
 using TimeTracker.App.Services.Interfaces;
 using TimeTracker.App.ViewModels.Activity;
@@ -14,7 +16,7 @@ using TimeTracker.DAL.Enums;
 
 namespace TimeTracker.App.ViewModels.Project;
 [QueryProperty(nameof(ProjectId), nameof(ProjectId))]
-public partial class ProjectDetailViewModel : ViewModelBase
+public partial class ProjectDetailViewModel : ViewModelBase, IRecipient<ProjectEditMessage>, IRecipient<ActivityEditMessage>, IRecipient<ActivityDeleteMessage>, IRecipient<UserEditMessage>
 {
     private readonly IProjectFacade _projectFacade;
     private readonly IUserFacade _userFacade;
@@ -78,6 +80,7 @@ public partial class ProjectDetailViewModel : ViewModelBase
     {
         await _projectFacade.RemoveUserFromProjectAsync(ProjectId, _activeUserService.GetId());
         await LoadDataAsync();
+
     }
     [RelayCommand]
     private async Task RemoveSpecificUserFromProjectAsync(Guid id)
@@ -136,13 +139,14 @@ public partial class ProjectDetailViewModel : ViewModelBase
             await _alertService.DisplayAsync("Error", e.Message);
         }
         await LoadDataAsync();
+        MessengerService.Send(new ActivityAddMessage());
     }
 
     [RelayCommand]
     private async Task DeleteActivityAsync(Guid id)
     {
         await _activityFacade.DeleteAsync(id);
-        await LoadDataAsync();
+        MessengerService.Send(new ActivityDeleteMessage());
     }
 
     [RelayCommand]
@@ -159,4 +163,28 @@ public partial class ProjectDetailViewModel : ViewModelBase
             new Dictionary<string, object?> { [nameof(ActivityEditViewModel.ActivityId)] = id }
         );
     }
+
+    public async void Receive(ProjectEditMessage message)
+    {
+        if (message.ProjectId == ProjectId)
+        {
+            await LoadDataAsync();
+        }
+    }
+
+    public async void Receive(ActivityEditMessage message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(ActivityDeleteMessage message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(UserEditMessage message)
+    {
+        await LoadDataAsync();
+    }
+
 }

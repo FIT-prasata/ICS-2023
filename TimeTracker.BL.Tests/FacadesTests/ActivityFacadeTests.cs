@@ -86,7 +86,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
         public async Task GetActivitiesAssignedToUser()
         {
             var activities = await _activityFacade.GetActivitiesByUserAssignedAsync(UserSeeds.UserEntity1.Id);
-            Assert.Single(activities);
+            Assert.Equal(2, activities.Count());
         }
 
         [Fact]

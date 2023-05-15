@@ -8,10 +8,185 @@
                        x:Name="UserDetailViewRoot"
                        x:DataType="vm:UserDetailViewModel"
 >
-    <VerticalStackLayout>
-        <Label 
-            Text="This is fooooooooooooking USER detail view"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid 
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill"
+        RowDefinitions="*, *"
+        ColumnDefinitions="*, *"
+        >
+        <Grid
+            HorizontalOptions="Start"
+            RowDefinitions="*, *, *"
+            ColumnDefinitions="*, Auto"
+            RowSpacing="20"
+            Margin="130, 100, 0, 30"
+            Column="0"
+            Row="0"
+            >
+            <Label Grid.Row="0"
+                   FontSize="24"
+                   Text="Name"
+                   VerticalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   TextColor="#d8e676"
+            />
+            <Entry BackgroundColor="#1a547e"
+                   TextColor="#9a9c27"
+                   FontAttributes="Bold"
+                   Text="{Binding User.FirstName}"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   MaxLength="15"
+                   MinimumWidthRequest="200"
+                   />
+            <Label Grid.Row="1"
+                   FontSize="24"
+                   Text="Surname"
+                   VerticalTextAlignment="Center"
+                   TextColor="#d8e676"
+                   FontAttributes="Bold"
+                   MinimumWidthRequest="300"
+                   />
+            <Entry BackgroundColor="#1a547e" 
+                   TextColor="#9a9c27"
+                   FontAttributes="Bold"
+                   Text="{Binding User.LastName}" 
+                   Grid.Row="1"  
+                   Grid.Column="1" 
+                   MinimumWidthRequest="200"
+                   MaxLength="15"
+                   />
+            <Button 
+                BackgroundColor="#62228e"
+                TextColor="#c7db3c"
+                FontAttributes="Bold"
+                FontSize="18"
+                Text="Save changes" 
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                 Command="{Binding SaveUserChangesCommand}"
+            />
+        </Grid>
+        <Grid 
+            Margin="0, 60, 0, 0"
+            Column="1"
+            Row="0"
+            RowDefinitions="Auto, Auto"
+            ColumnDefinitions="*, *"
+            >
+            <Image 
+                Grid.ColumnSpan="2"
+                Grid.Row="0"
+                Margin="0"
+                HorizontalOptions="Fill" VerticalOptions="Fill"
+                   Aspect="AspectFill"
+                   WidthRequest="180" HeightRequest="180"
+                   Source="{Binding User.ImgUri}" 
+                   />
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   FontSize="24"
+                   Margin="30,15, 0, 0"
+                   Text="Image URL path"
+                   VerticalTextAlignment="Center"
+                   TextColor="#d8e676"
+                   FontAttributes="Bold"
+            />
+            <Entry BackgroundColor="#1a547e"
+                   TextColor="#9a9c27"
+                   FontAttributes="Bold"
+                   Text="{Binding User.ImgUri}"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   Margin="-90, 15, 30, 0"
+                   />
+        </Grid>
+        <Grid Margin="0, 60, 0, 0"
+              Column="0"
+              Row="1"
+              RowDefinitions="Auto, Auto"
+              ColumnDefinitions="*, *"
+              >
+            <CollectionView
+                Grid.Row="2" ItemsSource="{Binding UserActivities}"
+                VerticalOptions="FillAndExpand"
+            >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        Orientation="Vertical"
+                        HorizontalItemSpacing="10" VerticalItemSpacing="10"
+                        Span="4"
+                    />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate
+                        x:DataType="m:ActivityListModel"
+                    >
+                        <Frame Padding="0"
+                           CornerRadius="10"
+                           WidthRequest="300"
+                           HeightRequest="100"
+                           IsClippedToBounds="True"
+                    >
+                            <Grid RowDefinitions="*,30" >
+
+                                <Grid
+                                Grid.Row="0"
+                                ColumnDefinitions="3*,*"
+                                RowDefinitions="*,*,*"
+                                >
+                                    <Label 
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                VerticalOptions="Center"
+                                BackgroundColor="Black"
+                                TextColor="Wheat"
+                                Text="{Binding Type}"
+                                />
+                                    <Label 
+                                    Grid.Column="0"
+                                    Grid.Row="1"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Black"
+                                    TextColor="Wheat"
+                                    Text="{Binding Duration}"
+                                />
+                                    <Label 
+                                    Grid.Column="0"
+                                    Grid.Row="2"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Black"
+                                    TextColor="Wheat"
+                                    Text="{Binding Assigned.FullName, FallbackValue='No one assigned'}"
+                                />
+                                    <ImageButton 
+                                Grid.Column="1"
+                                Grid.RowSpan="2"
+                                Aspect="AspectFit"
+                                Source="delete_icon.png"
+                                Grid.Row="0"
+                                Command="{Binding Source={x:Reference UserDetailViewRoot}, Path=BindingContext.DeleteActivityCommand}"
+                                CommandParameter="{Binding Id}"
+                                />
+                                    <ImageButton 
+                                    Grid.Column="1"
+                                    Grid.RowSpan="3"
+                                    Aspect="AspectFit"
+                                    Source="edit_icon.png"
+                                    Grid.Row="2"
+                                    Command="{Binding Source={x:Reference UserDetailViewRoot}, Path=BindingContext.GoToActivityEditCommand}"
+                                    CommandParameter="{Binding Id}"
+                                />
+                                </Grid>
+                            </Grid>
+
+                        </Frame>
+
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </Grid>
+    </Grid>
 </views:ContentBasePage>

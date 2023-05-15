@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
+using TimeTracker.App.Messages;
 using TimeTracker.App.Services.Interfaces;
 using TimeTracker.App.Services;
 using TimeTracker.BL.Facades;
@@ -30,6 +32,31 @@ public partial class ProjectEditViewModel: ViewModelBase
         _navigationService = navigationService;
         _activeUserService = activeUserService;
         _alertService = alertService;
+    }
+
+    protected override async Task LoadDataAsync()
+    {
+        await base.LoadDataAsync();
+        if (ProjectId == Guid.Empty)
+        {
+            Project = ProjectDetailModel.Empty;
+        }
+        else
+        {
+            Project = await _projectFacade.GetAsync(ProjectId);
+        }
+    }
+
+    [RelayCommand]
+    private async Task SaveAsync()
+    {
+        if (Project.Name == string.Empty)
+        {
+            await _alertService.DisplayAsync("Error", "Please fill out the name field");
+            return;
+        }
+        await _projectFacade.SaveAsync(Project);
+        MessengerService.Send(new ProjectEditMessage {ProjectId = ProjectId});
     }
 
 }
