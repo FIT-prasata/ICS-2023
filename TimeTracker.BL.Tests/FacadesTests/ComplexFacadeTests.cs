@@ -50,7 +50,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
             }
             var actualActivity = project.Activities == null ? throw new Exception("Activities not found") : project.Activities.FirstOrDefault(a => a.Id == activityId);
             var expectedActivityListModel = ActivityModelMapper.MapToListModel(ActivityModelMapper.MapToEntity(expectedActivity));
-            Assert.Equal((expectedActivityListModel.Id, expectedActivityListModel.Start, expectedActivityListModel.End), (actualActivity.Id, actualActivity.Start, actualActivity.End));
+            Assert.Equal(expectedActivityListModel, actualActivity);
         }
 
         [Fact]
