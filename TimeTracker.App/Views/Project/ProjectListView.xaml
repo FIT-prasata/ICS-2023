@@ -55,7 +55,7 @@
                                 >
                                 <Image Grid.Row="0"
                                        Grid.RowSpan="2"
-                                       HorizontalOptions="Fill" VerticalOptions="Fill"
+                                       HorizontalOptions="Fill" VerticalOptions="Start"
                                        Aspect="AspectFill"
                                        WidthRequest="320" HeightRequest="240"
                                        Source="project_default.jpg" />

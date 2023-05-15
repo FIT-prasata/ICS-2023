@@ -146,6 +146,7 @@
                 <CollectionView
                 Grid.Row="2" ItemsSource="{Binding Project.Users}"
                 HorizontalOptions="FillAndExpand"
+                    Margin="15"
             >
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
@@ -156,40 +157,40 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate
-                        x:DataType="m:UserListModel"
-                    >
+                            x:DataType="m:UserListModel"
+                        >
                             <Frame Padding="0"
-                           CornerRadius="10"
-                           WidthRequest="150"
-                           HeightRequest="150"
-                           IsClippedToBounds="True"
-                    >
+                                CornerRadius="10"
+                                WidthRequest="150"
+                                HeightRequest="150"
+                                IsClippedToBounds="True"
+                            >
                                 <Grid RowDefinitions="*,30" >
                                     <Image Grid.Row="0"
-                                   Grid.RowSpan="2"
-                                   HorizontalOptions="Fill"
-                                   VerticalOptions="Fill"
-                                   Aspect="AspectFit"
-                                   Source="{Binding ImgUri}"
-                                   />
+                                        Grid.RowSpan="2"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill"
+                                        Aspect="AspectFit"
+                                        Source="{Binding ImgUri}"
+                                    />
                                     <Grid
-                                Grid.Row="1"
-                                ColumnDefinitions="3*,*"
-                                >
+                                        Grid.Row="1"
+                                        ColumnDefinitions="3*,*"
+                                    >
                                         <Label 
-                                Grid.Column="0"
-                                VerticalOptions="Center"
-                                BackgroundColor="Black"
-                                TextColor="Wheat"
-                                Text="{Binding FullName}"
-                                />
+                                            Grid.Column="0"
+                                            VerticalOptions="Center"
+                                            BackgroundColor="Black"
+                                            TextColor="Wheat"
+                                            Text="{Binding FullName}"
+                                        />
                                         <ImageButton 
-                                Grid.Column="1"
-                                Aspect="AspectFit"
-                                Source="delete_icon.png"
-                                Command="{Binding Source={x:Reference ProjectDetailRoot}, Path=BindingContext.RemoveSpecificUserFromProjectCommand}"
-                                CommandParameter="{Binding Id}"
-                                />
+                                            Grid.Column="1"
+                                            Aspect="AspectFit"
+                                            Source="delete_icon.png"
+                                            Command="{Binding Source={x:Reference ProjectDetailRoot}, Path=BindingContext.RemoveSpecificUserFromProjectCommand}"
+                                            CommandParameter="{Binding Id}"
+                                        />
                                     </Grid>
                                 </Grid>
                             </Frame>
