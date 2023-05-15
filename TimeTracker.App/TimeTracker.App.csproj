@@ -103,10 +103,19 @@
 	  <MauiXaml Update="Views\User\UserDetailView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\User\UserSelectView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Views\Activity\Enums\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\User\UserSelectView.xaml.cs">
+	    <DependentUpon>UserSelectView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

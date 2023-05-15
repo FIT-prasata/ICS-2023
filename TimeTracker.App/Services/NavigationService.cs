@@ -13,6 +13,7 @@ public class NavigationService : INavigationService
 {
     public IEnumerable<RouteModel> Routes { get; } = new List<RouteModel>
     {
+        new("//start", typeof(UserSelectView), typeof(UserSelectViewModel)),
         new("//projects", typeof(ProjectListView), typeof(ProjectListViewModel)),
         new("//projects/detail", typeof(ProjectDetailView), typeof(ProjectDetailViewModel)),
         new("//projects/detail/edit", typeof(ProjectEditView), typeof(ProjectEditViewModel)),

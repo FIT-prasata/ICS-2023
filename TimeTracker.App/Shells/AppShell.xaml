@@ -10,7 +10,7 @@
        FlyoutBehavior="Disabled">
 
     <Shell.TitleView>
-        <Grid RowDefinitions="*" ColumnDefinitions="*, *, *" ColumnSpacing="5">
+        <Grid IsVisible="{Binding Source={x:Reference AppShellRoot}, Path=IsAuthenticated}" RowDefinitions="*" ColumnDefinitions="*, *, *" ColumnSpacing="5">
             <Button Grid.Row="0" CornerRadius="5" Grid.Column="0" FontSize="15" Text="Projects" BackgroundColor="#62228e" TextColor="#ECDBBA" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToProjectsCommand}" />
             <Button Grid.Row="0" CornerRadius="5" Grid.Column="1" Text="Activities" BackgroundColor="#62228e" TextColor="#ECDBBA" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToActivitiesCommand}" />
             <Button Grid.Row="0" CornerRadius="5" Grid.Column="2" Text="User" BackgroundColor="#62228e  " TextColor="#ECDBBA" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToUserCommand}" />
