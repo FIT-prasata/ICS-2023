@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 using TimeTracker.App.Services;
 using TimeTracker.App.Services.Interfaces;
+using TimeTracker.App.ViewModels.Activity;
 using TimeTracker.BL.Facades;
 using TimeTracker.BL.Models;
 
@@ -17,7 +19,6 @@ public partial class UserDetailViewModel : ViewModelBase
     private readonly INavigationService _navigationService;
     private readonly IAlertService _alertService;
     private readonly IActiveUserService _activeUserService;
-
 
     public UserDetailModel? User { get; private set; }
     public IEnumerable<ActivityListModel> UserActivities { get; set; } = null!;
@@ -42,9 +43,33 @@ public partial class UserDetailViewModel : ViewModelBase
     protected override async Task LoadDataAsync()
     {
         await base.LoadDataAsync();
-
         User = await _userFacade.GetAsync(_activeUserService.GetId());
         UserActivities = await _activityFacade.GetActivitiesByUserAssignedAsync(_activeUserService.GetId());
+    }
+
+    [RelayCommand]
+    private async Task SaveUserChangesAsync()
+    {
+        if (User.FirstName == string.Empty || User.LastName == string.Empty || User.ImgUri == string.Empty)
+        {
+            await _alertService.DisplayAsync("Error", "Name, Surname or Image URL cannot be empty");
+            return;
+        }
+        await _userFacade.SaveAsync(User);
+        await LoadDataAsync();
+    }
+    [RelayCommand]
+    private async Task DeleteActivityAsync(Guid id)
+    {
+        await _activityFacade.DeleteAsync(id);
+        await LoadDataAsync();
+    }
+    [RelayCommand]
+    private async Task GoToActivityEditAsync(Guid id)
+    {
+        await _navigationService.GoToAsync<ActivityEditViewModel>(
+            new Dictionary<string, object?> { [nameof(ActivityEditViewModel.ActivityId)] = id }
+        );
     }
 
 }
