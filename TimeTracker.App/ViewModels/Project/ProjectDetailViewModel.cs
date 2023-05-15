@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.IdentityModel.Tokens;
 using TimeTracker.App.Services;
 using TimeTracker.App.Services.Interfaces;
+using TimeTracker.App.ViewModels.Activity;
 using TimeTracker.BL.Facades;
 using TimeTracker.BL.Models;
 using TimeTracker.DAL.Enums;
@@ -31,6 +32,8 @@ public partial class ProjectDetailViewModel : ViewModelBase
 
     public IEnumerable<UserListModel> Users { get; set; } = new List<UserListModel>() ;
     public UserListModel? SelectedUser { get; set; }
+
+    public UserDetailModel NewUser { get; set; } = UserDetailModel.Empty;
 
     public ActivityDetailModel NewActivity {get; set; } = ActivityDetailModel.Empty;
 
@@ -96,6 +99,20 @@ public partial class ProjectDetailViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private async Task AddNewUserAsync()
+    {
+        if (NewUser.FirstName is null || NewUser.LastName is null )
+        {
+            await _alertService.DisplayAsync("Error", "First and last names are required");
+            return;
+        }
+        NewUser.Id = Guid.NewGuid();
+        await _userFacade.SaveAsync(NewUser);
+        await _projectFacade.AddUserToProjectAsync(ProjectId, NewUser.Id);
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
     private async Task AddActivityAsync()
     {
         if (NewActivity.Type == ActivityType.Empty)
@@ -126,5 +143,20 @@ public partial class ProjectDetailViewModel : ViewModelBase
     {
         await _activityFacade.DeleteAsync(id);
         await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task GoToProjectEditAsync()
+    {
+        await _navigationService.GoToAsync<ProjectEditViewModel>(
+            new Dictionary<string, object?> { [nameof(ProjectEditViewModel.ProjectId)] = ProjectId }
+            );
+    }
+    [RelayCommand]
+    private async Task GoToActivityEditAsync(Guid id)
+    {
+        await _navigationService.GoToAsync<ActivityEditViewModel>(
+            new Dictionary<string, object?> { [nameof(ActivityEditViewModel.ActivityId)] = id }
+        );
     }
 }
