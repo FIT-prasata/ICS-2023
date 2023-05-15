@@ -140,7 +140,7 @@
                     <Frame Padding="0"
                            CornerRadius="10"
                            WidthRequest="300"
-                           HeightRequest="75"
+                           HeightRequest="100"
                            IsClippedToBounds="True"
                     >
                         <Grid RowDefinitions="*,30" >
@@ -148,7 +148,7 @@
                             <Grid
                                 Grid.Row="0"
                                 ColumnDefinitions="3*,*"
-                                RowDefinitions="*,*"
+                                RowDefinitions="*,*,*"
                                 >
                                 <Label 
                                 Grid.Column="0"
@@ -166,9 +166,17 @@
                                     TextColor="Wheat"
                                     Text="{Binding Duration}"
                                 />
+                                <Label 
+                                    Grid.Column="0"
+                                    Grid.Row="2"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Black"
+                                    TextColor="Wheat"
+                                    Text="{Binding Assigned.FullName}"
+                                />
                                 <ImageButton 
                                 Grid.Column="1"
-                                Grid.RowSpan="2"
+                                Grid.RowSpan="3"
                                 Aspect="AspectFit"
                                 Source="delete_icon.png"
                                 Grid.Row="0"
