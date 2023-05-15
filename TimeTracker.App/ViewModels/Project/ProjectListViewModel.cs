@@ -52,4 +52,8 @@ public partial class ProjectListViewModel : ViewModelBase
         await LoadDataAsync();
     }
 
+    [RelayCommand]
+    private async Task GoToDetailAsync(Guid id)
+        => await _navigationService.GoToAsync<ProjectDetailViewModel>(
+            new Dictionary<string, object?> { [nameof(ProjectDetailViewModel.ProjectId)] = id });
 }

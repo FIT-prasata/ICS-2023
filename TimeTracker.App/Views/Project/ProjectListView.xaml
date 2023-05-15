@@ -37,13 +37,12 @@
                                IsClippedToBounds="True">
 
                             <!--<Frame.GestureRecognizers>
-                            TODO
-                            <TapGestureRecognizer Command="{Binding Source={x:Reference RecipeListViewRoot}, Path=BindingContext.GoToDetailCommand}"
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference ProjectListViewRoot}, Path=BindingContext.GotoDetailCommand}"
                                                       CommandParameter="{Binding Id}" />
-                        </Frame.GestureRecognizers>-->
+                            </Frame.GestureRecognizers>-->
 
                             <Grid
-                                RowDefinitions="*,*"
+                                RowDefinitions="50,150, *"
                                 >
                                 <Image Grid.Row="0"
                                        Grid.RowSpan="2"
@@ -70,6 +69,14 @@
                                        FontSize="20" LineBreakMode="WordWrap"
                                        Text="{Binding Description}"
                                        TextColor="Wheat" BackgroundColor="Black" VerticalOptions="Start" />
+                                <Button 
+                                        BackgroundColor="Green" 
+                                        TextColor="Wheat" 
+                                        Text="Detail" 
+                                        Grid.Row="2" 
+                                        Command="{Binding Source={x:Reference ProjectListViewRoot}, Path=BindingContext.GoToDetailCommand}" 
+                                        CommandParameter="{Binding Id}"
+                                    />
                             </Grid>
                         </Frame>
                     </DataTemplate>

@@ -14,6 +14,7 @@ public class NavigationService : INavigationService
     public IEnumerable<RouteModel> Routes { get; } = new List<RouteModel>
     {
         new("//projects", typeof(ProjectListView), typeof(ProjectListViewModel)),
+        new("//projects/detail", typeof(ProjectDetailView), typeof(ProjectDetailViewModel)),
         new("//activities", typeof(ActivityListView), typeof(ActivityListViewModel)),
         new("//user", typeof(UserDetailView), typeof(UserDetailViewModel))
     };

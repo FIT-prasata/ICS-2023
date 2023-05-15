@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentBasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="clr-namespace:TimeTracker.App.Views"
+                       xmlns:m="clr-namespace:TimeTracker.BL.Models;assembly=TimeTracker.BL"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels.Project"
+                       x:Class="TimeTracker.App.Views.Project.ProjectDetailView"
+                       x:Name="ProjectDetailRoot"
+                       x:DataType="vm:ProjectDetailViewModel"
+>
+    <Grid RowDefinitions="auto,*,*">
+        <Grid Grid.Row="0" RowDefinitions="20,20">
+            <Label
+                Grid.Row="0"
+                Text="{Binding  Project.Name, FallbackValue='Title' }"
+                TextColor="Black"
+            />
+            <Label 
+                Grid.Row="1"
+                Text="{Binding Project.Description, FallbackValue='Description'}"
+                TextColor="Black"
+                />
+        </Grid>
+
+    </Grid>
+</views:ContentBasePage>

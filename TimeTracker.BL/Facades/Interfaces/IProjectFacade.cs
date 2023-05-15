@@ -11,6 +11,7 @@ public interface IProjectFacade: IFacade<ProjectEntity, ProjectListModel, Projec
 {
     Task AddUserToProjectAsync(Guid projectId, Guid userId);
     Task RemoveUserFromProjectAsync(Guid projectId, Guid userId);
+
     Task<Boolean> IsUserInProjectAsync(Guid projectId, Guid userId);
 
 }
