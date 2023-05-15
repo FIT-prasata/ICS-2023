@@ -53,7 +53,17 @@ namespace TimeTracker.BL.Tests.FacadesTests
             Assert.Equal(expectedActivityListModel, actualActivity);
         }
 
-        
+        [Fact]
+        public async Task GetUsersAssignedToProject()
+        {
+            await _projectFacade.AddUserToProjectAsync( ProjectSeeds.ProjectEntity1.Id, UserSeeds.UserEntity1.Id);
+            await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectEntity1.Id, UserSeeds.UserGet.Id);
+            await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectEntity1.Id, UserSeeds.UserUpdate.Id);
+
+            var users = await _userFacade.GetByProjectAsync(ProjectSeeds.ProjectEntity1.Id);
+            Assert.Equal(3, users.Count());
+
+        }
 
     }
 }

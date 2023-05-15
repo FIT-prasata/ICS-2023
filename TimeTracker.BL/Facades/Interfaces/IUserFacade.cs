@@ -9,4 +9,5 @@ using TimeTracker.DAL.Entities;
 namespace TimeTracker.BL.Facades;
     public interface IUserFacade: IFacade<UserEntity, UserListModel, UserDetailModel>
     {
+        Task<IEnumerable<UserListModel>> GetByProjectAsync(Guid projectId);
     }
