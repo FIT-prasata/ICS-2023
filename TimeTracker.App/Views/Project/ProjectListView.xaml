@@ -70,7 +70,7 @@
                                        Text="{Binding Description}"
                                        TextColor="Wheat" BackgroundColor="Black" VerticalOptions="Start" />
                                 <Button 
-                                        BackgroundColor="Green" 
+                                        BackgroundColor="#384c54" 
                                         TextColor="Wheat" 
                                         Text="Detail" 
                                         Grid.Row="2" 
@@ -85,7 +85,7 @@
             <Grid Grid.Row="2" ColumnDefinitions="*,3*,200">
                 <Entry BackgroundColor="Black" TextColor="Wheat" Text="{Binding NewProject.Name}" Grid.Column="0" />
                 <Entry BackgroundColor="Black" TextColor="Wheat" Text="{Binding NewProject.Description}" Grid.Column="1" />
-                <Button BackgroundColor="Green" TextColor="Wheat" Text="Add new project" Grid.Column="2" Command="{Binding AddProjectCommand}"/>
+                <Button BackgroundColor="#384c54" TextColor="Wheat" Text="Add new project" Grid.Column="2" Command="{Binding AddProjectCommand}"/>
             </Grid>
 
 
