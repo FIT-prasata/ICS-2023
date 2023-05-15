@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using TimeTracker.App.Messages;
 using TimeTracker.App.Services;
 using TimeTracker.App.Services.Interfaces;
 using TimeTracker.App.ViewModels.Activity;
@@ -12,7 +14,7 @@ using TimeTracker.BL.Models;
 
 namespace TimeTracker.App.ViewModels.User;
 
-public partial class UserDetailViewModel : ViewModelBase
+public partial class UserDetailViewModel : ViewModelBase, IRecipient<ActivityAddMessage>, IRecipient<ActivityDeleteMessage>
 {
     private readonly IUserFacade _userFacade;
     private readonly IActivityFacade _activityFacade;
@@ -72,4 +74,13 @@ public partial class UserDetailViewModel : ViewModelBase
         );
     }
 
+    public async void Receive(ActivityAddMessage message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(ActivityDeleteMessage message)
+    {
+        await LoadDataAsync();
+    }
 }

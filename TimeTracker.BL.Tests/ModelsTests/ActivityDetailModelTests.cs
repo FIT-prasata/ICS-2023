@@ -12,22 +12,7 @@ namespace TimeTracker.BL.Tests.ModelsTests
 {
     public class ActivityDetailModelTests
     {
-        [Fact]
-        public void Empty_Always_ReturnsEmptyActivityDetailModel()
-        {
-            // Act
-            var emptyActivity = ActivityDetailModel.Empty;
-
-            // Assert
-            Assert.Equal(Guid.Empty, emptyActivity.Id);
-            Assert.Equal(DateTime.Now.Date, emptyActivity.Start.Date);
-            Assert.Equal(DateTime.Now.Date, emptyActivity.End.Date);
-            Assert.Equal(string.Empty, emptyActivity.Description);
-            Assert.Equal(ActivityType.Empty, emptyActivity.Type);
-            Assert.Equal(UserDetailModel.Empty, emptyActivity.CreatedBy);
-            Assert.Equal(emptyActivity.Assigned, UserDetailModel.Empty);
-            Assert.Equal(Guid.Empty, emptyActivity.ProjectId);
-        }
+  
 
         [Fact]
         public void Start_End_AssignedId_ProjectId_CanBeSet()

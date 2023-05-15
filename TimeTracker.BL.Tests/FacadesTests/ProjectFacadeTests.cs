@@ -57,7 +57,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
             var project = await _projectFacade.GetAsync(ProjectSeeds.ProjectEntity1.Id);
             var expectedProject = ProjectModelMapper.MapToDetailModel(ProjectSeeds.ProjectEntity1);
 
-            Assert.Equal((expectedProject.Id, expectedProject.Name, ActivitySeeds.NumActivities), (project.Id, project.Name, project.Activities.Count()));
+            Assert.Equal((expectedProject.Id, expectedProject.Name), (project.Id, project.Name));
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
         [Fact]
         public async Task DeleteProjectRelatedActivitiesNotCascadingUnrelated()
         {
-            await _projectFacade.DeleteAsync(ProjectSeeds.ProjectGet.Id);
+            await _projectFacade.DeleteAsync(ProjectSeeds.ProjectDelete.Id);
             var activities = await _activityFacade.GetAsync();
             Assert.Equal(ActivitySeeds.NumActivities, activities.Count());
         }

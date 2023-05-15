@@ -8,21 +8,352 @@
                        x:Name="ProjectDetailRoot"
                        x:DataType="vm:ProjectDetailViewModel"
 >
-    <Grid RowDefinitions="auto,2*,*,2*,*" ColumnDefinitions="*, 230">
+
+    <Grid RowDefinitions="100, 400, *">
+        <Grid ColumnDefinitions="*, 200" Grid.Row="0" >
+            <Label
+                Grid.Column="0"
+                VerticalOptions="Center"
+                FontSize="40"
+                Text="{Binding  Project.Name, FallbackValue='Title' }"
+                TextColor="White"
+            />
+            <Button 
+                Grid.Column="1"
+                Text="Edit project info"
+                Command="{Binding GoToProjectEditCommand}"
+                BackgroundColor="Green"
+                TextColor="White"
+            />
+        </Grid>
+        <Grid ColumnDefinitions="*, 2*" Grid.Row="1" ColumnSpacing="20"> <!-- popis-users blok -->
+            <Grid RowDefinitions="75, *" Grid.Column="0"> <!-- popis-->
+                <Label
+                    Grid.Row="0"
+                     BackgroundColor="#323232"
+                    VerticalOptions="Center"
+                    FontSize="30"
+                    Text="Description:"
+                    TextColor="White"
+                />
+                <Label 
+                    BackgroundColor="#252525"
+                Grid.Row="1"
+                VerticalOptions="Fill"
+                FontSize="20"
+                Text="{Binding Project.Description, FallbackValue='Description'}"
+                TextColor="White"
+                />
+            </Grid>
+            <Grid RowDefinitions="75, 120, *" Grid.Column="1"> <!-- nadpis/add user/list of users-->
+                <Label
+                     BackgroundColor="#323232"
+                    Grid.Row="0"
+                    VerticalOptions="Center"
+                    FontSize="30"
+                    Text="Users:"
+                    TextColor="White"
+                />
+                <Grid ColumnDefinitions="*,2*,200"  Grid.Row="1" BackgroundColor="#252525" ColumnSpacing="30"> <!-- add existing/add new-->
+                    <Grid Grid.Column="0" ColumnDefinitions="*,*" Margin="10"><!-- add existing-->
+                        <Picker
+                            BackgroundColor="Black"
+                            TextColor="Wheat"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            WidthRequest="130"
+                            HeightRequest="60"
+                            Grid.Column="0"
+                            
+                            ItemsSource="{Binding Users}"
+                            ItemDisplayBinding="{Binding .,Converter={StaticResource UserToStringConverter}}"
+                            SelectedItem="{Binding SelectedUser}"
+                        />
+                        <Button 
+                            Grid.Column="1"
+                            BackgroundColor="#62228e"
+                            TextColor="White"
+                            Text="Add existing user"
+                            Command="{Binding AddSelectedUserCommand}"
+                        />
+                    </Grid>
+                    <Grid Grid.Column="1" ColumnDefinitions="*,*,*" RowDefinitions="*,*" Margin="10" RowSpacing="5"><!--add new-->
+                        <Entry 
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            VerticalOptions="Center"
+                            BackgroundColor="#181818"
+                            TextColor="Wheat"
+                            Placeholder="First name"
+                            Text="{Binding NewUser.FirstName}"
+                        />
+                        <Entry 
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            VerticalOptions="Center"
+                            BackgroundColor="#181818"
+                            TextColor="Wheat"
+                            Placeholder="Surname"
+                            Text="{Binding NewUser.LastName}"
+                        />
+                        <Entry 
+                            Grid.Column="2"
+                            Grid.Row="0"
+                            VerticalOptions="Center"
+                            BackgroundColor="#181818"
+                            TextColor="Wheat"
+                            Placeholder="Link to image"
+                            Text="{Binding NewUser.ImgUri}"
+                        />
+                        <Button 
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            TextColor="Wheat"
+                            BackgroundColor="#62228e"
+                            Text="Add new user to project"
+                            Command="{Binding AddNewUserCommand}"
+                        />
+                    </Grid>
+                    <Button 
+                        HeightRequest="100"
+                        WidthRequest="150"
+                        Grid.Column="2"
+                        IsVisible="{Binding IsNotUserAssigned}"
+                        Text="Add yourself to project"
+                        Command="{Binding AddLoggedUserToProjectCommand}"
+                        BackgroundColor="Green"
+                        TextColor="Black"
+                    />
+                    <Button 
+                        HeightRequest="100"
+                        WidthRequest="150"
+                        Grid.Column="2"
+                        IsVisible="{Binding IsUserAssigned}"
+                        Text="Remove yourself from project"
+                        TextColor="Black"
+                        Command="{Binding RemoveLoggedUserFromProjectCommand}"
+                        BackgroundColor="Red"
+                    />
+                </Grid>
+                <!-- list of users-->
+                <CollectionView
+                Grid.Row="2" ItemsSource="{Binding Project.Users}"
+                HorizontalOptions="FillAndExpand"
+            >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                        Orientation="Vertical"
+                        HorizontalItemSpacing="10" VerticalItemSpacing="10"
+                        Span="4"
+                    />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                        x:DataType="m:UserListModel"
+                    >
+                            <Frame Padding="0"
+                           CornerRadius="10"
+                           WidthRequest="150"
+                           HeightRequest="150"
+                           IsClippedToBounds="True"
+                    >
+                                <Grid RowDefinitions="*,30" >
+                                    <Image Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   Aspect="AspectFit"
+                                   Source="{Binding ImgUri}"
+                                   />
+                                    <Grid
+                                Grid.Row="1"
+                                ColumnDefinitions="3*,*"
+                                >
+                                        <Label 
+                                Grid.Column="0"
+                                VerticalOptions="Center"
+                                BackgroundColor="Black"
+                                TextColor="Wheat"
+                                Text="{Binding FullName}"
+                                />
+                                        <ImageButton 
+                                Grid.Column="1"
+                                Aspect="AspectFit"
+                                Source="delete_icon.png"
+                                Command="{Binding Source={x:Reference ProjectDetailRoot}, Path=BindingContext.RemoveSpecificUserFromProjectCommand}"
+                                CommandParameter="{Binding Id}"
+                                />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Grid>
+        <Grid RowDefinitions="75, 100, *" Grid.Row="2"> <!-- nadpis/add Activity/list of activities-->
+            <Label
+                BackgroundColor="#323232"
+                Grid.Row="0"
+                VerticalOptions="Center"
+                FontSize="30"
+                Text="Activities:"
+                TextColor="White"
+            />
+            <Grid Grid.Row="1" ColumnDefinitions="100,4*,4*,4*,*,2*,100" RowDefinitions="50, *" BackgroundColor="#252525" >
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    VerticalOptions="Center"
+                    FontSize="20"
+                    Text="Since:"
+                    TextColor="White"
+                />
+                <Grid Grid.Column="1" Grid.Row="1" ColumnDefinitions="150,250">
+                    <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding DateStart}" Grid.Column="0" VerticalOptions="Start" />
+                    <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeStart}" Grid.Column="1" VerticalOptions="End" />
+                </Grid>
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    VerticalOptions="Center"
+                    FontSize="20"
+                    Text="Until:"
+                    TextColor="White"
+                />
+                <Grid Grid.Column="2" Grid.Row="1" ColumnDefinitions="150,250">
+                    <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding  DateEnd}" Grid.Column="0" VerticalOptions="Start" />
+                    <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeEnd}" Grid.Column="1" VerticalOptions="End" />
+
+                </Grid>
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    VerticalOptions="Center"
+                    FontSize="20"
+                    Text="Description:"
+                    TextColor="White"
+                />
+                <Entry BackgroundColor="Black" TextColor="Wheat" WidthRequest="400" Text="{Binding NewActivity.Description}" Grid.Column="3" Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Start" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    VerticalOptions="Center"
+                    FontSize="20"
+                    Text="Type:"
+                    TextColor="White"
+                />
+                <Picker
+                    BackgroundColor="Black"
+                    TextColor="Wheat"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="Fill"
+                    Grid.Column="4"
+                    Grid.Row="1"
+                    ItemsSource="{Binding ActivityTypes}"
+                    ItemDisplayBinding="{Binding .}"
+                    SelectedItem="{Binding NewActivity.Type}"
+                />
+                <Button BackgroundColor="#62228e" TextColor="Wheat" Text="Add activity" Grid.Column="5" Grid.RowSpan="2" Margin="15" Command="{Binding AddActivityCommand}"/>
+            </Grid>
+            <CollectionView
+                Grid.Row="2" ItemsSource="{Binding Project.Activities}"
+                VerticalOptions="FillAndExpand"
+            >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        Orientation="Vertical"
+                        HorizontalItemSpacing="10" VerticalItemSpacing="10"
+                        Span="5"
+                    />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate
+                        x:DataType="m:ActivityListModel"
+                    >
+                        <Frame Padding="0"
+                           CornerRadius="10"
+                           WidthRequest="300"
+                           HeightRequest="100"
+                           IsClippedToBounds="True"
+                    >
+                            <Grid RowDefinitions="*,30" >
+
+                                <Grid
+                                Grid.Row="0"
+                                ColumnDefinitions="3*,*"
+                                RowDefinitions="*,*,*"
+                                >
+                                    <Label 
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                VerticalOptions="Center"
+                                BackgroundColor="Black"
+                                TextColor="Wheat"
+                                Text="{Binding Type}"
+                                />
+                                    <Label 
+                                    Grid.Column="0"
+                                    Grid.Row="1"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Black"
+                                    TextColor="Wheat"
+                                    Text="{Binding Duration}"
+                                />
+                                    <Label 
+                                    Grid.Column="0"
+                                    Grid.Row="2"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Black"
+                                    TextColor="Wheat"
+                                    Text="{Binding Assigned.FullName, FallbackValue='No one assigned'}"
+                                />
+                                    <ImageButton 
+                                Grid.Column="1"
+                                Grid.RowSpan="2"
+                                Aspect="AspectFit"
+                                Source="delete_icon.png"
+                                Grid.Row="0"
+                                Command="{Binding Source={x:Reference ProjectDetailRoot}, Path=BindingContext.DeleteActivityCommand}"
+                                CommandParameter="{Binding Id}"
+                                />
+                                    <ImageButton 
+                                    Grid.Column="1"
+                                    Grid.RowSpan="3"
+                                    Aspect="AspectFit"
+                                    Source="edit_icon.png"
+                                    Grid.Row="2"
+                                    Command="{Binding Source={x:Reference ProjectDetailRoot}, Path=BindingContext.GoToActivityEditCommand}"
+                                    CommandParameter="{Binding Id}"
+                                />
+                                </Grid>
+                            </Grid>
+
+                        </Frame>
+
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </Grid>
+    </Grid>
+    <!--<Grid RowDefinitions="auto,2*,*,2*,*" ColumnDefinitions="*, 230">
         <Grid Grid.Row="0" RowDefinitions="20,20" ColumnDefinitions="*,*">
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
                 VerticalOptions="Center"
                 Text="{Binding  Project.Name, FallbackValue='Title' }"
-                TextColor="Black"
+                TextColor="White"
             />
             <Label 
                 Grid.Row="1"
                 Grid.Column="0"
                 VerticalOptions="Center"
                 Text="{Binding Project.Description, FallbackValue='Description'}"
-                TextColor="Black"
+                TextColor="White"
                 />
             <Button 
                 Grid.Column="1"
@@ -30,7 +361,7 @@
                 Text="Edit project info"
                 Command="{Binding GoToProjectEditCommand}"
                 BackgroundColor="Green"
-                TextColor="Black"
+                TextColor="White"
             />
         </Grid>
         <Button 
@@ -272,5 +603,5 @@
             <Button BackgroundColor="#384c54" TextColor="Wheat" Text="Add activity" Grid.Column="4" Command="{Binding AddActivityCommand}"/>
 
         </Grid>
-    </Grid>
+    </Grid>-->
 </views:ContentBasePage>

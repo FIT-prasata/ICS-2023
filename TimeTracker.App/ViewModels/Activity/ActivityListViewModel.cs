@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using TimeTracker.App.Messages;
 using TimeTracker.App.Services;
 using TimeTracker.App.ViewModels.Activity.Enums;
 using TimeTracker.BL.Enums;
@@ -12,7 +13,7 @@ using TimeTracker.BL.Facades;
 using TimeTracker.BL.Models;
 
 namespace TimeTracker.App.ViewModels.Activity;
-public partial class ActivityListViewModel: ViewModelBase
+public partial class ActivityListViewModel: ViewModelBase, IRecipient<ActivityAddMessage>, IRecipient<ActivityDeleteMessage>, IRecipient<ActivityEditMessage>
 {
     private readonly IActivityFacade _activityFacade;
     private readonly INavigationService _navigationService;
@@ -123,7 +124,7 @@ public partial class ActivityListViewModel: ViewModelBase
     private async Task DeleteActivityAsync(Guid id)
     {
         await _activityFacade.DeleteAsync(id);
-        await LoadDataAsync();
+        MessengerService.Send(new ActivityDeleteMessage());
     }
     [RelayCommand]
     private async Task GoToActivityEditAsync(Guid id)
@@ -131,5 +132,20 @@ public partial class ActivityListViewModel: ViewModelBase
         await _navigationService.GoToAsync<ActivityEditViewModel>(
             new Dictionary<string, object?> { [nameof(ActivityEditViewModel.ActivityId)] = id }
         );
+    }
+
+    public async void Receive(ActivityAddMessage _)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(ActivityDeleteMessage _)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(ActivityEditMessage _)
+    {
+        await LoadDataAsync();
     }
 }
