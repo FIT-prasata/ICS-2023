@@ -99,11 +99,7 @@
                                         CommandParameter="{Binding Id}"
                                     />
                                 
-                                <BoxView 
-                                    Grid.Row="2"
-                                    Color="White"
-                                    Opacity="0"
-                                    />
+                                
                             </Grid>
                         </Frame>
                     </DataTemplate>
