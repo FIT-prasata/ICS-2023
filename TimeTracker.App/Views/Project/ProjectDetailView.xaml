@@ -8,19 +8,94 @@
                        x:Name="ProjectDetailRoot"
                        x:DataType="vm:ProjectDetailViewModel"
 >
-    <Grid RowDefinitions="auto,*,*">
+    <Grid RowDefinitions="auto,*,*" ColumnDefinitions="*, 230">
         <Grid Grid.Row="0" RowDefinitions="20,20">
             <Label
                 Grid.Row="0"
+                VerticalOptions="Center"
                 Text="{Binding  Project.Name, FallbackValue='Title' }"
                 TextColor="Black"
             />
             <Label 
                 Grid.Row="1"
+                VerticalOptions="Center"
                 Text="{Binding Project.Description, FallbackValue='Description'}"
                 TextColor="Black"
                 />
         </Grid>
+        <Button 
+                Grid.Column="1"
+                IsVisible="{Binding IsNotUserAssigned}"
+                Text="Add yourself to project"
+                Command="{Binding AddLoggedUserToProjectCommand}"
+                BackgroundColor="Green"
+                TextColor="Black"
+            />
+        <Button 
+            Grid.Column="1"
+            IsVisible="{Binding IsUserAssigned}"
+            Text="Remove yourself from project"
+            TextColor="Black"
+            Command="{Binding RemoveLoggedUserFromProjectCommand}"
+            BackgroundColor="Red"
+        />
+        <CollectionView
+                Grid.Row="1" ItemsSource="{Binding Project.Users}"
+                VerticalOptions="FillAndExpand"
+                Grid.ColumnSpan="2"
+            >
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                        Orientation="Vertical"
+                        HorizontalItemSpacing="10" VerticalItemSpacing="10"
+                        Span="8"
+                    />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate
+                        x:DataType="m:UserListModel"
+                    >
+                    <Frame Padding="0"
+                           CornerRadius="10"
+                           WidthRequest="150"
+                           HeightRequest="150"
+                           IsClippedToBounds="True"
+                    >
+                        <Grid RowDefinitions="*,30" >
+                            <Image Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   Aspect="AspectFit"
+                                   Source="{Binding ImgUri}"
+                                   />
+                            <Grid
+                                Grid.Row="1"
+                                ColumnDefinitions="3*,*"
+                                >
+                            <Label 
+                                Grid.Column="0"
+                                VerticalOptions="Center"
+                                BackgroundColor="Black"
+                                TextColor="Wheat"
+                                Text="{Binding FullName}"
+                                />
+                            <ImageButton 
+                                Grid.Column="1"
+                                Aspect="AspectFit"
+                                Source="delete_icon.png"
+                                Command="{Binding Source={x:Reference ProjectDetailRoot}, Path=BindingContext.RemoveSpecificUserFromProjectCommand}"
+                                CommandParameter="{Binding Id}"
+                                />
+                            </Grid>
+                        </Grid>
 
+                    </Frame>
+
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
     </Grid>
 </views:ContentBasePage>

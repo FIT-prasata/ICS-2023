@@ -12,7 +12,7 @@ public static class UserSeeds
         Id = Guid.Parse(input: "86aae9b6-46ff-4ded-8562-dc5dcd06c39b"),
         FirstName = "John",
         LastName = "Doe",
-        ImgUri = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+        ImgUri = "https://i.imgur.com/9wjVTB0.png"
     };
     public static UserEntity UserUpdate => new()
     {

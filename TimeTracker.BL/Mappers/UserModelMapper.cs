@@ -36,6 +36,7 @@ namespace TimeTracker.BL.Mappers
                 Id = entity.Id,
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
+                ImgUri = entity.ImgUri,
             };
 
         public IEnumerable<UserListModel> MapToListModel(IEnumerable<UserEntity>? entities)
