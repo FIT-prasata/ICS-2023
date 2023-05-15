@@ -18,7 +18,7 @@ namespace TimeTracker.BL.Models
 
         public static ProjectDetailModel Empty => new()
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.Empty,
             Name = string.Empty,
             Description = string.Empty,
             CreatedById = Guid.Empty,

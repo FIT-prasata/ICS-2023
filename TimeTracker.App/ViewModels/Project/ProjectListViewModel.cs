@@ -47,6 +47,7 @@ public partial class ProjectListViewModel : ViewModelBase
             return;
         }
         NewProject.CreatedById = _activeUserService.GetId();
+        NewProject.Id = Guid.NewGuid();
         await _projectFacade.SaveAsync(NewProject);
         NewProject = ProjectDetailModel.Empty;
         await LoadDataAsync();

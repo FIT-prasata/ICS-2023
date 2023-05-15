@@ -32,6 +32,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    msbuildArgs: '-p:PublishReadyToRun=false'
 
 - task: VSTest@2
   inputs:

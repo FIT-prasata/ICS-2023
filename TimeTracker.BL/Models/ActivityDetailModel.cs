@@ -16,19 +16,19 @@ namespace TimeTracker.BL.Models
         public ActivityType Type { get; set; }
 
         public UserDetailModel CreatedBy { get; set; }
-        public UserDetailModel Assigned { get; set; } 
+        public UserDetailModel? Assigned { get; set; } 
         public Guid ProjectId { get; set; }
 
 
         public static ActivityDetailModel Empty => new()
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.Empty,
             Start = DateTime.Now,
             End = DateTime.Now,
             Description = string.Empty,
             Type = ActivityType.Empty,
             CreatedBy = UserDetailModel.Empty,
-            Assigned = UserDetailModel.Empty,
+            Assigned = null,
             ProjectId = Guid.Empty
         };
     }
