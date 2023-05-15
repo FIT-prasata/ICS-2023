@@ -8,10 +8,153 @@
                        x:Name="ActivityListViewRoot"
                        x:DataType="vm:ActivityListViewModel"
                        >
-    <VerticalStackLayout>
-        <Label 
-            Text="This is fooooooooooooking Activity list view"
+    <Grid RowDefinitions="*,*, 4*">
+        <Label
+            Grid.Row="0"
+            TextColor="Wheat"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+            HorizontalOptions="Center" 
+            FontSize="46"
+            Text="{Binding DisplayText}"
+
+            />
+        <Grid Grid.Row="1">
+            <Grid
+                ColumnDefinitions="*,*,*,*,*,3*"
+                >
+                <Button 
+                        Grid.Column="0"
+                        Text="All"
+                        Command="{Binding GetAllActivitiesCommand}"
+                    />
+                <Button 
+                    Grid.Column="1"
+                    Text="24h"
+                    Command="{Binding GetActivitiesFromLastDayCommand}"
+                />
+                <Button 
+                    Grid.Column="2"
+                    Text="Week"
+                    Command="{Binding GetActivitiesFromLastWeekCommand}"
+                />
+                <Button 
+                    Grid.Column="3"
+                    Text="Month"
+                    Command="{Binding GetActivitiesFromLastMonthCommand}"
+                />
+                <Button 
+                    Grid.Column="4"
+                    Text="Year"
+                    Command="{Binding GetActivitiesFromLastYearCommand}"
+                />
+                <Grid
+                    Grid.Column="5"
+                    ColumnDefinitions="*,*"
+                    RowDefinitions="*,*"
+                    >
+                        <DatePicker 
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            BackgroundColor="Black"
+                            TextColor="Wheat"
+                            Date="{Binding SpecificDateStart}"
+                            />
+                        <DatePicker 
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            BackgroundColor="Black"
+                            TextColor="Wheat"
+                            Date="{Binding SpecificDateEnd}"
+                        />
+                        <Button 
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            Text="Filter By specific dates"
+                            Command="{Binding GetActivitiesFromSpecificDateCommand}"
+                            />
+                </Grid>
+            </Grid>
+        </Grid>
+        <CollectionView
+                Grid.Row="2" ItemsSource="{Binding FilteredActivities}"
+                VerticalOptions="FillAndExpand"
+            >
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                        Orientation="Vertical"
+                        HorizontalItemSpacing="10" VerticalItemSpacing="10"
+                        Span="4"
+                    />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate
+                        x:DataType="m:ActivityListModel"
+                    >
+                    <Frame Padding="0"
+                           CornerRadius="10"
+                           WidthRequest="300"
+                           HeightRequest="100"
+                           IsClippedToBounds="True"
+                    >
+                        <Grid RowDefinitions="*,30" >
+
+                            <Grid
+                                Grid.Row="0"
+                                ColumnDefinitions="3*,*"
+                                RowDefinitions="*,*,*"
+                                >
+                                <Label 
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                VerticalOptions="Center"
+                                BackgroundColor="Black"
+                                TextColor="Wheat"
+                                Text="{Binding Type}"
+                                />
+                                <Label 
+                                    Grid.Column="0"
+                                    Grid.Row="1"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Black"
+                                    TextColor="Wheat"
+                                    Text="{Binding Duration}"
+                                />
+                                <Label 
+                                    Grid.Column="0"
+                                    Grid.Row="2"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Black"
+                                    TextColor="Wheat"
+                                    Text="{Binding Assigned.FullName, FallbackValue='No one assigned'}"
+                                />
+                                <ImageButton 
+                                Grid.Column="1"
+                                Grid.RowSpan="2"
+                                Aspect="AspectFit"
+                                Source="delete_icon.png"
+                                Grid.Row="0"
+                                Command="{Binding Source={x:Reference ActivityListViewRoot}, Path=BindingContext.DeleteActivityCommand}"
+                                CommandParameter="{Binding Id}"
+                                />
+                                <ImageButton 
+                                    Grid.Column="1"
+                                    Grid.RowSpan="3"
+                                    Aspect="AspectFit"
+                                    Source="edit_icon.png"
+                                    Grid.Row="2"
+                                    Command="{Binding Source={x:Reference ActivityListViewRoot}, Path=BindingContext.GoToActivityEditCommand}"
+                                    CommandParameter="{Binding Id}"
+                                />
+                            </Grid>
+                        </Grid>
+
+                    </Frame>
+
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </Grid>
 </views:ContentBasePage>

@@ -159,4 +159,5 @@ public partial class ProjectDetailViewModel : ViewModelBase
             new Dictionary<string, object?> { [nameof(ActivityEditViewModel.ActivityId)] = id }
         );
     }
+
 }
