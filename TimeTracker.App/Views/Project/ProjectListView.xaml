@@ -14,10 +14,19 @@
               RowSpacing="20"
               Margin="15"
               >
+            <BoxView
+                Grid.Row="0"
+                CornerRadius="5"
+                Opacity="0.1"
+                Color="White"
+                />
             <Label Grid.Row="0"
                    FontSize="24"
                    Text="Projects"
-                   BackgroundColor="Black"
+                   Margin="5"
+                   FontAttributes="Bold"
+
+                   TextColor="#ECDBBA"
                    />
             <CollectionView
                 Grid.Row="1" ItemsSource="{Binding Projects}"
@@ -42,7 +51,7 @@
                             </Frame.GestureRecognizers>-->
 
                             <Grid
-                                RowDefinitions="50,150, *"
+                                RowDefinitions="55,140, *"
                                 >
                                 <Image Grid.Row="0"
                                        Grid.RowSpan="2"
@@ -51,41 +60,59 @@
                                        WidthRequest="320" HeightRequest="240"
                                        Source="project_default.jpg" />
 
-                                <BoxView Grid.Row="0"
-                                         Grid.RowSpan="2"
-                                         Opacity="0.25"
-                                         Color="Black" />
+                                <BoxView 
+                                    Grid.Row="0"
+                                    Color="#1a547e"
+                                    />
 
                                 <Label 
                                     Grid.Row="0"
-                                VerticalOptions="Center"
-                                   FontSize="30"
-                                   Text="{Binding Name}"
-                                   TextColor="Wheat" BackgroundColor="Black"/>
+                                    VerticalOptions="Center"
+                                    FontSize="28"
+                                    Margin="7"
+                                    Text="{Binding Name}"
+                                    FontAttributes="Bold"
+                                    TextColor="#c7db3c" />
+
+                                <BoxView 
+                                    Grid.Row="1"
+                                    Opacity="0.5"
+                                    Color="#191919"
+                                    />
 
                                 <Label 
-                                        Grid.Row="1"
+                                       Grid.Row="1"
                                        Margin="22,12"
                                        FontSize="20" LineBreakMode="WordWrap"
-                                       Text="{Binding Description}"
-                                       TextColor="Wheat" BackgroundColor="Black" VerticalOptions="Start" />
+                                       Text="{Binding Description}"                                   
+                                       TextColor="#ECDBBA" VerticalOptions="Start" />
+                                
                                 <Button 
-                                        BackgroundColor="#384c54" 
-                                        TextColor="Wheat" 
+                                        BackgroundColor="#2473a0" 
+                                        TextColor="#c7db3c" 
                                         Text="Detail" 
                                         Grid.Row="2" 
+                                        FontSize="18"
+                                        FontAttributes="Bold"
+                                        WidthRequest="320"
                                         Command="{Binding Source={x:Reference ProjectListViewRoot}, Path=BindingContext.GoToDetailCommand}" 
                                         CommandParameter="{Binding Id}"
+                                    />
+                                
+                                <BoxView 
+                                    Grid.Row="2"
+                                    Color="White"
+                                    Opacity="0"
                                     />
                             </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Grid Grid.Row="2" ColumnDefinitions="*,3*,200">
-                <Entry BackgroundColor="Black" TextColor="Wheat" Text="{Binding NewProject.Name}" Grid.Column="0" />
-                <Entry BackgroundColor="Black" TextColor="Wheat" Text="{Binding NewProject.Description}" Grid.Column="1" />
-                <Button BackgroundColor="#384c54" TextColor="Wheat" Text="Add new project" Grid.Column="2" Command="{Binding AddProjectCommand}"/>
+            <Grid Grid.Row="2" ColumnDefinitions="*,3*,200" ColumnSpacing="7" >
+                <Entry BackgroundColor="#1a547e" TextColor="#d8e676" Text="{Binding NewProject.Name}" Grid.Column="0" Placeholder="Project name" PlaceholderColor="#9a9c27" FontAttributes="Bold" />
+                <Entry BackgroundColor="#1a547e" TextColor="#c7db3c" Text="{Binding NewProject.Description}" Grid.Column="1" Placeholder="Project description" PlaceholderColor="#9a9c27" FontAttributes="Bold" />
+                <Button BackgroundColor="#62228e" TextColor="#c7db3c" FontSize="18" FontAttributes="Bold" Text="Add new project" Grid.Column="2" Command="{Binding AddProjectCommand}"/>
             </Grid>
 
 

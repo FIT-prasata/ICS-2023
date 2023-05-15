@@ -6,14 +6,14 @@
        xmlns:user="using:TimeTracker.App.Views.User"
        x:Class="TimeTracker.App.Shells.AppShell"
        x:Name="AppShellRoot"
-       BackgroundColor="Wheat"
+       BackgroundColor="#191919"
        FlyoutBehavior="Disabled">
 
     <Shell.TitleView>
-        <Grid RowDefinitions="*" ColumnDefinitions="*, *, *">
-            <Button Grid.Row="0" CornerRadius="0" Grid.Column="0" Text="Projects" BackgroundColor="#384c54" TextColor="Wheat" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToProjectsCommand}" />
-            <Button Grid.Row="0" CornerRadius="0" Grid.Column="1" Text="Activities" BackgroundColor="#384c54" TextColor="Wheat" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToActivitiesCommand}" />
-            <Button Grid.Row="0" CornerRadius="0" Grid.Column="2" Text="User" BackgroundColor="#384c54" TextColor="Wheat" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToUserCommand}" />
+        <Grid RowDefinitions="*" ColumnDefinitions="*, *, *" ColumnSpacing="5">
+            <Button Grid.Row="0" CornerRadius="5" Grid.Column="0" FontSize="15" Text="Projects" BackgroundColor="#62228e" TextColor="#ECDBBA" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToProjectsCommand}" />
+            <Button Grid.Row="0" CornerRadius="5" Grid.Column="1" Text="Activities" BackgroundColor="#62228e" TextColor="#ECDBBA" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToActivitiesCommand}" />
+            <Button Grid.Row="0" CornerRadius="5" Grid.Column="2" Text="User" BackgroundColor="#62228e  " TextColor="#ECDBBA" Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToUserCommand}" />
         </Grid>
     </Shell.TitleView>
 
