@@ -18,7 +18,7 @@ namespace TimeTracker.BL.Models
 
         public static ActivityListModel Empty => new()
         {
-            Id = Guid.Empty,
+            Id = Guid.NewGuid(),
             Start = DateTime.Now,
             End = DateTime.Now,
             Type = ActivityType.Empty,

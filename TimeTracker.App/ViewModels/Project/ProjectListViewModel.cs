@@ -46,7 +46,6 @@ public partial class ProjectListViewModel : ViewModelBase
             await _alertService.DisplayAsync("Error", "Please fill out both fields");
             return;
         }
-        NewProject.Id = Guid.NewGuid();
         NewProject.CreatedById = _activeUserService.GetId();
         await _projectFacade.SaveAsync(NewProject);
         NewProject = ProjectDetailModel.Empty;

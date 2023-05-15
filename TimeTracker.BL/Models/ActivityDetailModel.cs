@@ -22,7 +22,7 @@ namespace TimeTracker.BL.Models
 
         public static ActivityDetailModel Empty => new()
         {
-            Id = Guid.Empty,
+            Id = Guid.NewGuid(),
             Start = DateTime.Now,
             End = DateTime.Now,
             Description = string.Empty,
