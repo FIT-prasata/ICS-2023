@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using TimeTracker.App.Messages;
 using TimeTracker.App.Services.Interfaces;
 using TimeTracker.App.Services;
 using TimeTracker.BL.Facades;
 using TimeTracker.BL.Models;
+using TimeTracker.DAL.Enums;
 
 namespace TimeTracker.App.ViewModels.Activity;
 
@@ -35,4 +39,31 @@ namespace TimeTracker.App.ViewModels.Activity;
         _activeUserService = activeUserService;
         _alertService = alertService;
     }
+
+    protected override async Task LoadDataAsync()
+    {
+        await base.LoadDataAsync();
+        if (ActivityId == Guid.Empty)
+        {
+            Activity = ActivityDetailModel.Empty;
+        }
+        else
+        {
+            Activity = await _activityFacade.GetAsync(ActivityId);
+        }
+    }
+
+    [RelayCommand]
+    private async Task SaveAsync()
+    {
+        if (Activity.Type == ActivityType.Empty)
+        {
+            await _alertService.DisplayAsync("Error", "Type is required");
+            return;
+        }
+        await _activityFacade.SaveAsync(Activity!);
+        MessengerService.Send(new ActivityEditMessage { ActivityId = ActivityId });
+    }
+
+
 }
