@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TimeTracker.BL.Mappers;
 using TimeTracker.BL.Models;
 using TimeTracker.DAL.Entities;
@@ -17,5 +18,13 @@ namespace TimeTracker.BL.Facades
         {
         }
 
+        public async Task<IEnumerable<UserListModel>> GetUsersNotInProjectAsync(Guid projectId)
+        {
+            await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+            IQueryable<UserEntity> query = uow.GetRepository<UserEntity, UserEntityMapper>().Get();
+            IQueryable<ProjectUserEntity> projectUsers = uow.GetRepository<ProjectUserEntity, ProjectUserEntityMapper>().Get();
+            IEnumerable<Guid> userIds = projectUsers.Where(pu => pu.ProjectEntityId == projectId).Select(pu => pu.UserEntityId);
+            return Mapper.MapToListModel(await (query.Where(u => !userIds.Contains(u.Id))).ToListAsync());
+        }
     }
 }

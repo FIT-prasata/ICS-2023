@@ -15,6 +15,8 @@ namespace TimeTracker.BL.Models
         public ActivityType Type { get; set; }
         public UserDetailModel? Assigned { get; set; }
 
+        public string Duration => (End - Start).ToString(@"hh\:mm\:ss");
+
 
         public static ActivityListModel Empty => new()
         {

@@ -53,7 +53,14 @@ namespace TimeTracker.BL.Tests.FacadesTests
             Assert.Equal(expectedActivityListModel, actualActivity);
         }
 
-        
+        [Fact]
+        public async Task GetUsersThatAreNotInProject()
+        {
+            await _projectFacade.AddUserToProjectAsync(ProjectSeeds.ProjectEntity1.Id, UserSeeds.UserEntity1.Id);
+            var users = await _userFacade.GetUsersNotInProjectAsync(ProjectSeeds.ProjectEntity1.Id);
+            Assert.DoesNotContain(users, u => u.Id == UserSeeds.UserEntity1.Id);
+
+        }
 
     }
 }

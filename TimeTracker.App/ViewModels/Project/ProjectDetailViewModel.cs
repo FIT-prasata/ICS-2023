@@ -18,6 +18,7 @@ public partial class ProjectDetailViewModel : ViewModelBase
     private readonly IActivityFacade _activityFacade;
     private readonly INavigationService _navigationService;
     private readonly IActiveUserService _activeUserService;
+    private readonly IAlertService _alertService;
 
     public Guid ProjectId { get; set; }
 
@@ -26,8 +27,11 @@ public partial class ProjectDetailViewModel : ViewModelBase
 
     public Boolean IsNotUserAssigned => !IsUserAssigned;
 
+    public IEnumerable<UserListModel> Users { get; set; } = new List<UserListModel>() ;
+    public UserListModel? SelectedUser { get; set; }
+
     public ProjectDetailViewModel(IProjectFacade projectFacade, IUserFacade userFacade,
-        IActivityFacade activityFacade, INavigationService navigationService, IActiveUserService activeUserService, IMessengerService messengerService)
+        IActivityFacade activityFacade, INavigationService navigationService, IActiveUserService activeUserService, IAlertService alertService, IMessengerService messengerService)
     : base(messengerService)
     {
         _projectFacade = projectFacade;
@@ -35,6 +39,7 @@ public partial class ProjectDetailViewModel : ViewModelBase
         _activityFacade = activityFacade;
         _navigationService = navigationService;
         _activeUserService = activeUserService;
+        _alertService = alertService;
 
     }
 
@@ -44,7 +49,7 @@ public partial class ProjectDetailViewModel : ViewModelBase
 
         Project = await _projectFacade.GetAsync(ProjectId);
         IsUserAssigned = await _projectFacade.IsUserInProjectAsync(ProjectId, _activeUserService.GetId());
-
+        Users = (await _userFacade.GetUsersNotInProjectAsync(ProjectId)).ToList();
     }
 
     [RelayCommand]
@@ -65,5 +70,17 @@ public partial class ProjectDetailViewModel : ViewModelBase
     {
         await _projectFacade.RemoveUserFromProjectAsync(ProjectId, id);
         await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task AddSelectedUserAsync()
+    {
+        if (SelectedUser is not null)
+        {
+            await _projectFacade.AddUserToProjectAsync(ProjectId, SelectedUser.Id);
+            await LoadDataAsync();
+            return;
+        }
+        await _alertService.DisplayAsync("Warning", "You need to select user first");
     }
 }
