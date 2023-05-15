@@ -101,88 +101,68 @@
                    Margin="-90, 15, 30, 0"
                    />
         </Grid>
-        <Grid Margin="0, 60, 0, 0"
-              Column="0"
+        <Grid Margin="50, 50, 50, 0"
+              ColumnSpan="2"
               Row="1"
-              RowDefinitions="Auto, Auto"
-              ColumnDefinitions="*, *"
-              >
+        >
             <CollectionView
-                Grid.Row="2" ItemsSource="{Binding UserActivities}"
+                ItemsSource="{Binding UserActivities}"
                 VerticalOptions="FillAndExpand"
             >
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
                         Orientation="Vertical"
                         HorizontalItemSpacing="10" VerticalItemSpacing="10"
-                        Span="4"
+                        Span="5"
                     />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate
                         x:DataType="m:ActivityListModel"
                     >
-                        <Frame Padding="0"
+                        <Frame Padding="10"
                            CornerRadius="10"
-                           WidthRequest="300"
-                           HeightRequest="100"
+                           WidthRequest="230"
+                           HeightRequest="200"
                            IsClippedToBounds="True"
-                    >
-                            <Grid RowDefinitions="*,30" >
-
-                                <Grid
-                                Grid.Row="0"
-                                ColumnDefinitions="3*,*"
-                                RowDefinitions="*,*,*"
-                                >
-                                    <Label 
-                                Grid.Column="0"
-                                Grid.Row="0"
-                                VerticalOptions="Center"
-                                BackgroundColor="Black"
-                                TextColor="Wheat"
-                                Text="{Binding Type}"
-                                />
-                                    <Label 
-                                    Grid.Column="0"
-                                    Grid.Row="1"
-                                    VerticalOptions="Center"
-                                    BackgroundColor="Black"
-                                    TextColor="Wheat"
-                                    Text="{Binding Duration}"
-                                />
-                                    <Label 
-                                    Grid.Column="0"
-                                    Grid.Row="2"
-                                    VerticalOptions="Center"
-                                    BackgroundColor="Black"
-                                    TextColor="Wheat"
-                                    Text="{Binding Assigned.FullName, FallbackValue='No one assigned'}"
-                                />
-                                    <ImageButton 
-                                Grid.Column="1"
-                                Grid.RowSpan="2"
-                                Aspect="AspectFit"
-                                Source="delete_icon.png"
-                                Grid.Row="0"
-                                Command="{Binding Source={x:Reference UserDetailViewRoot}, Path=BindingContext.DeleteActivityCommand}"
-                                CommandParameter="{Binding Id}"
-                                />
-                                    <ImageButton 
-                                    Grid.Column="1"
-                                    Grid.RowSpan="3"
-                                    Aspect="AspectFit"
-                                    Source="edit_icon.png"
-                                    Grid.Row="2"
-                                    Command="{Binding Source={x:Reference UserDetailViewRoot}, Path=BindingContext.GoToActivityEditCommand}"
-                                    CommandParameter="{Binding Id}"
-                                />
-                                </Grid>
+                            >
+                            <Grid RowDefinitions="*, *, *, *, *"
+                                  ColumnDefinitions="*, *"
+                                  >
+                                <Label Grid.ColumnSpan="2"
+                                       Grid.Row="0"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"
+                                       TextColor="#d8e676"
+                                       FontSize="18"
+                                       Text="{Binding Type}"/>
+                                <Label Grid.Column="0"
+                                       Grid.Row="1"
+                                       HorizontalOptions="Center"
+                                       Text="Start time"/>
+                                <Label Grid.Column="0"
+                                        Grid.Row="2"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Start}"/>
+                                <Label Grid.Column="1"
+                                        Grid.Row="1"
+                                        HorizontalOptions="Center"
+                                        Text="End time"/>
+                                <Label Grid.Column="1"
+                                        Grid.Row="2"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding End}"/>
+                                <Label Grid.Column="0"
+                                       Grid.Row="3"
+                                       HorizontalOptions="Center"
+                                       Grid.ColumnSpan="2"
+                                       Text="Duration"/>
+                                <Label Grid.ColumnSpan="2"
+                                       Grid.Row="4"
+                                       HorizontalOptions="Center"
+                                       Text="{Binding Duration}"/>
                             </Grid>
-
                         </Frame>
-
-
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 

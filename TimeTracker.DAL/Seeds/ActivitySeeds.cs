@@ -33,6 +33,7 @@ public static class ActivitySeeds
         ProjectId = ProjectSeeds.ProjectEntity1.Id,
         AssignedId = UserSeeds.UserEntity1.Id
 
+
     };
     public static ActivityEntity ActivityDelete => new()
     {
@@ -42,7 +43,8 @@ public static class ActivitySeeds
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
-        ProjectId = ProjectSeeds.ProjectEntity1.Id
+        ProjectId = ProjectSeeds.ProjectEntity1.Id,
+        AssignedId = UserSeeds.UserGet.Id,
     };
 
     public static ActivityEntity ActivityFromToday => new()
@@ -53,7 +55,8 @@ public static class ActivitySeeds
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
-        ProjectId = ProjectSeeds.ProjectEntity1.Id
+        ProjectId = ProjectSeeds.ProjectEntity1.Id,
+        AssignedId = UserSeeds.UserGet.Id,
     };
     
     public static ActivityEntity ActivityAlmostWeekAgo => new ()
@@ -64,7 +67,8 @@ public static class ActivitySeeds
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
-        ProjectId = ProjectSeeds.ProjectEntity1.Id
+        ProjectId = ProjectSeeds.ProjectEntity1.Id,
+        AssignedId = UserSeeds.UserGet.Id,
     };
 
     public static ActivityEntity ActivityAlmostMonthAgo => new()
@@ -75,7 +79,8 @@ public static class ActivitySeeds
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
-        ProjectId = ProjectSeeds.ProjectEntity1.Id
+        ProjectId = ProjectSeeds.ProjectEntity1.Id,
+        AssignedId = UserSeeds.UserGet.Id,
     };
 
     public static ActivityEntity ActivityAlmostYearAgo => new()
@@ -86,7 +91,8 @@ public static class ActivitySeeds
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
-        ProjectId = ProjectSeeds.ProjectEntity1.Id
+        ProjectId = ProjectSeeds.ProjectEntity1.Id,
+        AssignedId = UserSeeds.UserGet.Id,
     };
 
     public static ActivityEntity ActivityAssignedToUser => new()
