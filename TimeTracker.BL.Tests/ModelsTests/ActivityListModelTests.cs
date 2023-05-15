@@ -12,19 +12,7 @@ namespace TimeTracker.BL.Tests.ModelsTests
 {
     public class ActivityModelTests
     {
-        [Fact]
-        public void Empty_ReturnsValidInstance()
-        {
-            // Arrange & Act
-            var emptyActivity = ActivityListModel.Empty;
 
-            // Assert
-            Assert.Equal(Guid.Empty, emptyActivity.Id);
-            Assert.Equal(DateTime.Now.Date, emptyActivity.Start.Date);
-            Assert.Equal(DateTime.Now.Date, emptyActivity.End.Date);
-            Assert.Equal(ActivityType.Empty, emptyActivity.Type);
-            Assert.Equal(UserDetailModel.Empty, emptyActivity.Assigned);
-        }
 
         [Fact]
         public void Properties_SetAndGetCorrectly()

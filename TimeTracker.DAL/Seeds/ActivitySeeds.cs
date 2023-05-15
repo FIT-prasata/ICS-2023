@@ -48,8 +48,8 @@ public static class ActivitySeeds
     public static ActivityEntity ActivityFromToday => new()
     {
         Id = Guid.Parse("10000000-0000-0000-0000-000000000004"),
-        Start = DateTime.Now.AddHours(-2),
-        End = DateTime.Now,
+        Start = DateTime.Now,
+        End = DateTime.Now.AddHours(2),
         Description = "Test",
         Type = ActivityType.Work,
         CreatedById = UserSeeds.UserEntity1.Id,
