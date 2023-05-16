@@ -13,8 +13,8 @@ namespace TimeTracker.BL.Models
         public string? Description { get; set; }
 
         public Guid CreatedById { get; set; } 
-        public ObservableCollection<ActivityListModel>? Activities { get; init; } = new();
-        public ObservableCollection<UserListModel>? Users { get; init; } = new();
+        public ObservableCollection<ActivityListModel>? Activities { get; set; } = new();
+        public ObservableCollection<UserListModel>? Users { get; set; } = new();
 
         public static ProjectDetailModel Empty => new()
         {

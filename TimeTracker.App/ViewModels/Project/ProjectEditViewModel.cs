@@ -55,6 +55,9 @@ public partial class ProjectEditViewModel: ViewModelBase
             await _alertService.DisplayAsync("Error", "Please fill out the name field");
             return;
         }
+
+        Project.Activities = null;
+        Project.Users = null;
         await _projectFacade.SaveAsync(Project);
         MessengerService.Send(new ProjectEditMessage {ProjectId = ProjectId});
         await LoadDataAsync();
