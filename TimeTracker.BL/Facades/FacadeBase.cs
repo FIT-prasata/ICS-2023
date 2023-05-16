@@ -12,6 +12,7 @@ using TimeTracker.DAL.Entities;
 using TimeTracker.DAL.Mappers;
 using TimeTracker.DAL.Repositories;
 using TimeTracker.DAL.UnitOfWork;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace TimeTracker.BL.Facades
 {
@@ -116,10 +117,16 @@ namespace TimeTracker.BL.Facades
         public virtual async Task<IEnumerable<TListModel>> GetAsync()
         {
             await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-            List<TEntity> entities = await uow
+            IQueryable<TEntity> query = uow
                 .GetRepository<TEntity, TEntityMapper>()
-                .Get()
-                .ToListAsync();
+                .Get();
+
+            if (IncludesNavigationPathDetail.Any())
+            {
+                IncludesNavigationPathDetail.ForEach(include => query = query.Include(include));
+            }
+
+            List<TEntity> entities = await query.ToListAsync();
 
             return Mapper.MapToListModel(entities);
         }

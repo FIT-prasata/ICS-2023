@@ -104,9 +104,9 @@ public partial class ProjectDetailViewModel : ViewModelBase, IRecipient<ProjectE
     [RelayCommand]
     private async Task AddNewUserAsync()
     {
-        if (NewUser.FirstName is null || NewUser.LastName is null )
+        if (NewUser.FirstName == string.Empty || NewUser.LastName == string.Empty || NewUser.ImgUri == string.Empty)
         {
-            await _alertService.DisplayAsync("Error", "First and last names are required");
+            await _alertService.DisplayAsync("Error", "All fields are required");
             return;
         }
         NewUser.Id = Guid.NewGuid();
