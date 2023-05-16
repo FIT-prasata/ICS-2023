@@ -165,33 +165,41 @@
                                 HeightRequest="150"
                                 IsClippedToBounds="True"
                             >
-                                <Grid RowDefinitions="*,30" >
+                                <Grid RowDefinitions="50,*,50" >
                                     <Image Grid.Row="0"
-                                        Grid.RowSpan="2"
+                                        Grid.RowSpan="3"
                                         HorizontalOptions="Fill"
                                         VerticalOptions="Fill"
                                         Aspect="AspectFit"
                                         Source="{Binding ImgUri}"
                                     />
-                                    <Grid
-                                        Grid.Row="1"
-                                        ColumnDefinitions="3*,*"
-                                    >
-                                        <Label 
-                                            Grid.Column="0"
-                                            VerticalOptions="Center"
-                                            BackgroundColor="Black"
-                                            TextColor="Wheat"
-                                            Text="{Binding FullName}"
-                                        />
-                                        <ImageButton 
-                                            Grid.Column="1"
-                                            Aspect="AspectFit"
-                                            Source="delete_icon.png"
-                                            Command="{Binding Source={x:Reference ProjectDetailRoot}, Path=BindingContext.RemoveSpecificUserFromProjectCommand}"
-                                            CommandParameter="{Binding Id}"
-                                        />
-                                    </Grid>
+                                    <ImageButton 
+                                        Grid.Row="0"
+                                        Aspect="AspectFit"
+                                        HorizontalOptions="End"
+                                        Source="delete_icon.png"
+                                        Command="{Binding Source={x:Reference ProjectDetailRoot}, Path=BindingContext.RemoveSpecificUserFromProjectCommand}"
+                                        CommandParameter="{Binding Id}"
+                                    />
+
+                                    
+                                    <Label 
+                                        Grid.Row="2"
+                                        HeightRequest="35"
+                                        VerticalOptions="End"
+                                        Opacity="0.75"
+                                        BackgroundColor="Black"/>
+                                    <Label 
+                                        Margin="5"
+                                        FontAttributes="Bold"
+                                        Grid.Row="2"
+                                        HeightRequest="25"
+                                        FontSize="15"
+                                        VerticalOptions="End"
+                                        TextColor="White"
+                                        Text="{Binding FullName}"
+                                    />
+
                                 </Grid>
                             </Frame>
                         </DataTemplate>
