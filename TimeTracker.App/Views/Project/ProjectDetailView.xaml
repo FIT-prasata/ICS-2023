@@ -63,7 +63,7 @@
                 <Grid ColumnDefinitions="*,2*,200"  Grid.Row="1" BackgroundColor="#252525" ColumnSpacing="30"> <!-- add existing/add new-->
                     <Grid Grid.Column="0" ColumnDefinitions="*,*" Margin="10"><!-- add existing-->
                         <Picker
-                            BackgroundColor="Black"
+                            BackgroundColor="#181818"
                             TextColor="Wheat"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"
@@ -226,8 +226,8 @@
                     TextColor="White"
                 />
                 <Grid Grid.Column="1" Grid.Row="1" ColumnDefinitions="150,250">
-                    <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding DateStart}" Grid.Column="0" VerticalOptions="Start" />
-                    <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeStart}" Grid.Column="1" VerticalOptions="End" />
+                    <DatePicker BackgroundColor="#181818" TextColor="Wheat" Date="{Binding DateStart}" Grid.Column="0" VerticalOptions="Start" />
+                    <TimePicker BackgroundColor="#181818" TextColor="Wheat" Time="{Binding TimeStart}" Grid.Column="1" VerticalOptions="End" />
                 </Grid>
                 <Label
                     Grid.Row="0"
@@ -238,8 +238,8 @@
                     TextColor="White"
                 />
                 <Grid Grid.Column="2" Grid.Row="1" ColumnDefinitions="150,250">
-                    <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding  DateEnd}" Grid.Column="0" VerticalOptions="Start" />
-                    <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeEnd}" Grid.Column="1" VerticalOptions="End" />
+                    <DatePicker BackgroundColor="#181818" TextColor="Wheat" Date="{Binding  DateEnd}" Grid.Column="0" VerticalOptions="Start" />
+                    <TimePicker BackgroundColor="#181818" TextColor="Wheat" Time="{Binding TimeEnd}" Grid.Column="1" VerticalOptions="End" />
 
                 </Grid>
                 <Label
@@ -250,7 +250,7 @@
                     Text="Description:"
                     TextColor="White"
                 />
-                <Entry BackgroundColor="Black" TextColor="Wheat" WidthRequest="400" Text="{Binding NewActivity.Description}" Grid.Column="3" Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Start" />
+                <Entry BackgroundColor="#181818" TextColor="Wheat" WidthRequest="400" Text="{Binding NewActivity.Description}" Grid.Column="3" Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Start" />
                 <Label
                     Grid.Row="0"
                     Grid.Column="4"
@@ -260,7 +260,7 @@
                     TextColor="White"
                 />
                 <Picker
-                    BackgroundColor="Black"
+                    BackgroundColor="#181818"
                     TextColor="Wheat"
                     VerticalOptions="Fill"
                     HorizontalOptions="Fill"

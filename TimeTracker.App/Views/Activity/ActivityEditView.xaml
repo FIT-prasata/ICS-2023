@@ -8,8 +8,10 @@
                        x:Name="ActivityEditViewRoot"
                        x:DataType="vm:ActivityEditViewModel"
 >
-    <Grid ColumnDefinitions="100,4*,4*,4*,*,2*,100" RowDefinitions="auto, auto" BackgroundColor="#252525" >
-        <Label
+
+    <Grid RowDefinitions="*,100, 10*">
+        <Grid ColumnDefinitions="100,4*,4*,4*,*,2*,100" RowDefinitions="auto, auto" BackgroundColor="#252525" Grid.Row="1" Margin="5">
+            <Label
                     Grid.Row="0"
                     Grid.Column="1"
                     VerticalOptions="Center"
@@ -17,11 +19,11 @@
                     Text="Since:"
                     TextColor="White"
                 />
-        <Grid Grid.Column="1" Grid.Row="1" ColumnDefinitions="150,250">
-            <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding DateStart}" Grid.Column="0" VerticalOptions="Start" />
-            <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeStart}" Grid.Column="1" VerticalOptions="End" />
-        </Grid>
-        <Label
+            <Grid Grid.Column="1" Grid.Row="1" ColumnDefinitions="150,250">
+                <DatePicker BackgroundColor="#181818" TextColor="Wheat" Date="{Binding DateStart}" Grid.Column="0" VerticalOptions="Start" />
+                <TimePicker BackgroundColor="#181818" TextColor="Wheat" Time="{Binding TimeStart}" Grid.Column="1" VerticalOptions="End" />
+            </Grid>
+            <Label
                     Grid.Row="0"
                     Grid.Column="2"
                     VerticalOptions="Center"
@@ -29,12 +31,12 @@
                     Text="Until:"
                     TextColor="White"
                 />
-        <Grid Grid.Column="2" Grid.Row="1" ColumnDefinitions="150,250">
-            <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding  DateEnd}" Grid.Column="0" VerticalOptions="Start" />
-            <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeEnd}" Grid.Column="1" VerticalOptions="End" />
+            <Grid Grid.Column="2" Grid.Row="1" ColumnDefinitions="150,250">
+                <DatePicker BackgroundColor="#181818" TextColor="Wheat" Date="{Binding  DateEnd}" Grid.Column="0" VerticalOptions="Start" />
+                <TimePicker BackgroundColor="#181818" TextColor="Wheat" Time="{Binding TimeEnd}" Grid.Column="1" VerticalOptions="End" />
 
-        </Grid>
-        <Label
+            </Grid>
+            <Label
                     Grid.Row="0"
                     Grid.Column="3"
                     VerticalOptions="Center"
@@ -42,8 +44,8 @@
                     Text="Description:"
                     TextColor="White"
                 />
-        <Entry BackgroundColor="Black" TextColor="Wheat" WidthRequest="400" Text="{Binding Activity.Description}" Grid.Column="3" Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Start" />
-        <Label
+            <Entry BackgroundColor="#181818" TextColor="Wheat" WidthRequest="400" Text="{Binding Activity.Description}" Grid.Column="3" Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Start" />
+            <Label
                     Grid.Row="0"
                     Grid.Column="4"
                     VerticalOptions="Center"
@@ -51,8 +53,8 @@
                     Text="Type:"
                     TextColor="White"
                 />
-        <Picker
-                    BackgroundColor="Black"
+            <Picker
+                    BackgroundColor="#181818"
                     TextColor="Wheat"
                     VerticalOptions="Fill"
                     HorizontalOptions="Fill"
@@ -62,6 +64,8 @@
                     ItemDisplayBinding="{Binding .}"
                     SelectedItem="{Binding Activity.Type}"
                 />
-        <Button BackgroundColor="#62228e" TextColor="Wheat" Text="Save" Grid.Column="5" Grid.RowSpan="2" Margin="15" Command="{Binding SaveCommand}"/>
+            <Button BackgroundColor="#62228e" TextColor="Wheat" Text="Save" Grid.Column="5" Grid.RowSpan="2" Margin="15" Command="{Binding SaveCommand}"/>
+        </Grid>
     </Grid>
+    
 </views:ContentBasePage>

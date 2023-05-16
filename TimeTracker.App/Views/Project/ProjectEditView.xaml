@@ -8,61 +8,74 @@
                        x:Name="ProjectEditRoot"
                        x:DataType="vm:ProjectEditViewModel"
 >
-    <Grid
-        RowDefinitions="*,*,*"
-        ColumnDefinitions="*,*,*"
-        >
-    <Label 
-        Grid.Row="0"
-        Grid.Column="0"
-        Grid.ColumnSpan="3"
-        FontSize="50"
-        TextColor="Wheat"
-        Text="Project Edit"
-        />
-    
-    <Label 
-        Grid.Row="1"
-        Grid.Column="0"
-        Text="Project name"
-        TextColor="Wheat"
-        />
-    <Entry
-        Grid.Row="1"
-        Grid.Column="1"
-        BackgroundColor="Wheat"
-        TextColor="Black"
-        Text="{Binding Project.Name}"
-    />
-    <Button 
-        Grid.Row="1"
-        Grid.Column="2"
-        Command="{Binding SaveCommand}"
-        Text="Save"
-        BackgroundColor="Green"
-        
-        />
+    <Grid  RowDefinitions="*,150,200,200,2*" ColumnDefinitions="500,*,500" >
         <Label 
-        Grid.Row="2"
-        Grid.Column="0"
-        Text="Project description"
-        TextColor="Wheat"
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            FontSize="50"
+            TextColor="White"
+            Text="Project Edit"
         />
-    <Entry
-        Grid.Row="2"
-        Grid.Column="1"
-        BackgroundColor="Wheat"
-        TextColor="Black"
-        Text="{Binding Project.Description}"
-    />
-    <Button 
-        Grid.Row="2"
-        Grid.Column="2"
-        Command="{Binding DeleteCommand}"
-        Text="Delete"
-        BackgroundColor="Red"
+        <Grid RowDefinitions="50,*" Grid.Row="2" Grid.Column="1" >
+            <Label 
+                Grid.Row="0"
+                FontSize="30"
+                Text="Project name"
+                TextColor="White"
+            />
+            <Entry
+                Grid.Row="1"
+                VerticalOptions="Start"
+                Margin="10"
+                HeightRequest="75"
+                BackgroundColor="#252525"
+                TextColor="White"
+                Text="{Binding Project.Name}"
+            />
+        </Grid>
+        <Grid RowDefinitions="50,*" Grid.Row="3" Grid.Column="1" >
+            <Label 
+                Grid.Row="0"
+                FontSize="30"
+                Text="Project description"
+                TextColor="White"
+            />
+            <Entry
+                Grid.Row="1"
+                VerticalOptions="Start"
+                Margin="10"
+                HeightRequest="75"
+                BackgroundColor="#252525"
+                TextColor="White"
+                Text="{Binding Project.Description}"
+            />
+        </Grid>
+        <Grid ColumnDefinitions="*,*" Grid.Row="4" Grid.Column="1" ColumnSpacing="100" Margin="15">
+            <Button 
+                Grid.Column="0"
+                HeightRequest="75"
+                Command="{Binding SaveCommand}"
+                Text="Save changes"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="18"
+                BackgroundColor="#4d8e22"
+            />
+
+            <Button 
+                Grid.Column="1"
+                HeightRequest="75"
+                Command="{Binding DeleteCommand}"
+                Text="Delete project"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="18"
+                BackgroundColor="#b30b4e"
+            />  
+        </Grid>
+
         
-    />
 
     </Grid>
 
