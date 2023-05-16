@@ -8,7 +8,7 @@
                        x:Name="ActivityListViewRoot"
                        x:DataType="vm:ActivityListViewModel"
                        >
-    <Grid RowDefinitions="*,*, 4*">
+    <Grid RowDefinitions="*,150, 5*" RowSpacing="20">
         <Label
             Grid.Row="0"
             TextColor="Wheat"
@@ -18,18 +18,24 @@
             Text="{Binding DisplayText}"
 
             />
-        <Grid Grid.Row="1">
-            <Grid
-                ColumnDefinitions="*,*,*,*,*,3*"
-                >
+        <Grid Grid.Row="1" ColumnDefinitions="2*,*" BackgroundColor="#252525" ColumnSpacing="100">
+            <Grid ColumnDefinitions="*,*,*,*,*" >
                 <Button 
-                        Grid.Column="0"
-                        Text="All"
-                        Margin="50"
-                        Command="{Binding GetAllActivitiesCommand}"
-                    />
+                    Grid.Column="0"
+                    Text="All"
+                    BackgroundColor="#62228e"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Margin="50"
+                    Command="{Binding GetAllActivitiesCommand}"
+                />
                 <Button 
                     Grid.Column="1"
+                    BackgroundColor="#62228e"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="20"
                     Text="24h"
                     Margin="50"
                     Command="{Binding GetActivitiesFromLastDayCommand}"
@@ -37,46 +43,62 @@
                 <Button 
                     Grid.Column="2"
                     Text="Week"
+                    BackgroundColor="#62228e"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="20"
                     Margin="50"
                     Command="{Binding GetActivitiesFromLastWeekCommand}"
                 />
                 <Button 
                     Grid.Column="3"
                     Text="Month"
+                    BackgroundColor="#62228e"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="20"
                     Margin="50"
                     Command="{Binding GetActivitiesFromLastMonthCommand}"
                 />
                 <Button 
                     Grid.Column="4"
                     Text="Year"
+                    BackgroundColor="#62228e"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="20"
                     Margin="50"
                     Command="{Binding GetActivitiesFromLastYearCommand}"
                 />
-                <Grid
-                    Grid.Column="5"
-                    ColumnDefinitions="*,*"
-                    >
-                        <DatePicker 
-                            Grid.Column="0"
-                            BackgroundColor="Black"
-                            TextColor="Wheat"
-                            Margin="30"
-                            Date="{Binding SpecificDateStart}"
-                            />
-                        <DatePicker 
-                            Grid.Column="1"
-                            BackgroundColor="Black"
-                            TextColor="Wheat"
-                            Margin="-150"
-                            Date="{Binding SpecificDateEnd}"
-                        />
-                        <Button 
-                            Grid.Column="2"
-                            Text="Filter By specific dates"
-                            Margin="50"
-                            Command="{Binding GetActivitiesFromSpecificDateCommand}"
-                            />
-                </Grid>
+                
+            </Grid>
+            <Grid Grid.Column="5" ColumnDefinitions="3*,3*,8*" >
+                <DatePicker 
+                    Grid.Column="0"
+                    BackgroundColor="#181818"
+                    TextColor="Wheat"
+                    HeightRequest="50"
+                    Date="{Binding SpecificDateStart}"
+                />
+                <DatePicker 
+                    Grid.Column="1"
+                    BackgroundColor="#181818"
+                    TextColor="Wheat"
+                    HorizontalOptions="Center"
+                    HeightRequest="50"
+                            
+                    Date="{Binding SpecificDateEnd}"
+                />
+                <Button 
+                    Grid.Column="2"
+                    Text="Filter By specific dates"
+                    BackgroundColor="#62228e"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Margin="50"
+                    Command="{Binding GetActivitiesFromSpecificDateCommand}"
+                />
             </Grid>
         </Grid>
         <CollectionView
