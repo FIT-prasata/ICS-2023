@@ -29,8 +29,7 @@
                    />
             <CollectionView
                 Grid.Row="1" ItemsSource="{Binding Projects}"
-                VerticalOptions="Start"
-                HorizontalOptions="Start">
+                VerticalOptions="FillAndExpand">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout 
                             Orientation="Vertical"
@@ -44,11 +43,6 @@
                                CornerRadius="1"
                                WidthRequest="320" HeightRequest="240"
                                IsClippedToBounds="True">
-
-                            <!--<Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference ProjectListViewRoot}, Path=BindingContext.GotoDetailCommand}"
-                                                      CommandParameter="{Binding Id}" />
-                            </Frame.GestureRecognizers>-->
 
                             <Grid
                                 RowDefinitions="55,140, *"
