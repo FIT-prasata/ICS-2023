@@ -52,24 +52,31 @@
                     Margin="50"
                     Command="{Binding GetActivitiesFromLastYearCommand}"
                 />
-                <DatePicker 
+                <Grid
                     Grid.Column="5"
-                    BackgroundColor="Black"
-                    TextColor="Wheat"
-                    Date="{Binding SpecificDateStart}"
-                />
-                <DatePicker 
-                    Grid.Column="6"
-                    BackgroundColor="Black"
-                    TextColor="Wheat"
-                    Date="{Binding SpecificDateEnd}"
-                />
-                <Button 
-                    Grid.Column="7"
-                    Text="Filter By specific dates"
-                    Margin="250,50,0,50"
-                    Command="{Binding GetActivitiesFromSpecificDateCommand}"
-                />
+                    ColumnDefinitions="*,*"
+                    >
+                        <DatePicker 
+                            Grid.Column="0"
+                            BackgroundColor="Black"
+                            TextColor="Wheat"
+                            Margin="30"
+                            Date="{Binding SpecificDateStart}"
+                            />
+                        <DatePicker 
+                            Grid.Column="1"
+                            BackgroundColor="Black"
+                            TextColor="Wheat"
+                            Margin="-150"
+                            Date="{Binding SpecificDateEnd}"
+                        />
+                        <Button 
+                            Grid.Column="2"
+                            Text="Filter By specific dates"
+                            Margin="50"
+                            Command="{Binding GetActivitiesFromSpecificDateCommand}"
+                            />
+                </Grid>
             </Grid>
         </Grid>
         <CollectionView
