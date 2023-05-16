@@ -8,9 +8,62 @@
                        x:Name="ProjectEditRoot"
                        x:DataType="vm:ProjectEditViewModel"
 >
+    <Grid
+        RowDefinitions="*,*,*"
+        ColumnDefinitions="*,*,*"
+        >
     <Label 
-        TextColor="Black"
-        Text="{Binding  ProjectId}"
+        Grid.Row="0"
+        Grid.Column="0"
+        Grid.ColumnSpan="3"
+        FontSize="50"
+        TextColor="Wheat"
+        Text="Project Edit"
         />
     
+    <Label 
+        Grid.Row="1"
+        Grid.Column="0"
+        Text="Project name"
+        TextColor="Wheat"
+        />
+    <Entry
+        Grid.Row="1"
+        Grid.Column="1"
+        BackgroundColor="Wheat"
+        TextColor="Black"
+        Text="{Binding Project.Name}"
+    />
+    <Button 
+        Grid.Row="1"
+        Grid.Column="2"
+        Command="{Binding SaveCommand}"
+        Text="Save"
+        BackgroundColor="Green"
+        
+        />
+        <Label 
+        Grid.Row="2"
+        Grid.Column="0"
+        Text="Project description"
+        TextColor="Wheat"
+        />
+    <Entry
+        Grid.Row="2"
+        Grid.Column="1"
+        BackgroundColor="Wheat"
+        TextColor="Black"
+        Text="{Binding Project.Description}"
+    />
+    <Button 
+        Grid.Row="2"
+        Grid.Column="2"
+        Command="{Binding DeleteCommand}"
+        Text="Delete"
+        BackgroundColor="Red"
+        
+    />
+
+    </Grid>
+
 </views:ContentBasePage>
