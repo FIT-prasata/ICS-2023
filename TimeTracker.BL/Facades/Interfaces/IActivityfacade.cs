@@ -15,5 +15,6 @@ namespace TimeTracker.BL.Facades
         Task<IEnumerable<ActivityListModel>> GetActivitiesByUserCreatedAsync(Guid userId);
         Task<IEnumerable<ActivityListModel>> GetActivitiesByUserAssignedAsync(Guid userId);
         Task<IEnumerable<ActivityListModel>> GetActivitiesByDateLazyAsync(LazyDateType typeDate);
+        Task DeleteUserActivitiesOnProject(Guid projectId, Guid userId);
     }
 }
