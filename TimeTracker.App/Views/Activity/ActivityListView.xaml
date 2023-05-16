@@ -111,7 +111,7 @@
                                    Grid.Row="0"
                                    FontAttributes="Bold"
                                    HorizontalOptions="Center"
-                                   FontSize="18"
+                                   FontSize="12"
                                    Text="{Binding Assigned.FullName}"/>
                             <Label Grid.Column="0"
                                        Grid.Row="1"
@@ -140,10 +140,39 @@
                                        Grid.ColumnSpan="2"
                                        Margin="10"
                                        Text="Duration"/>
-                            <Label Grid.ColumnSpan="2"
-                                       Grid.Row="4"
+                            <Grid ColumnDefinitions="Auto, Auto, Auto"
+                                  RowDefinitions="*"
+                                  Grid.Row="4"
+                                  Grid.ColumnSpan="2">
+                                <ImageButton 
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Aspect="AspectFit"
+                                    Source="edit_icon.png"
+                                    Padding="5"
+                                    Margin="0,-5"
+                                    BackgroundColor="Black"
+                                    Command="{Binding Source={x:Reference ActivityListViewRoot}, Path=BindingContext.GoToActivityEditCommand}"
+                                    CommandParameter="{Binding Id}"/>
+                                <Label Grid.Column="1"
+                                       Grid.Row="0"
+                                       Margin="42, 0, 0, 0"
+                                       MinimumWidthRequest="40"
                                        HorizontalOptions="Center"
                                        Text="{Binding Duration}"/>
+                                <ImageButton 
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    Aspect="AspectFit"
+                                    Source="delete_icon.png"
+                                    Margin="30, -9"
+                                    BackgroundColor="Black"
+                                    Padding="5"
+                                    Command="{Binding Source={x:Reference ActivityListViewRoot}, Path=BindingContext.DeleteActivityCommand}"
+                                    CommandParameter="{Binding Id}"
+                                />
+                            </Grid>
+
                         </Grid>
                     </Frame>
                 </DataTemplate>

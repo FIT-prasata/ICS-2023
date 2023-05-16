@@ -143,7 +143,7 @@
                                    Grid.Row="0"
                                    FontAttributes="Bold"
                                    HorizontalOptions="Center"
-                                   FontSize="18"
+                                   FontSize="12"
                                    Text="{Binding Assigned.FullName}"/>
                                 <Label Grid.Column="0"
                                        Grid.Row="1"
