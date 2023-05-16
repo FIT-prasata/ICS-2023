@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentBasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="clr-namespace:TimeTracker.App.Views"
+                       xmlns:m="clr-namespace:TimeTracker.BL.Models;assembly=TimeTracker.BL"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels.User"
+                       x:Class="TimeTracker.App.Views.User.UserSelectView"
+                       x:Name="UserSelectViewRoot"
+                       x:DataType="vm:UserSelectViewModel"
+>
+    <Grid RowDefinitions="50, *">
+        <Label
+                Grid.Row="0"
+                Text="Choose your character"
+            />
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Users}"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            >
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout 
+                        Orientation="Vertical"
+                        HorizontalItemSpacing="10" VerticalItemSpacing="10"
+                        Span="4"
+                    />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate
+                    x:DataType="m:UserListModel"
+                    >
+                    <Frame Padding="0"
+                           CornerRadius="10"
+                           WidthRequest="150"
+                           HeightRequest="150"
+                           IsClippedToBounds="True"
+                    >
+                        <Grid RowDefinitions="*,30" >
+                            <Image Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   Aspect="AspectFit"
+                                   Source="{Binding ImgUri}"
+                            />
+                            <Grid
+                                Grid.Row="1"
+                                ColumnDefinitions="3*,*"
+                            >
+                                <Label 
+                                    Grid.Column="0"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Black"
+                                    TextColor="Wheat"
+                                    Text="{Binding FullName}"
+                                />
+                                <Button 
+                                    Grid.Column="1"
+                                    Text="Login as!"
+                                    Command="{Binding Source={x:Reference UserSelectViewRoot}, Path=BindingContext.UserSelectedCommand}"
+                                    CommandParameter="{Binding Id}"
+                                />
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </Grid>
+</views:ContentBasePage>
