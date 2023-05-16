@@ -7,7 +7,7 @@ using TimeTracker.BL.Facades;
 using TimeTracker.BL.Models;
 
 namespace TimeTracker.App.ViewModels.Project;
-public partial class ProjectListViewModel : ViewModelBase, IRecipient<ProjectEditMessage>
+public partial class ProjectListViewModel : ViewModelBase, IRecipient<ProjectEditMessage>, IRecipient<ProjectDeleteMessage>
 {
     private readonly IProjectFacade _projectFacade;
     private readonly INavigationService _navigationService;
@@ -60,6 +60,11 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<ProjectEdi
             new Dictionary<string, object?> { [nameof(ProjectDetailViewModel.ProjectId)] = id });
 
     public async void Receive(ProjectEditMessage message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(ProjectDeleteMessage message)
     {
         await LoadDataAsync();
     }

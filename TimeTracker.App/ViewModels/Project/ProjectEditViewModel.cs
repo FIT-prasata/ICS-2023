@@ -57,6 +57,15 @@ public partial class ProjectEditViewModel: ViewModelBase
         }
         await _projectFacade.SaveAsync(Project);
         MessengerService.Send(new ProjectEditMessage {ProjectId = ProjectId});
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task DeleteAsync()
+    {
+        await _projectFacade.DeleteAsync(ProjectId);
+        MessengerService.Send(new ProjectDeleteMessage());
+        await _navigationService.GoToAsync<ProjectListViewModel>();
     }
 
 }

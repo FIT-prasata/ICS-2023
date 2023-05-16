@@ -8,9 +8,13 @@
                        x:Name="UserSelectViewRoot"
                        x:DataType="vm:UserSelectViewModel"
 >
-    <Grid RowDefinitions="50, *">
+    <Grid RowDefinitions="70, *">
         <Label
                 Grid.Row="0"
+            FontAttributes="Bold"
+            FontSize="32"
+            Margin="10"
+            HorizontalOptions="CenterAndExpand"
                 Text="Choose your character"
             />
         <CollectionView
@@ -24,6 +28,7 @@
                         Orientation="Vertical"
                         HorizontalItemSpacing="10" VerticalItemSpacing="10"
                         Span="4"
+                        
                     />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
@@ -32,11 +37,12 @@
                     >
                     <Frame Padding="0"
                            CornerRadius="10"
-                           WidthRequest="150"
-                           HeightRequest="150"
+                           WidthRequest="200"
+                           HeightRequest="200"
                            IsClippedToBounds="True"
                     >
-                        <Grid RowDefinitions="*,30" >
+                        
+                        <Grid RowDefinitions="*,50" >
                             <Image Grid.Row="0"
                                    Grid.RowSpan="2"
                                    HorizontalOptions="Fill"
@@ -44,24 +50,29 @@
                                    Aspect="AspectFit"
                                    Source="{Binding ImgUri}"
                             />
-                            <Grid
+                            <Label 
                                 Grid.Row="1"
-                                ColumnDefinitions="3*,*"
-                            >
-                                <Label 
-                                    Grid.Column="0"
-                                    VerticalOptions="Center"
-                                    BackgroundColor="Black"
-                                    TextColor="Wheat"
-                                    Text="{Binding FullName}"
-                                />
-                                <Button 
-                                    Grid.Column="1"
-                                    Text="Login as!"
-                                    Command="{Binding Source={x:Reference UserSelectViewRoot}, Path=BindingContext.UserSelectedCommand}"
-                                    CommandParameter="{Binding Id}"
-                                />
-                            </Grid>
+                                HeightRequest="35"
+                                VerticalOptions="End"
+                                Opacity="0.75"
+                                BackgroundColor="Black"
+                            />
+                            <Label 
+                                Margin="5"
+                                FontAttributes="Bold"
+                                Grid.Row="1"
+                                HeightRequest="25"
+                                FontSize="15"
+                                VerticalOptions="End"
+                                TextColor="White"
+                                Text="{Binding FullName}"
+                            />
+                            <Button 
+                                Grid.RowSpan="2"
+                                Opacity="0"
+                                Command="{Binding Source={x:Reference UserSelectViewRoot}, Path=BindingContext.UserSelectedCommand}"
+                                CommandParameter="{Binding Id}"
+                            />
                         </Grid>
                     </Frame>
 
