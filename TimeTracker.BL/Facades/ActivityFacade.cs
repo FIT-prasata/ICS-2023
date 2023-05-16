@@ -123,5 +123,17 @@ namespace TimeTracker.BL.Facades
 
             return Mapper.MapToListModel(entities);
         }
+
+        public async Task DeleteUserActivitiesOnProject(Guid projectId, Guid userId)
+        {
+            await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+            IQueryable<ActivityEntity> query = GetQuery(uow);
+            query = query.Where(activity => activity.ProjectId == projectId && activity.AssignedId == userId);
+            
+            List<Guid> toDelete = await query.Select(e => e.Id).ToListAsync();
+            toDelete.ForEach(id => uow.GetRepository<ActivityEntity, ActivityEntityMapper>().Delete(id));
+            await uow.CommitAsync();
+
+        }
     }
 }

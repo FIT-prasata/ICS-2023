@@ -79,6 +79,18 @@ namespace TimeTracker.App.ViewModels.Activity;
             await _alertService.DisplayAsync("Error", "Type is required");
             return;
         }
+        if (DateEnd < DateStart)
+        {
+            await _alertService.DisplayAsync("Error", "End date can't be before start date");
+            return;
+        }
+
+        if (DateEnd.Date == DateStart.Date && TimeEnd <= TimeStart)
+        {
+            await _alertService.DisplayAsync("Error", "End time can't be before start time or at the same time");
+            return;
+        }
+
         Activity.Start = DateStart.Date + TimeStart;
         Activity.End = DateEnd.Date + TimeEnd;
         try

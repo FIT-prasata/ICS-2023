@@ -78,6 +78,7 @@ public partial class ProjectDetailViewModel : ViewModelBase, IRecipient<ProjectE
     [RelayCommand]
     private async Task RemoveLoggedUserFromProjectAsync()
     {
+        await _activityFacade.DeleteUserActivitiesOnProject(ProjectId, _activeUserService.GetId());
         await _projectFacade.RemoveUserFromProjectAsync(ProjectId, _activeUserService.GetId());
         await LoadDataAsync();
 
@@ -85,6 +86,7 @@ public partial class ProjectDetailViewModel : ViewModelBase, IRecipient<ProjectE
     [RelayCommand]
     private async Task RemoveSpecificUserFromProjectAsync(Guid id)
     {
+        await _activityFacade.DeleteUserActivitiesOnProject(ProjectId, id);
         await _projectFacade.RemoveUserFromProjectAsync(ProjectId, id);
         await LoadDataAsync();
     }
@@ -121,6 +123,24 @@ public partial class ProjectDetailViewModel : ViewModelBase, IRecipient<ProjectE
         if (NewActivity.Type == ActivityType.Empty)
         {
             await _alertService.DisplayAsync("Error", "Select type");
+            return;
+        }
+
+        if (!(Project.Users.Select(u => u.Id).ToList().Contains(_activeUserService.GetId())))
+        {
+            await _alertService.DisplayAsync("Error", "You need add yourself to the project first");
+            return;
+        }
+
+        if (DateEnd < DateStart)
+        {
+            await _alertService.DisplayAsync("Error", "End date can't be before start date");
+            return;
+        }
+
+        if (DateEnd.Date == DateStart.Date && TimeEnd <= TimeStart)
+        {
+            await _alertService.DisplayAsync("Error", "End time can't be before start time or at the same time");
             return;
         }
         NewActivity.Id = Guid.NewGuid();
