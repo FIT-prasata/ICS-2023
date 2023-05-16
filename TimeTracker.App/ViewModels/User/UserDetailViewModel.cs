@@ -57,6 +57,7 @@ public partial class UserDetailViewModel : ViewModelBase, IRecipient<ActivityAdd
             await _alertService.DisplayAsync("Error", "Name, Surname or Image URL cannot be empty");
             return;
         }
+        await _alertService.DisplayAsync("Success!", "User changes were saved.");
         await _userFacade.SaveAsync(User);
         await LoadDataAsync();
     }
