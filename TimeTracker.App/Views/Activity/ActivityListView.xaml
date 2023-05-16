@@ -84,74 +84,97 @@
                 <GridItemsLayout
                         Orientation="Vertical"
                         HorizontalItemSpacing="10" VerticalItemSpacing="10"
-                        Span="4"
+                        Span="5"
                     />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate
                         x:DataType="m:ActivityListModel"
                     >
-                    <Frame Padding="0"
+                    <Frame Padding="10"
                            CornerRadius="10"
-                           WidthRequest="300"
-                           HeightRequest="100"
+                           WidthRequest="230"
+                           HeightRequest="200"
                            IsClippedToBounds="True"
-                    >
-                        <Grid RowDefinitions="*,30" >
-
-                            <Grid
-                                Grid.Row="0"
-                                ColumnDefinitions="3*,*"
-                                RowDefinitions="*,*,*"
-                                >
-                                <Label 
-                                Grid.Column="0"
-                                Grid.Row="0"
-                                VerticalOptions="Center"
-                                BackgroundColor="Black"
-                                TextColor="Wheat"
-                                Text="{Binding Type}"
-                                />
-                                <Label 
-                                    Grid.Column="0"
-                                    Grid.Row="1"
-                                    VerticalOptions="Center"
-                                    BackgroundColor="Black"
-                                    TextColor="Wheat"
-                                    Text="{Binding Duration}"
-                                />
-                                <Label 
-                                    Grid.Column="0"
-                                    Grid.Row="2"
-                                    VerticalOptions="Center"
-                                    BackgroundColor="Black"
-                                    TextColor="Wheat"
-                                    Text="{Binding Assigned.FullName, FallbackValue='No one assigned'}"
-                                />
+                            >
+                        <Grid RowDefinitions="*, *, *, *, *"
+                                  ColumnDefinitions="*, *"
+                                  >
+                            <Label Grid.Column="0"
+                                       Grid.Row="0"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"
+                                       TextColor="#d8e676"
+                                       FontSize="18"
+                                       Text="{Binding Type}"/>
+                            <Label Grid.Column="1"
+                                   Grid.Row="0"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   FontSize="12"
+                                   Text="{Binding Assigned.FullName}"/>
+                            <Label Grid.Column="0"
+                                       Grid.Row="1"
+                                       HorizontalOptions="Center"
+                                       FontAttributes="Bold"
+                                       Text="Start time"/>
+                            <Label Grid.Column="0"
+                                        Grid.Row="2"
+                                        HorizontalOptions="Center"
+                                        Margin="5,-10,0,0"
+                                        Text="{Binding Start}"/>
+                            <Label Grid.Column="1"
+                                        Grid.Row="1"
+                                        HorizontalOptions="Center"
+                                        FontAttributes="Bold"
+                                        Text="End time"/>
+                            <Label Grid.Column="1"
+                                        Grid.Row="2"
+                                        HorizontalOptions="Center"
+                                        Margin="5,-10,0,0"
+                                        Text="{Binding End}"/>
+                            <Label Grid.Column="0"
+                                       Grid.Row="3"
+                                       HorizontalOptions="Center"
+                                       FontAttributes="Bold"
+                                       Grid.ColumnSpan="2"
+                                       Margin="10"
+                                       Text="Duration"/>
+                            <Grid ColumnDefinitions="Auto, Auto, Auto"
+                                  RowDefinitions="*"
+                                  Grid.Row="4"
+                                  Grid.ColumnSpan="2">
                                 <ImageButton 
-                                Grid.Column="1"
-                                Grid.RowSpan="2"
-                                Aspect="AspectFit"
-                                Source="delete_icon.png"
-                                Grid.Row="0"
-                                Command="{Binding Source={x:Reference ActivityListViewRoot}, Path=BindingContext.DeleteActivityCommand}"
-                                CommandParameter="{Binding Id}"
-                                />
-                                <ImageButton 
-                                    Grid.Column="1"
-                                    Grid.RowSpan="3"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
                                     Aspect="AspectFit"
                                     Source="edit_icon.png"
-                                    Grid.Row="2"
+                                    Padding="5"
+                                    Margin="0,-5"
+                                    BackgroundColor="Black"
                                     Command="{Binding Source={x:Reference ActivityListViewRoot}, Path=BindingContext.GoToActivityEditCommand}"
+                                    CommandParameter="{Binding Id}"/>
+                                <Label Grid.Column="1"
+                                       Grid.Row="0"
+                                       Margin="42, 0, 0, 0"
+                                       MinimumWidthRequest="40"
+                                       HorizontalOptions="Center"
+                                       Text="{Binding Duration}"/>
+                                <ImageButton 
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    Aspect="AspectFit"
+                                    Source="delete_icon.png"
+                                    Margin="30, -9"
+                                    BackgroundColor="Black"
+                                    Padding="5"
+                                    Command="{Binding Source={x:Reference ActivityListViewRoot}, Path=BindingContext.DeleteActivityCommand}"
                                     CommandParameter="{Binding Id}"
                                 />
                             </Grid>
+
                         </Grid>
-
                     </Frame>
-
-
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 

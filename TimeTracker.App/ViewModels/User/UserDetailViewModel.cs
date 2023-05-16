@@ -64,7 +64,7 @@ public partial class UserDetailViewModel : ViewModelBase, IRecipient<ActivityAdd
     private async Task DeleteActivityAsync(Guid id)
     {
         await _activityFacade.DeleteAsync(id);
-        await LoadDataAsync();
+        MessengerService.Send(new ActivityDeleteMessage());
     }
     [RelayCommand]
     private async Task GoToActivityEditAsync(Guid id)
@@ -72,6 +72,7 @@ public partial class UserDetailViewModel : ViewModelBase, IRecipient<ActivityAdd
         await _navigationService.GoToAsync<ActivityEditViewModel>(
             new Dictionary<string, object?> { [nameof(ActivityEditViewModel.ActivityId)] = id }
         );
+
     }
 
     public async void Receive(ActivityAddMessage message)
