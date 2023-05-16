@@ -145,8 +145,8 @@ public partial class ProjectDetailViewModel : ViewModelBase, IRecipient<ProjectE
         }
         NewActivity.Id = Guid.NewGuid();
         NewActivity.ProjectId = ProjectId;
-        NewActivity.Start = DateStart + TimeStart;
-        NewActivity.End = DateEnd + TimeEnd;
+        NewActivity.Start = DateStart.Date + TimeStart;
+        NewActivity.End = DateEnd.Date + TimeEnd;
         UserDetailModel user = (await _userFacade.GetAsync(_activeUserService.GetId()))!;
         NewActivity.CreatedBy = user;
         NewActivity.Assigned = user;
