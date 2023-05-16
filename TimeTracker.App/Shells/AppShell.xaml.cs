@@ -9,34 +9,53 @@ using TimeTracker.App.ViewModels.User;
 
 namespace TimeTracker.App.Shells;
 
-public partial class AppShell: IRecipient<UserAuthenticatedMessage>
+public partial class AppShell
 {
     private readonly INavigationService _navigationService;
     private readonly IActiveUserService _activeUserService;
-    public Boolean IsAuthenticated { get; set; } = false;
+    private readonly IAlertService _alertService;
 
-    public AppShell(INavigationService navigationService, IActiveUserService activeUserService)
-    { 
+    public AppShell(INavigationService navigationService, IActiveUserService activeUserService, IAlertService alertService)
+    {
         _navigationService = navigationService;
         _activeUserService = activeUserService;
+        _alertService = alertService;
 
         InitializeComponent();
     }
 
     [RelayCommand]
     private async Task GoToProjectsAsync()
-    => await _navigationService.GoToAsync<ProjectListViewModel>();
+    {
+        if (!_activeUserService.IsAuthenticated())
+        {
+            await _alertService.DisplayAsync("Error", "Please select user first");
+            return;
+        }
+        await _navigationService.GoToAsync<ProjectListViewModel>();
+    }
+
 
     [RelayCommand]
     private async Task GoToActivitiesAsync()
-    => await _navigationService.GoToAsync<ActivityListViewModel>();
+    {
+        if (!_activeUserService.IsAuthenticated())
+        {
+            await _alertService.DisplayAsync("Error", "Please select user first");
+            return;
+        }
+        await _navigationService.GoToAsync<ActivityListViewModel>();
+    }
 
     [RelayCommand]
     private async Task GoToUserAsync()
-    => await _navigationService.GoToAsync<UserDetailViewModel>();
-
-    public void Receive(UserAuthenticatedMessage message)
     {
-        IsAuthenticated = _activeUserService.IsAuthenticated();
+        if (!_activeUserService.IsAuthenticated())
+        {
+            await _alertService.DisplayAsync("Error", "Please select user first");
+            return;
+        }
+        await _navigationService.GoToAsync<UserDetailViewModel>();
     }
+
 }
