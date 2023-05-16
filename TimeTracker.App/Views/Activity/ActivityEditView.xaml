@@ -8,11 +8,60 @@
                        x:Name="ActivityEditViewRoot"
                        x:DataType="vm:ActivityEditViewModel"
 >
-    <VerticalStackLayout>
-        <Label 
-            Text="{Binding ActivityId}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" 
-            TextColor="Black"/>
-    </VerticalStackLayout>
+    <Grid ColumnDefinitions="100,4*,4*,4*,*,2*,100" RowDefinitions="auto, auto" BackgroundColor="#252525" >
+        <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    VerticalOptions="Center"
+                    FontSize="20"
+                    Text="Since:"
+                    TextColor="White"
+                />
+        <Grid Grid.Column="1" Grid.Row="1" ColumnDefinitions="150,250">
+            <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding DateStart}" Grid.Column="0" VerticalOptions="Start" />
+            <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeStart}" Grid.Column="1" VerticalOptions="End" />
+        </Grid>
+        <Label
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    VerticalOptions="Center"
+                    FontSize="20"
+                    Text="Until:"
+                    TextColor="White"
+                />
+        <Grid Grid.Column="2" Grid.Row="1" ColumnDefinitions="150,250">
+            <DatePicker BackgroundColor="Black" TextColor="Wheat" Date="{Binding  DateEnd}" Grid.Column="0" VerticalOptions="Start" />
+            <TimePicker BackgroundColor="Black" TextColor="Wheat" Time="{Binding TimeEnd}" Grid.Column="1" VerticalOptions="End" />
+
+        </Grid>
+        <Label
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    VerticalOptions="Center"
+                    FontSize="20"
+                    Text="Description:"
+                    TextColor="White"
+                />
+        <Entry BackgroundColor="Black" TextColor="Wheat" WidthRequest="400" Text="{Binding Activity.Description}" Grid.Column="3" Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Start" />
+        <Label
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    VerticalOptions="Center"
+                    FontSize="20"
+                    Text="Type:"
+                    TextColor="White"
+                />
+        <Picker
+                    BackgroundColor="Black"
+                    TextColor="Wheat"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="Fill"
+                    Grid.Column="4"
+                    Grid.Row="1"
+                    ItemsSource="{Binding ActivityTypes}"
+                    ItemDisplayBinding="{Binding .}"
+                    SelectedItem="{Binding Activity.Type}"
+                />
+        <Button BackgroundColor="#62228e" TextColor="Wheat" Text="Save" Grid.Column="5" Grid.RowSpan="2" Margin="15" Command="{Binding SaveCommand}"/>
+    </Grid>
 </views:ContentBasePage>

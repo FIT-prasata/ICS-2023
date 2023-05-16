@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.IdentityModel.Tokens;
 using TimeTracker.App.Messages;
 using TimeTracker.App.Services.Interfaces;
 using TimeTracker.App.Services;
@@ -26,6 +27,14 @@ namespace TimeTracker.App.ViewModels.Activity;
 
     public ActivityDetailModel? Activity { get; set; }
 
+    public List<ActivityType> ActivityTypes { get; set; }
+
+    public DateTime DateStart {get; set; } = DateTime.Now;
+    public TimeSpan TimeStart { get; set; } = new TimeSpan(0, 0, 0);
+
+    public DateTime DateEnd { get; set; } = DateTime.Now;
+    public TimeSpan TimeEnd { get; set; } = new TimeSpan(0, 0, 0);
+
     public ActivityEditViewModel(
         IActivityFacade activityFacade,
         INavigationService navigationService,
@@ -38,6 +47,10 @@ namespace TimeTracker.App.ViewModels.Activity;
         _navigationService = navigationService;
         _activeUserService = activeUserService;
         _alertService = alertService;
+
+        ActivityTypes = Enum.GetValues<ActivityType>().Where(a => a != ActivityType.Empty).ToList();
+
+        
     }
 
     protected override async Task LoadDataAsync()
@@ -50,6 +63,11 @@ namespace TimeTracker.App.ViewModels.Activity;
         else
         {
             Activity = await _activityFacade.GetAsync(ActivityId);
+            DateStart = Activity.Start;
+            TimeStart = Activity.Start.TimeOfDay;
+            DateEnd = Activity.End;
+            TimeEnd = Activity.End.TimeOfDay;
+
         }
     }
 
@@ -61,8 +79,19 @@ namespace TimeTracker.App.ViewModels.Activity;
             await _alertService.DisplayAsync("Error", "Type is required");
             return;
         }
-        await _activityFacade.SaveAsync(Activity!);
+        Activity.Start = DateStart.Date + TimeStart;
+        Activity.End = DateEnd.Date + TimeEnd;
+        try
+        {
+            await _activityFacade.SaveAsync(Activity!);
+        }
+        catch (SecurityTokenException e)
+        {
+            await _alertService.DisplayAsync("Error", e.Message);
+        }
         MessengerService.Send(new ActivityEditMessage { ActivityId = ActivityId });
+        await LoadDataAsync();
+        await _alertService.DisplayAsync("Success!", "Activity changes were saved.");
     }
 
 

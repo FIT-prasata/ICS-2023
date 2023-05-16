@@ -58,6 +58,8 @@ public partial class ProjectEditViewModel: ViewModelBase
         await _projectFacade.SaveAsync(Project);
         MessengerService.Send(new ProjectEditMessage {ProjectId = ProjectId});
         await LoadDataAsync();
+        await _alertService.DisplayAsync("Success!", "Project changes were saved.");
+
     }
 
     [RelayCommand]

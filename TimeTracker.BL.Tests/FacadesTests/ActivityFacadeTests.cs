@@ -151,7 +151,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
                 // Inside of other activity
                 await _activityFacade.SaveAsync(new ActivityDetailModel()
                 {
-                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Id = Guid.NewGuid(),
                     Start = DateTime.Parse("2020-01-22 05:00:00"),
                     End = DateTime.Parse("2020-01-22 10:00:00"),
                     Description = "Test",
@@ -177,7 +177,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
                 // Inside of other activity
                 await _activityFacade.SaveAsync(new ActivityDetailModel()
                 {
-                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Id = Guid.NewGuid(),
                     Start = DateTime.Parse("2020-01-22 00:00:00"),
                     End = DateTime.Parse("2020-01-22 20:00:00"),
                     Description = "Test",
@@ -202,7 +202,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
                 // Inside of other activity
                 await _activityFacade.SaveAsync(new ActivityDetailModel()
                 {
-                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Id = Guid.NewGuid(),
                     Start = DateTime.Parse("2020-01-22 00:00:00"),
                     End = DateTime.Parse("2020-01-22 10:00:00"),
                     Description = "Test",
@@ -227,7 +227,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
                 // Inside of other activity
                 await _activityFacade.SaveAsync(new ActivityDetailModel()
                 {
-                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Id = Guid.NewGuid(),
                     Start = DateTime.Parse("2020-01-22 05:00:00"),
                     End = DateTime.Parse("2020-01-22 20:00:00"),
                     Description = "Test",
@@ -252,7 +252,7 @@ namespace TimeTracker.BL.Tests.FacadesTests
                 // Inside of other activity
                 await _activityFacade.SaveAsync(new ActivityDetailModel()
                 {
-                    Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                    Id = Guid.NewGuid(),
                     Start = DateTime.Parse("2020-01-22 13:00:00"),
                     End = DateTime.Parse("2020-01-22 20:00:00"),
                     Description = "Test",

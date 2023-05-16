@@ -43,6 +43,7 @@ namespace TimeTracker.BL.Facades
                         (model.Start <= activity.Start && model.End >= activity.End)
                     ) &&
                         (activity.AssignedId == model.Assigned.Id)
+                     && (activity.Id != model.Id)
                 );
 
             if (await query.AnyAsync())
@@ -75,7 +76,7 @@ namespace TimeTracker.BL.Facades
             await using IUnitOfWork uow = UnitOfWorkFactory.Create();
             return   Mapper.MapToListModel(await (
                      GetQuery(uow)).Where(
-                    activity => activity.CreatedById == userId)
+                    activity => activity.CreatedById == userId).OrderBy(a => a.Start)
                 .ToListAsync()
             );
         }
@@ -84,7 +85,7 @@ namespace TimeTracker.BL.Facades
             await using IUnitOfWork uow = UnitOfWorkFactory.Create();
             return Mapper.MapToListModel(await (
                      GetQuery(uow)).Where(
-                    activity => activity.AssignedId == userId)
+                    activity => activity.AssignedId == userId).OrderBy(a => a.Start)
                 .ToListAsync()
             );
         }
@@ -104,6 +105,23 @@ namespace TimeTracker.BL.Facades
                 default:
                     return await GetActivitiesByDateAsync(null, null);
             }
+        }
+
+        public override async Task<IEnumerable<ActivityListModel>> GetAsync()
+        {
+            await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+            IQueryable<ActivityEntity> query = uow
+                .GetRepository<ActivityEntity, ActivityEntityMapper>()
+                .Get().OrderBy(a=>a.Start);
+
+            if (IncludesNavigationPathDetail.Any())
+            {
+                IncludesNavigationPathDetail.ForEach(include => query = query.Include(include));
+            }
+
+            List<ActivityEntity> entities = await query.ToListAsync();
+
+            return Mapper.MapToListModel(entities);
         }
     }
 }
