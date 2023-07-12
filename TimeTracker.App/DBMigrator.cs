@@ -34,7 +34,7 @@ public class SqliteDbMigrator : IDbMigrator
     {
         await using TimeTrackerDbContext dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-        var recreateData = true;
+        var recreateData = false;
         if (recreateData)
         {
             await dbContext.Database.EnsureDeletedAsync(cancellationToken);
